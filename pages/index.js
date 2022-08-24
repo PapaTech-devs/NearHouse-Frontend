@@ -1,9 +1,13 @@
-import { Button } from "@chakra-ui/react";
+import { Text } from "@chakra-ui/react";
+import Head from "next/head";
+
 export default function Home() {
   return (
     <div>
-      <p>NearHouse App</p>
-      <Button colorScheme={"blue"}>Click Me</Button>
+      <Head>
+        <title>NearHouse</title>
+      </Head>
+      <Text>Landing Page</Text>
     </div>
   );
 }
