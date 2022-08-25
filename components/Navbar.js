@@ -1,9 +1,13 @@
 import { Box, Button, Flex, Heading, Hide, Show, Link } from "@chakra-ui/react";
 import Sidebar from "./Sidebar";
-import { HiUser } from "react-icons/hi";
+import { HiUser, HiOutlineLogout } from "react-icons/hi";
 import * as NextLink from "next/link";
+import { useRouter } from "next/router";
+import { useAuth } from "../hooks/contextHooks";
 
 export default function Navbar() {
+  const router = useRouter();
+  const { authUser, signMeOut } = useAuth();
   return (
     <Flex
       px={["2rem", "2.5rem", "2.5rem", "4.5rem"]}
@@ -22,29 +26,44 @@ export default function Navbar() {
           gap={10}
           fontSize={["xs", "sm", "md", "lg"]}
         >
-          <NextLink href="/" passHref>
+          <NextLink href="/search" passHref>
             <Link>Search</Link>
           </NextLink>
-          <NextLink href="/" passHref>
+          <NextLink href="/listproperty" passHref>
             <Link>List Property</Link>
           </NextLink>
-          <NextLink href="/" passHref>
+          <NextLink href="/about" passHref>
             <Link>About</Link>
           </NextLink>
         </Flex>
       </Hide>
       <Hide below="md">
         <Box w="25%">
-          <Button
-            rightIcon={<HiUser />}
-            colorScheme="gray"
-            variant="ghost"
-            fontSize="lg"
-            fontWeight="semibold"
-            float={"right"}
-          >
-            Login
-          </Button>
+          {!authUser ? (
+            <Button
+              rightIcon={<HiUser />}
+              colorScheme="gray"
+              variant="ghost"
+              fontSize="lg"
+              fontWeight="semibold"
+              float={"right"}
+              onClick={() => router.push("/login")}
+            >
+              Login
+            </Button>
+          ) : (
+            <Button
+              variant="ghost"
+              rightIcon={<HiOutlineLogout />}
+              fontSize="lg"
+              colorScheme="gray"
+              fontWeight="semibold"
+              float={"right"}
+              onClick={async () => await signMeOut()}
+            >
+              Logout
+            </Button>
+          )}
         </Box>
       </Hide>
       <Show below="md">

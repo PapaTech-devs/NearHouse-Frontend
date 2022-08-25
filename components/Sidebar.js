@@ -5,19 +5,21 @@ import {
   useDisclosure,
   DrawerBody,
   DrawerCloseButton,
-  Text,
   IconButton,
   Link,
   Icon,
   VStack,
+  Button,
 } from "@chakra-ui/react";
 import { useRef } from "react";
 import { FaHamburger } from "react-icons/fa";
 import * as NextLink from "next/link";
+import { useAuth } from "../hooks/contextHooks";
 
 export default function Sidebar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef();
+  const { authUser, signMeOut } = useAuth();
   return (
     <>
       <IconButton
@@ -37,18 +39,30 @@ export default function Sidebar() {
           <DrawerCloseButton />
           <DrawerBody>
             <VStack alignItems={"start"} spacing={4} pt="2">
-              <NextLink href="/">
+              <NextLink href="/search">
                 <Link fontSize="lg">Search</Link>
               </NextLink>
-              <NextLink href="/">
+              <NextLink href="/listproperty">
                 <Link fontSize="lg">List Property</Link>
               </NextLink>
-              <NextLink href="/">
+              <NextLink href="/about">
                 <Link fontSize="lg">About</Link>
               </NextLink>
-              <NextLink href="/">
-                <Link fontSize="lg">Login</Link>
-              </NextLink>
+              {!authUser ? (
+                <NextLink href="/login">
+                  <Link fontSize="lg">Login</Link>
+                </NextLink>
+              ) : (
+                <Button
+                  size="lg"
+                  color="black"
+                  fontWeight="normal"
+                  variant="link"
+                  onClick={() => signMeOut()}
+                >
+                  Logout
+                </Button>
+              )}
             </VStack>
           </DrawerBody>
         </DrawerContent>
