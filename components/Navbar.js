@@ -10,7 +10,7 @@ export default function Navbar() {
   const { authUser, signMeOut } = useAuth();
   return (
     <Flex
-      px={["2rem", "2.5rem", "2.5rem", "4.5rem"]}
+      px={["2rem", "2.5rem", "2.5rem", "3rem"]}
       h="10vh"
       align="center"
       justify="space-between"
