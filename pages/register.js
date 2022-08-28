@@ -165,7 +165,9 @@ export default function RegisterPage() {
             onChange={(e) => handleInputChange(e, setValues, values)}
           />
           <InputGroup>
-            <InputLeftElement pointerEvents="none" children={<AiFillPhone />} />
+            <InputLeftElement pointerEvents="none">
+              <AiFillPhone />
+            </InputLeftElement>
             <Input
               isInvalid={errors.phoneNumber}
               name="phoneNumber"

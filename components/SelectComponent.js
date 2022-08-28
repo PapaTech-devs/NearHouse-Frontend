@@ -12,7 +12,9 @@ export default function SelectComponent() {
     <Flex gap="3" pb="5">
       <InputGroup w="150%">
         <Input placeholder="Enter a city name" variant="filled" />
-        <InputRightElement children={<BsSearch color="gray" />} />
+        <InputRightElement>
+          <BsSearch color="gray" />
+        </InputRightElement>
       </InputGroup>
       <Select
         placeholder="Type: House"
