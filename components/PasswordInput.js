@@ -7,7 +7,12 @@ import {
 import { BiShow, BiHide } from "react-icons/bi";
 import { useState } from "react";
 
-export default function PasswordInput({ setValue, placeholder }) {
+export default function PasswordInput({
+  onChange,
+  placeholder,
+  isInvalid,
+  name,
+}) {
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
 
@@ -15,9 +20,11 @@ export default function PasswordInput({ setValue, placeholder }) {
     <InputGroup size="md">
       <Input
         pr="4.5rem"
+        isInvalid={isInvalid}
         type={show ? "text" : "password"}
         placeholder={placeholder}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={onChange}
+        name={name}
       />
       <InputRightElement width="4.5rem">
         <IconButton

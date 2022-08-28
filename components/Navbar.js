@@ -16,7 +16,9 @@ export default function Navbar() {
       justify="space-between"
     >
       <Heading minWidth="fit-content" w="30%" size={["md", "md", "md", "lg"]}>
-        NearHouse
+        <NextLink href="/" passHref>
+          <Link>NearHouse</Link>
+        </NextLink>
       </Heading>
       <Hide below="md">
         <Flex
