@@ -42,7 +42,7 @@ export default function Sidebar() {
               <NextLink href="/search">
                 <Link fontSize="lg">Search</Link>
               </NextLink>
-              <NextLink href="/listproperty">
+              <NextLink href="/property">
                 <Link fontSize="lg">List Property</Link>
               </NextLink>
               <NextLink href="/about">

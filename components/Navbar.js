@@ -31,7 +31,7 @@ export default function Navbar() {
           <NextLink href="/search" passHref>
             <Link>Search</Link>
           </NextLink>
-          <NextLink href="/listproperty" passHref>
+          <NextLink href="/property" passHref>
             <Link>List Property</Link>
           </NextLink>
           <NextLink href="/about" passHref>
