@@ -1,5 +1,6 @@
-import React from "react";
+import MapWithSearchBox from "../MapWithSearchBox";
 
 export default function PropertyLocation() {
-  return <div>PropertyLocation</div>;
+  return <MapWithSearchBox />;
+  // return <p>Location</p>;
 }

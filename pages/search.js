@@ -46,17 +46,17 @@ export default function SearchPage() {
             </Grid>
           </Box>
         ) : (
-          <Box w="100%" h="80vh" bg="red.200" borderRadius="5px">
-            Map
-          </Box>
-          // <Map width="100%" />
+          // <Box w="100%" h="80vh" bg="red.200" borderRadius="5px">
+          //   Map
+          // </Box>
+          <Map width="100%" />
         )}
 
         <Show above="md">
-          <Box w="46%" h="80vh" bg="red.200" borderRadius="5px">
+          {/* <Box w="46%" h="80vh" bg="red.200" borderRadius="5px">
             Map
-          </Box>
-          {/* <Map width="46%" /> */}
+          </Box> */}
+          <Map width="46%" />
         </Show>
         <Hide above="md">
           <Button

@@ -38,18 +38,16 @@ export default function FlatInfo({ handleInputChange }) {
       <Stack direction="row">
         <Input
           type="number"
-          placeholder="No of parkings"
-          name="numParking"
+          placeholder="Dependent parking"
+          name="numParkingDependent"
           onChange={handleInputChange}
         />
-        <Select
-          placeholder="Parking type"
-          name="parkingType"
+        <Input
+          type="number"
+          placeholder="Independent parking"
+          name="numParkingIndependent"
           onChange={handleInputChange}
-        >
-          <option value="dependent">Dependent</option>
-          <option value="independent">Independent</option>
-        </Select>
+        />
       </Stack>
       <Input
         type="number"

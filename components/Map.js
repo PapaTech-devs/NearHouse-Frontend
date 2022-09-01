@@ -26,7 +26,10 @@ function Map({ width }) {
 
   if (window.google === undefined)
     return (
-      <LoadScript googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_API_KEY}>
+      <LoadScript
+        googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_API_KEY}
+        libraries={["places"]}
+      >
         {GoogleMapComponent}
       </LoadScript>
     );

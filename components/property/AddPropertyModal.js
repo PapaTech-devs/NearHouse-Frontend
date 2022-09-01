@@ -36,8 +36,8 @@ export default function AddPropertyModal({ isOpen, onClose }) {
     numBath: "",
     currentStatus: "",
     furnishType: "",
-    numParking: "",
-    parkingType: "",
+    numParkingDependent: "",
+    numParkingIndependent: "",
     numBalcony: "",
     floorNo: "",
     videoLink: "",
@@ -53,7 +53,7 @@ export default function AddPropertyModal({ isOpen, onClose }) {
         <ModalHeader>Add Property</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <Tabs>
+          <Tabs isLazy>
             <TabList>
               <Tab>Property Info</Tab>
               <Tab>Property Pictures</Tab>
