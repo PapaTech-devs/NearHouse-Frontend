@@ -35,8 +35,13 @@ export default function PropertyPictures() {
           justifyContent="center"
           gap="4"
           h="10rem"
+          bg="gray.100"
+          borderRadius="2px"
         >
-          <ImImages size="25" /> <Text fontSize="lg">Browse Images</Text>
+          <ImImages size="25" color="gray" />
+          <Text fontSize="lg" textColor="gray.700">
+            Browse Images
+          </Text>
         </Flex>
       </label>
       <Input

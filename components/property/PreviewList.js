@@ -1,5 +1,4 @@
 import { Grid, IconButton, Box, Image } from "@chakra-ui/react";
-// import Image from "next/image";
 import { GrClose } from "react-icons/gr";
 
 export default function PreviewList({
@@ -29,7 +28,7 @@ export default function PreviewList({
       mt="4"
     >
       {previewList.map((url, index) => (
-        <Box bg={"red.200"} key={index} position="relative">
+        <Box key={index} position="relative">
           <IconButton
             position="absolute"
             right="10px"
@@ -38,7 +37,7 @@ export default function PreviewList({
             onClick={() => removeImg(index)}
             icon={<GrClose />}
           />
-          <Image width="100%" height="150px" src={url} />
+          <Image width="100%" height="fit-content" src={url} />
         </Box>
       ))}
     </Grid>
