@@ -40,6 +40,7 @@ export default function AddPropertyModal({ isOpen, onClose }) {
     parkingType: "",
     numBalcony: "",
     floorNo: "",
+    videoLink: "",
   });
 
   return (

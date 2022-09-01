@@ -121,6 +121,12 @@ export default function PropertyInfo({ values, setValues }) {
           <option value="lumpsum">Lumpsum</option>
         </Select>
       </Stack>
+      <Input
+        placeholder="Enter video link(if any)"
+        size="md"
+        name="videoLink"
+        onChange={handleInputChange}
+      />
       <Flex alignItems="center" ml={4} gap={4}>
         <Text>Is property verified?</Text>
         <Checkbox
