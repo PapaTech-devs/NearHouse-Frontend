@@ -1,26 +1,34 @@
-import { Input, Select, Stack } from "@chakra-ui/react";
+import { Input, Select, Stack } from "@chakra-ui/react"
+import { handleInputChange } from "../../utils"
 
-export default function HouseInfo({ handleInputChange }) {
+export default function HouseInfo({ values, setValues }) {
   return (
     <>
+      <Input
+        onChange={(e) => handleInputChange(e, setValues, values)}
+        type="number"
+        placeholder="Enter BHK"
+        size="md"
+        name="bhk"
+      />
       <Stack direction="row">
         <Input
           type="number"
           placeholder="Number of floors"
           name="numFloor"
-          onChange={handleInputChange}
+          onChange={(e) => handleInputChange(e, setValues, values)}
         />
         <Input
           type="number"
           placeholder="Number of bathrooms"
           name="numBath"
-          onChange={handleInputChange}
+          onChange={(e) => handleInputChange(e, setValues, values)}
         />
       </Stack>
       <Select
         placeholder="Current Status"
         name="currentStatus"
-        onChange={handleInputChange}
+        onChange={(e) => handleInputChange(e, setValues, values)}
       >
         <option value="underconstruction">Under construction</option>
         <option value="readytomove">Ready to move</option>
@@ -28,7 +36,7 @@ export default function HouseInfo({ handleInputChange }) {
       <Select
         placeholder="Furnished Type"
         name="furnishType"
-        onChange={handleInputChange}
+        onChange={(e) => handleInputChange(e, setValues, values)}
       >
         <option value="fullfurnished">Full-furnished</option>
         <option value="semifurnished">Semi-furnished</option>
@@ -39,21 +47,21 @@ export default function HouseInfo({ handleInputChange }) {
           type="number"
           placeholder="Dependent parking"
           name="numParkingDependent"
-          onChange={handleInputChange}
+          onChange={(e) => handleInputChange(e, setValues, values)}
         />
         <Input
           type="number"
           placeholder="Independent parking"
           name="numParkingIndependent"
-          onChange={handleInputChange}
+          onChange={(e) => handleInputChange(e, setValues, values)}
         />
       </Stack>
       <Input
         type="number"
         placeholder="No of balcony"
         name="numBalcony"
-        onChange={handleInputChange}
+        onChange={(e) => handleInputChange(e, setValues, values)}
       />
     </>
-  );
+  )
 }

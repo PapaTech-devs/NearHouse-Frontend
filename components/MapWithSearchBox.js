@@ -1,57 +1,68 @@
-import {
-  GoogleMap,
-  StandaloneSearchBox,
-  MarkerF,
-} from "@react-google-maps/api";
-import React, { useEffect } from "react";
+import { GoogleMap, StandaloneSearchBox, MarkerF } from "@react-google-maps/api"
+import React, { useEffect } from "react"
 
 const mapContainerStyle = {
   height: "63vh",
   width: "100%",
-};
+}
 
-function MapWithSearchBox() {
-  const [searchBox, setSearchBox] = React.useState(null);
-  const zoom = 13;
+function MapWithSearchBox({ values, setValues }) {
+  const [searchBox, setSearchBox] = React.useState(null)
+  const zoom = 13
   const [center, setCenter] = React.useState({
     lat: 22.9867569,
     lng: 87.8549755,
-  });
+  })
+  const [marker, setMarker] = React.useState(null)
 
   const onLoad = (ref) => {
-    setSearchBox(ref);
-  };
+    setSearchBox(ref)
+  }
 
   const success = (pos) => {
-    setCenter({
+    const position = {
       lat: pos.coords.latitude,
       lng: pos.coords.longitude,
-    });
-  };
+    }
+    setCenter(position)
+    setMarker(position)
+  }
 
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(success, () => console.error, {
       enableHighAccuracy: true,
       timeout: 5000,
       maximumAge: 0,
-    });
-  }, []);
+    })
+  }, [])
 
   const onPlacesChanged = () => {
-    const value = searchBox.getPlaces()[0];
+    if (!searchBox) {
+      alert("Clear input and search again")
+      return
+    }
+    const value = searchBox.getPlaces()[0]
     setCenter({
       lat: value.geometry.location.lat(),
       lng: value.geometry.location.lng(),
-    });
-  };
+    })
+    setMarker({
+      lat: value.geometry.location.lat(),
+      lng: value.geometry.location.lng(),
+    })
+  }
 
   const handleClick = (e) => {
     const location = {
       lat: e.latLng.lat(),
       lng: e.latLng.lng(),
-    };
-    setCenter(location);
-  };
+    }
+    setValues({
+      ...values,
+      location: location,
+    })
+    setMarker(location)
+  }
 
   return (
     <GoogleMap
@@ -84,9 +95,9 @@ function MapWithSearchBox() {
           }}
         />
       </StandaloneSearchBox>
-      <MarkerF position={center} />
+      {marker && <MarkerF position={marker} />}
     </GoogleMap>
-  );
+  )
 }
 
-export default React.memo(MapWithSearchBox);
+export default React.memo(MapWithSearchBox)

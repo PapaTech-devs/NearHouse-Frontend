@@ -6,17 +6,20 @@ import {
   Tabs,
   Button,
   Flex,
-} from "@chakra-ui/react";
-import { useState } from "react";
-import PropertyInfo from "./PropertyInfo";
-import PropertyLocation from "./PropertyLocation";
-import PropertyPictures from "./PropertyPictures";
+} from "@chakra-ui/react"
+import { useState } from "react"
+import PropertyInfo from "./PropertyInfo"
+import PropertyLocation from "./PropertyLocation"
+import PropertyPictures from "./PropertyPictures"
+import { v4 as uuidV4 } from "uuid"
 
 export default function AddPropertyTabs() {
   const [values, setValues] = useState({
+    id: uuidV4(),
     title: "",
     description: "",
     owner: false,
+    region: "",
     propertyType: "",
     bhk: "",
     area: "",
@@ -35,7 +38,9 @@ export default function AddPropertyTabs() {
     numBalcony: "",
     floorNo: "",
     videoLink: "",
-  });
+    images: [],
+    location: null,
+  })
 
   return (
     <Flex direction="column" rowGap="2" mb="4">
@@ -51,10 +56,10 @@ export default function AddPropertyTabs() {
             <PropertyInfo values={values} setValues={setValues} />
           </TabPanel>
           <TabPanel px="-4">
-            <PropertyPictures />
+            <PropertyPictures values={values} setValues={setValues} />
           </TabPanel>
           <TabPanel px="-4">
-            <PropertyLocation />
+            <PropertyLocation values={values} setValues={setValues} />
           </TabPanel>
         </TabPanels>
       </Tabs>
@@ -67,5 +72,5 @@ export default function AddPropertyTabs() {
         Submit
       </Button>
     </Flex>
-  );
+  )
 }

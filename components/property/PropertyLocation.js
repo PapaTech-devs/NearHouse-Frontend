@@ -1,6 +1,6 @@
-import MapWithSearchBox from "../MapWithSearchBox";
+import MapWithSearchBox from "../MapWithSearchBox"
 
-export default function PropertyLocation() {
-  // return <MapWithSearchBox />;
-  return <p>Location</p>;
+export default function PropertyLocation({ values, setValues }) {
+  return <MapWithSearchBox values={values} setValues={setValues} />
+  // return <p>Location</p>;
 }

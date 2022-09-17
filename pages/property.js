@@ -1,10 +1,10 @@
-import { Flex, Button, Text } from "@chakra-ui/react";
-import Head from "next/head";
-import { useState } from "react";
-import AddPropertyTabs from "../components/property/AddPropertyTabs";
+import { Flex, Button, Text } from "@chakra-ui/react"
+import Head from "next/head"
+import { useState } from "react"
+import AddPropertyTabs from "../components/property/AddPropertyTabs"
 
 export default function PropertyPage() {
-  const [add, setAdd] = useState(false);
+  const [add, setAdd] = useState(false)
   return (
     <Flex px={["2rem", "2.5rem", "2.5rem", "3rem"]} direction="column">
       <Head>
@@ -17,7 +17,6 @@ export default function PropertyPage() {
         <Button onClick={() => setAdd(!add)}>{add ? "Close" : "Add"}</Button>
       </Flex>
       {add ? <AddPropertyTabs /> : <p>Property Listing</p>}
-      {/* <MapWithSearchBox /> */}
     </Flex>
-  );
+  )
 }

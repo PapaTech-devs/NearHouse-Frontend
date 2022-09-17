@@ -1,13 +1,13 @@
-import { Box, Button, Flex, Heading, Hide, Show, Link } from "@chakra-ui/react";
-import Sidebar from "./Sidebar";
-import { HiUser, HiOutlineLogout } from "react-icons/hi";
-import * as NextLink from "next/link";
-import { useRouter } from "next/router";
-import { useAuth } from "../hooks/contextHooks";
+import { Box, Button, Flex, Heading, Hide, Show, Link } from "@chakra-ui/react"
+import Sidebar from "./Sidebar"
+import { HiUser, HiOutlineLogout } from "react-icons/hi"
+import * as NextLink from "next/link"
+import { useRouter } from "next/router"
+import { useAuth } from "../hooks/contextHooks"
 
 export default function Navbar() {
-  const router = useRouter();
-  const { authUser, signMeOut } = useAuth();
+  const router = useRouter()
+  const { authUser, signMeOut } = useAuth()
   return (
     <Flex
       px={["2rem", "2.5rem", "2.5rem", "3rem"]}
@@ -31,9 +31,11 @@ export default function Navbar() {
           <NextLink href="/search" passHref>
             <Link>Search</Link>
           </NextLink>
-          <NextLink href="/property" passHref>
-            <Link>List Property</Link>
-          </NextLink>
+          {authUser && (
+            <NextLink href="/property" passHref>
+              <Link>List Property</Link>
+            </NextLink>
+          )}
           <NextLink href="/about" passHref>
             <Link>About</Link>
           </NextLink>
@@ -72,5 +74,5 @@ export default function Navbar() {
         <Sidebar />
       </Show>
     </Flex>
-  );
+  )
 }

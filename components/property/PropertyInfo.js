@@ -6,18 +6,13 @@ import {
   Text,
   Checkbox,
   Flex,
-} from "@chakra-ui/react";
-import FlatInfo from "./FlatInfo";
-import HouseInfo from "./HouseInfo";
+} from "@chakra-ui/react"
+import FlatInfo from "./FlatInfo"
+import HouseInfo from "./HouseInfo"
+import { handleInputChange } from "../../utils"
 
 export default function PropertyInfo({ values, setValues }) {
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setValues({
-      ...values,
-      [name]: value,
-    });
-  };
+  const regions = ["Bolpur", "Kolkata", "Asansol"]
 
   return (
     <Stack w="100%" rowGap={1}>
@@ -25,13 +20,13 @@ export default function PropertyInfo({ values, setValues }) {
         placeholder="Enter property title"
         size="md"
         name="title"
-        onChange={handleInputChange}
+        onChange={(e) => handleInputChange(e, setValues, values)}
       />
       <Textarea
         placeholder="Enter property description"
         name="description"
         size="md"
-        onChange={handleInputChange}
+        onChange={(e) => handleInputChange(e, setValues, values)}
       />
       <Flex alignItems="center" ml={4} gap={4}>
         <Text>Are you the owner?</Text>
@@ -41,7 +36,18 @@ export default function PropertyInfo({ values, setValues }) {
         />
       </Flex>
       <Select
-        onChange={handleInputChange}
+        onChange={(e) => handleInputChange(e, setValues, values)}
+        placeholder="Select region"
+        name="region"
+      >
+        {regions.map((region, index) => (
+          <option key={region + index.toString()} value={region}>
+            {region}
+          </option>
+        ))}
+      </Select>
+      <Select
+        onChange={(e) => handleInputChange(e, setValues, values)}
         placeholder="Select property type"
         name="propertyType"
       >
@@ -49,23 +55,16 @@ export default function PropertyInfo({ values, setValues }) {
         <option value="flat">Flat</option>
         <option value="plot">Plot (Land)</option>
       </Select>
-      <Input
-        onChange={handleInputChange}
-        type="number"
-        placeholder="Enter BHK"
-        size="md"
-        name="bhk"
-      />
       <Stack direction="row">
         <Input
-          onChange={handleInputChange}
+          onChange={(e) => handleInputChange(e, setValues, values)}
           type="number"
           placeholder="Enter area"
           size="md"
           name="area"
         />
         <Select
-          onChange={handleInputChange}
+          onChange={(e) => handleInputChange(e, setValues, values)}
           placeholder="Area metric"
           name="areaType"
         >
@@ -75,7 +74,7 @@ export default function PropertyInfo({ values, setValues }) {
         </Select>
       </Stack>
       <Select
-        onChange={handleInputChange}
+        onChange={(e) => handleInputChange(e, setValues, values)}
         placeholder="Select facing"
         name="facing"
       >
@@ -89,16 +88,16 @@ export default function PropertyInfo({ values, setValues }) {
         <option value="southwest">South West</option>
       </Select>
       {values.propertyType === "house" && (
-        <HouseInfo handleInputChange={handleInputChange} />
+        <HouseInfo values={values} setValues={setValues} />
       )}
       {values.propertyType === "flat" && (
-        <FlatInfo handleInputChange={handleInputChange} />
+        <FlatInfo values={values} setValues={setValues} />
       )}
       {values.propertyType === "plot" && (
         <Select
           placeholder="Type of land"
           name="landType"
-          onChange={handleInputChange}
+          onChange={(e) => handleInputChange(e, setValues, values)}
         >
           <option value="krishi">Krishi</option>
           <option value="shali">Shali</option>
@@ -107,13 +106,13 @@ export default function PropertyInfo({ values, setValues }) {
       )}
       <Stack direction="row">
         <Input
-          onChange={handleInputChange}
+          onChange={(e) => handleInputChange(e, setValues, values)}
           type="number"
           placeholder="Price of the property"
           name="price"
         />
         <Select
-          onChange={handleInputChange}
+          onChange={(e) => handleInputChange(e, setValues, values)}
           placeholder="Price type"
           name="priceType"
         >
@@ -125,7 +124,7 @@ export default function PropertyInfo({ values, setValues }) {
         placeholder="Enter video link(if any)"
         size="md"
         name="videoLink"
-        onChange={handleInputChange}
+        onChange={(e) => handleInputChange(e, setValues, values)}
       />
       <Flex alignItems="center" ml={4} gap={4}>
         <Text>Is property verified?</Text>
@@ -135,5 +134,5 @@ export default function PropertyInfo({ values, setValues }) {
         />
       </Flex>
     </Stack>
-  );
+  )
 }
