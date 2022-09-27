@@ -1,7 +1,7 @@
 import { Flex, Button, Text } from "@chakra-ui/react"
 import Head from "next/head"
 import { useState } from "react"
-import AddPropertyTabs from "../components/property/AddPropertyTabs"
+import AddPropertyTabs from "../../components/property/AddPropertyTabs"
 
 export default function PropertyPage() {
   const [add, setAdd] = useState(false)

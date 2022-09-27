@@ -12,104 +12,20 @@ import {
 } from "@chakra-ui/react"
 import { usePropertyContext } from "../hooks/propertyContext"
 
-export default function PropertySortModal({ isOpen, onClose }) {
-  const price = [
-    1000000, 2000000, 3000000, 4000000, 5000000, 6000000, 7000000, 8000000,
-    9000000,
-  ]
+export default function MoreFilterComponents({ isOpen, onClose }) {
+  const { filterObject, setFilterObject } = usePropertyContext()
   const emiPrice = [
     10000, 20000, 30000, 40000, 50000, 60000, 70000, 80000, 90000,
   ]
-  const bhk = [1, 2, 3, 4, 5]
   const baths = [1, 2, 3, 4, 5]
-  const { filterObject, setFilterObject } = usePropertyContext()
   return (
     <Modal isOpen={isOpen} onClose={onClose} isCentered size="sm">
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Sort Properties</ModalHeader>
+        <ModalHeader>More Options</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <Stack rowGap={4}>
-            <Select
-              placeholder="Property type"
-              variant="filled"
-              color="gray.500"
-              value={filterObject.propertyType}
-              onChange={(e) =>
-                setFilterObject({
-                  ...filterObject,
-                  propertyType: e.target.value,
-                })
-              }
-            >
-              <option value="house">House</option>
-              <option value="commercial">Commercial</option>
-              <option value="land">Land</option>
-            </Select>
-            <Select
-              placeholder="Min: Price"
-              variant="filled"
-              color="gray.500"
-              value={filterObject.minPrice}
-              onChange={(e) => {
-                setFilterObject({ ...filterObject, minPrice: e.target.value })
-              }}
-            >
-              <option value="0">{`<1000000`}</option>
-              {price.map((p, index) => {
-                if (
-                  filterObject.maxPrice &&
-                  p >= parseInt(filterObject.maxPrice)
-                ) {
-                  return null
-                }
-                return (
-                  <option key={`${p}${index}min`} value={p.toString()}>
-                    {p}
-                  </option>
-                )
-              })}
-            </Select>
-            <Select
-              placeholder="Max: Price"
-              variant="filled"
-              color="gray.500"
-              value={filterObject.maxPrice}
-              onChange={(e) =>
-                setFilterObject({ ...filterObject, maxPrice: e.target.value })
-              }
-            >
-              {price.map((p, index) => {
-                if (
-                  filterObject.minPrice &&
-                  p <= parseInt(filterObject.minPrice)
-                ) {
-                  return null
-                }
-                return (
-                  <option key={`${p}${index}max`} value={p.toString()}>
-                    {p}
-                  </option>
-                )
-              })}
-              <option value="10000000">{`>9000000`}</option>
-            </Select>
-            <Select
-              placeholder="BHK"
-              value={filterObject.bhk}
-              onChange={(e) =>
-                setFilterObject({ ...filterObject, bhk: e.target.value })
-              }
-              variant="filled"
-              color="gray.500"
-            >
-              {bhk.map((val, index) => (
-                <option key={val + index} value={val}>
-                  {val}
-                </option>
-              ))}
-            </Select>
             <Select
               placeholder="Furnished Type"
               variant="filled"
@@ -199,7 +115,7 @@ export default function PropertySortModal({ isOpen, onClose }) {
                   </option>
                 )
               })}
-              <option value="100000">{`>90000`}</option>
+              <option value="10000000">{`>90000`}</option>
             </Select>
             <Select
               placeholder="Current Status"

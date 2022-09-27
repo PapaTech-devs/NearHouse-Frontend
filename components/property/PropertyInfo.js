@@ -35,6 +35,12 @@ export default function PropertyInfo({ values, setValues }) {
           size="md"
         />
       </Flex>
+      <Input
+        placeholder="Enter property address"
+        size="md"
+        name="address"
+        onChange={(e) => handleInputChange(e, setValues, values)}
+      />
       <Select
         onChange={(e) => handleInputChange(e, setValues, values)}
         placeholder="Select region"

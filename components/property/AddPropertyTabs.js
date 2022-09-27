@@ -15,7 +15,7 @@ import { v4 as uuidV4 } from "uuid"
 
 export default function AddPropertyTabs() {
   const [values, setValues] = useState({
-    id: uuidV4(),
+    propertyId: uuidV4(),
     title: "",
     description: "",
     owner: false,
@@ -24,6 +24,7 @@ export default function AddPropertyTabs() {
     bhk: "",
     area: "",
     areaType: "",
+    address: "",
     facing: "",
     verified: false,
     price: "",
