@@ -11,6 +11,10 @@ const propertyContext = createContext({
   filterProperties: () => {},
   selectedProperty: null,
   setSelectedProperty: () => {},
+  regions: [],
+  setRegions: () => {},
+  myProperties: [],
+  setMyProperties: () => {},
 })
 
 export function PropertyContextProvider({ children }) {
@@ -18,6 +22,8 @@ export function PropertyContextProvider({ children }) {
   const [filterObject, setFilterObject] = useState({})
   const [filteredProperties, setFilteredProperties] = useState([])
   const [allProperties, setAllProperties] = useState([])
+  const [myProperties, setMyProperties] = useState([])
+  const [regions, setRegions] = useState([])
   const [loading, setLoading] = useState(false)
 
   useEffect(() => filterProperties(), [filterObject])
@@ -82,6 +88,10 @@ export function PropertyContextProvider({ children }) {
         loading: loading,
         filterObject: filterObject,
         setFilterObject: setFilterObject,
+        regions: regions,
+        setRegions: setRegions,
+        myProperties: myProperties,
+        setMyProperties: setMyProperties,
       }}
     >
       {children}

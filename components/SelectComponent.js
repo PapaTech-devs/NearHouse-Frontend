@@ -1,19 +1,16 @@
 import {
-  Button,
+  Box,
   Flex,
   IconButton,
-  Input,
-  InputGroup,
-  InputRightElement,
   Select,
   Show,
   useDisclosure,
 } from "@chakra-ui/react"
-import { BsSearch } from "react-icons/bs"
 import { CgMoreO } from "react-icons/cg"
 import { usePropertyContext } from "../hooks/propertyContext"
 import MoreFilterComponents from "./MoreFilterComponents"
 import PropertySortModal from "./PropertySortModal"
+import { default as ReactSelect } from "react-select"
 
 export default function SelectComponent() {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -22,15 +19,45 @@ export default function SelectComponent() {
     9000000,
   ]
   const bhk = [1, 2, 3, 4, 5]
-  const { filterObject, setFilterObject } = usePropertyContext()
+  const { filterObject, setFilterObject, regions, fetchProperties } =
+    usePropertyContext()
+
   return (
-    <Flex gap="3" pb="5">
-      <InputGroup w="150%">
-        <Input placeholder="Enter a city name" variant="filled" />
-        <InputRightElement>
-          <BsSearch color="gray" />
-        </InputRightElement>
-      </InputGroup>
+    <Flex gap="3" pb="5" alignItems="center">
+      <Box w="full" h="full">
+        {regions.length !== 0 && (
+          <ReactSelect
+            styles={{
+              valueContainer: (provided, _) => ({
+                ...provided,
+                backgroundColor: "#EDF2F7",
+              }),
+              dropdownIndicator: (provided, _) => ({
+                ...provided,
+                backgroundColor: "#EDF2F7",
+                color: "#718096",
+              }),
+              indicatorSeparator: (provided, _) => ({
+                ...provided,
+                backgroundColor: "#EDF2F7",
+              }),
+              indicatorsContainer: (provided, _) => ({
+                ...provided,
+                backgroundColor: "#EDF2F7",
+              }),
+            }}
+            isSearchable={true}
+            isClearable={true}
+            onChange={(data) => {
+              if (data) fetchProperties(data.value)
+            }}
+            options={regions.map((region) => ({
+              value: region,
+              label: region,
+            }))}
+          />
+        )}
+      </Box>
       <Show above="md">
         <Select
           placeholder="Property type"

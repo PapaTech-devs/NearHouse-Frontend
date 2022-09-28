@@ -20,10 +20,22 @@ import { usePropertyContext } from "../hooks/propertyContext"
 
 export default function SearchPage() {
   const [showMap, setShowMap] = useState(false)
-  const { filteredProperties, fetchProperties, loading } = usePropertyContext()
+  const { filteredProperties, allProperties, setRegions, loading } =
+    usePropertyContext()
 
   useEffect(() => {
-    fetchProperties()
+    async function fetchRegions() {
+      try {
+        const res = await fetch("/regions")
+        const data = await res.json()
+        console.log(data)
+        setRegions(data)
+      } catch (err) {
+        console.error(err)
+        alert(err.toString())
+      }
+    }
+    fetchRegions()
   }, [])
 
   return (
@@ -56,7 +68,9 @@ export default function SearchPage() {
               >
                 {filteredProperties.length === 0 ? (
                   <Text fontSize="lg" fontWeight="bold">
-                    No properties found
+                    {allProperties.length === 0
+                      ? "Please search for a region"
+                      : "No properties found"}
                   </Text>
                 ) : (
                   filteredProperties.map((property) => (
