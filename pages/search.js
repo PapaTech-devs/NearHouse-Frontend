@@ -26,9 +26,8 @@ export default function SearchPage() {
   useEffect(() => {
     async function fetchRegions() {
       try {
-        const res = await fetch("/regions")
+        const res = await fetch("/backend/regions")
         const data = await res.json()
-        console.log(data)
         setRegions(data)
       } catch (err) {
         console.error(err)

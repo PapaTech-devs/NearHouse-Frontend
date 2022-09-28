@@ -10,22 +10,28 @@ import {
 import FlatInfo from "./FlatInfo"
 import HouseInfo from "./HouseInfo"
 import { handleInputChange } from "../../utils"
+import { usePropertyContext } from "../../hooks/propertyContext"
 
-export default function PropertyInfo({ values, setValues }) {
-  const regions = ["Bolpur", "Kolkata", "Asansol"]
+export default function PropertyInfo({ error, values, setValues }) {
+  const { regions } = usePropertyContext()
 
   return (
     <Stack w="100%" rowGap={1}>
+      <Text fontSize="sm" fontStyle="italic" marginBottom={1}>
+        * are required fields
+      </Text>
       <Input
-        placeholder="Enter property title"
+        placeholder="*Enter property title"
         size="md"
         name="title"
+        isInvalid={error.title}
         onChange={(e) => handleInputChange(e, setValues, values)}
       />
       <Textarea
-        placeholder="Enter property description"
+        placeholder="*Enter property description"
         name="description"
         size="md"
+        isInvalid={error.description}
         onChange={(e) => handleInputChange(e, setValues, values)}
       />
       <Flex alignItems="center" ml={4} gap={4}>
@@ -36,14 +42,16 @@ export default function PropertyInfo({ values, setValues }) {
         />
       </Flex>
       <Input
-        placeholder="Enter property address"
+        placeholder="*Enter property address"
         size="md"
         name="address"
+        isInvalid={error.address}
         onChange={(e) => handleInputChange(e, setValues, values)}
       />
       <Select
         onChange={(e) => handleInputChange(e, setValues, values)}
-        placeholder="Select region"
+        placeholder="*Select region"
+        isInvalid={error.region}
         name="region"
       >
         {regions.map((region, index) => (
@@ -54,8 +62,9 @@ export default function PropertyInfo({ values, setValues }) {
       </Select>
       <Select
         onChange={(e) => handleInputChange(e, setValues, values)}
-        placeholder="Select property type"
+        placeholder="*Select property type"
         name="propertyType"
+        isInvalid={error.propertyType}
       >
         <option value="house">House</option>
         <option value="flat">Flat</option>
@@ -65,14 +74,16 @@ export default function PropertyInfo({ values, setValues }) {
         <Input
           onChange={(e) => handleInputChange(e, setValues, values)}
           type="number"
-          placeholder="Enter area"
+          placeholder="*Enter area"
           size="md"
+          isInvalid={error.area}
           name="area"
         />
         <Select
           onChange={(e) => handleInputChange(e, setValues, values)}
-          placeholder="Area metric"
+          placeholder="*Area metric"
           name="areaType"
+          isInvalid={error.areaType}
         >
           <option value="sqfeet">Sq. Feet</option>
           <option value="katha">Katha</option>
@@ -81,8 +92,9 @@ export default function PropertyInfo({ values, setValues }) {
       </Stack>
       <Select
         onChange={(e) => handleInputChange(e, setValues, values)}
-        placeholder="Select facing"
+        placeholder="*Select facing"
         name="facing"
+        isInvalid={error.facing}
       >
         <option value="north">North</option>
         <option value="south">South</option>
@@ -94,15 +106,16 @@ export default function PropertyInfo({ values, setValues }) {
         <option value="southwest">South West</option>
       </Select>
       {values.propertyType === "house" && (
-        <HouseInfo values={values} setValues={setValues} />
+        <HouseInfo error={error} values={values} setValues={setValues} />
       )}
       {values.propertyType === "flat" && (
-        <FlatInfo values={values} setValues={setValues} />
+        <FlatInfo error={error} values={values} setValues={setValues} />
       )}
       {values.propertyType === "plot" && (
         <Select
-          placeholder="Type of land"
+          placeholder="*Type of land"
           name="landType"
+          isInvalid={error.landType}
           onChange={(e) => handleInputChange(e, setValues, values)}
         >
           <option value="krishi">Krishi</option>
@@ -114,13 +127,15 @@ export default function PropertyInfo({ values, setValues }) {
         <Input
           onChange={(e) => handleInputChange(e, setValues, values)}
           type="number"
-          placeholder="Price of the property"
+          placeholder="*Price of the property"
           name="price"
+          isInvalid={error.price}
         />
         <Select
           onChange={(e) => handleInputChange(e, setValues, values)}
-          placeholder="Price type"
+          placeholder="*Price type"
           name="priceType"
+          isInvalid={error.priceType}
         >
           <option value="emi">EMI</option>
           <option value="lumpsum">Lumpsum</option>

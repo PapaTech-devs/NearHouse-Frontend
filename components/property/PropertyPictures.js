@@ -1,16 +1,10 @@
 import { Button, Flex, Input, Text } from "@chakra-ui/react"
-import { useState } from "react"
 import { ImImages } from "react-icons/im"
 import PreviewList from "./PreviewList"
 import imageCompression from "browser-image-compression"
 import { uploadImage } from "../../utils"
 
 export default function PropertyPictures({ values, setValues }) {
-  const [preview, setPreview] = useState([])
-  const [files, setFiles] = useState([])
-  const [loading, setLoading] = useState(false)
-  const [loadingText, setLoadingText] = useState("")
-
   function handleFilesUpload(e) {
     let tempArr = []
     let fileList = []
@@ -20,22 +14,21 @@ export default function PropertyPictures({ values, setValues }) {
       tempArr.push(url)
       fileList.push(file)
     }
-    tempArr = tempArr.concat(preview)
-    fileList = fileList.concat(files)
+    tempArr = tempArr.concat(values.preview)
+    fileList = fileList.concat(values.files)
     const elemsToDelete = tempArr.length - 10
     if (elemsToDelete > 0) {
       tempArr.splice(tempArr.length - elemsToDelete, elemsToDelete)
       fileList.splice(fileList.length - elemsToDelete, elemsToDelete)
     }
-    setPreview(tempArr)
-    setFiles(fileList)
+    setValues({ ...values, preview: tempArr, files: fileList })
     e.target.value = ""
   }
 
   async function compressImages() {
     setLoadingText("Compressing ")
     let res = []
-    for (let image of files) {
+    for (let image of values.files) {
       const imageFile = image
       const options = {
         maxSizeMB: 1,
@@ -52,11 +45,11 @@ export default function PropertyPictures({ values, setValues }) {
     return res
   }
 
-  async function uploadImages(images, dir) {
+  async function uploadImages(images) {
     let res = []
     setLoadingText("Uploading images")
     for (let image of images) {
-      let link = await uploadImage(image, values.id)
+      let link = await uploadImage(image, values.propertyid)
       res.push(link)
     }
     return res
@@ -65,13 +58,12 @@ export default function PropertyPictures({ values, setValues }) {
   async function handleSubmit() {
     setLoading(true)
     const compressedFiles = await compressImages()
-    const links = await uploadImages(compressedFiles, "default")
+    const links = await uploadImages(compressedFiles)
     setValues({
       ...values,
       images: links,
     })
     setLoading(false)
-    console.log(links)
   }
 
   return (
@@ -108,20 +100,8 @@ export default function PropertyPictures({ values, setValues }) {
         onChange={handleFilesUpload}
         accept=".jpg,.png,.jpeg,.JPG,.PNG,.JPEG"
       />
-      <Button
-        loadingText={loadingText}
-        isLoading={loading}
-        onClick={handleSubmit}
-      >
-        Click Me
-      </Button>
-      {preview.length > 0 && (
-        <PreviewList
-          previewList={preview}
-          files={files}
-          setFiles={setFiles}
-          setPreview={setPreview}
-        />
+      {values.preview.length > 0 && (
+        <PreviewList values={values} setValues={setValues} />
       )}
     </>
   )

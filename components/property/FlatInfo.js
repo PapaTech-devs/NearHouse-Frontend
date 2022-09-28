@@ -2,33 +2,37 @@ import { Input, Stack, Select } from "@chakra-ui/react"
 import React from "react"
 import { handleInputChange } from "../../utils"
 
-export default function FlatInfo({ values, setValues }) {
+export default function FlatInfo({ error, values, setValues }) {
   return (
     <>
       <Input
         onChange={(e) => handleInputChange(e, setValues, values)}
         type="number"
-        placeholder="Enter BHK"
+        placeholder="*Enter BHK"
         size="md"
         name="bhk"
+        isInvalid={error.bhk}
       />
       <Stack direction="row">
         <Input
           type="number"
-          placeholder="Enter floor no."
+          placeholder="*Enter floor no."
           name="floorNo"
+          isInvalid={error.floorNo}
           onChange={(e) => handleInputChange(e, setValues, values)}
         />
         <Input
           type="number"
-          placeholder="Number of bathrooms"
+          placeholder="*Number of bathrooms"
           name="numBath"
+          isInvalid={error.numBath}
           onChange={(e) => handleInputChange(e, setValues, values)}
         />
       </Stack>
       <Select
-        placeholder="Current Status"
+        placeholder="*Current Status"
         name="currentStatus"
+        isInvalid={error.currentStatus}
         onChange={(e) => handleInputChange(e, setValues, values)}
       >
         <option value="underconstruction">Under construction</option>

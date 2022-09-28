@@ -5,8 +5,8 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: "/regions",
-        destination: `${process.env.NEXT_PUBLIC_BACKEND_URL}/regions`,
+        source: "/backend/:path*",
+        destination: `${process.env.NEXT_PUBLIC_BACKEND_URL}/:path*`,
       },
     ]
   },

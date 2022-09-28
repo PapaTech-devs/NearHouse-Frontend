@@ -55,7 +55,9 @@ function Map({ width, properties }) {
     >
       {properties.map((property) => (
         <MarkerF
+          onMouseDown={() => setSelectedProperty(property.propertyId)}
           onMouseOver={() => setSelectedProperty(property.propertyId)}
+          onMouseUp={() => setSelectedProperty(null)}
           onMouseOut={() => setSelectedProperty(null)}
           onClick={() => router.push(`/property/${property.propertyId}`)}
           key={property.propertyId}

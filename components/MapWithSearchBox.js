@@ -8,7 +8,7 @@ const mapContainerStyle = {
 
 function MapWithSearchBox({ values, setValues }) {
   const [searchBox, setSearchBox] = React.useState(null)
-  const zoom = 13
+  const zoom = 17
   const [center, setCenter] = React.useState({
     lat: 22.9867569,
     lng: 87.8549755,
@@ -26,6 +26,10 @@ function MapWithSearchBox({ values, setValues }) {
     }
     setCenter(position)
     setMarker(position)
+    setValues({
+      ...values,
+      location: position,
+    })
   }
 
   useEffect(() => {
@@ -43,10 +47,6 @@ function MapWithSearchBox({ values, setValues }) {
     }
     const value = searchBox.getPlaces()[0]
     setCenter({
-      lat: value.geometry.location.lat(),
-      lng: value.geometry.location.lng(),
-    })
-    setMarker({
       lat: value.geometry.location.lat(),
       lng: value.geometry.location.lng(),
     })
