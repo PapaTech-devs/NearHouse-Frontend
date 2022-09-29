@@ -69,7 +69,7 @@ export const storeProperty = async (values, setLoadingText) => {
   setLoadingText("Posting data to backend...")
 
   try {
-    const res = await fetch(`/backend/properties`, {
+    const res = await fetch(`/backend/properties/propertyList`, {
       method: "POST",
       headers: {
         Accept: "*/*",
