@@ -6,6 +6,8 @@
 // for (let image of compressedFiles) after += image.size / 1024 / 1024
 // console.log(`Before ${before} and after ${after}`)
 
+import imageCompression from "browser-image-compression"
+
 export const validateEmail = (email) => {
   // eslint-disable-next-line
   return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(
@@ -23,6 +25,117 @@ export const handleInputChange = (e, setValues, values) => {
     ...values,
     [name]: value,
   })
+}
+
+async function compressImages(values) {
+  let res = []
+  for (let image of values.files) {
+    const imageFile = image
+    const options = {
+      maxSizeMB: 1,
+      maxWidthOrHeight: 1920,
+      useWebWorker: true,
+    }
+    try {
+      const compressedImage = await imageCompression(imageFile, options)
+      res.push(compressedImage)
+    } catch (error) {
+      throw error
+    }
+  }
+  return res
+}
+
+async function uploadImages(images, id) {
+  let res = []
+  for (let image of images) {
+    let link = await uploadImage(image, id)
+    res.push(link)
+  }
+  return res
+}
+
+export const storeProperty = async (values, setLoadingText) => {
+  let data = {}
+  for (let key in values)
+    if (values[key] !== "" && key !== "files" && key !== "preview")
+      data[key] = values[key]
+
+  setLoadingText("Compressing images...")
+  const compressedFiles = await compressImages(values)
+  setLoadingText("Uploading images to server...")
+  const links = await uploadImages(compressedFiles, values.propertyid)
+  data.images = links
+  setLoadingText("Posting data to backend...")
+
+  try {
+    const res = await fetch(`/backend/properties`, {
+      method: "POST",
+      headers: {
+        Accept: "*/*",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+    const d = await res.json()
+    setLoadingText(null)
+    return d["property"]
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+export const deleteProperty = async (property) => {
+  for (let url of property.images) {
+    const index = url.lastIndexOf("/")
+    const key = property.propertyid + url.slice(index)
+
+    await fetch(`/api/deleteImage?key=${key}`).then((res) => res.json())
+  }
+
+  try {
+    const res = await fetch(`/backend/properties/${property.propertyid}`, {
+      method: "DELETE",
+      headers: {
+        Accept: "*/*",
+        "Content-Type": "application/json",
+      },
+    })
+    await res.json()
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+export const updateProperty = async (values, setLoadingText) => {
+  let data = {}
+  for (let key in values)
+    if (values[key] !== "" && key !== "files" && key !== "preview")
+      data[key] = values[key]
+
+  setLoadingText("Compressing images...")
+  const compressedFiles = await compressImages(values)
+  setLoadingText("Uploading images to server...")
+  const links = await uploadImages(compressedFiles, values.propertyid)
+  data.images = data.images.concat(links)
+  setLoadingText("Posting data to backend...")
+
+  try {
+    const res = await fetch(`/backend/properties/${values.propertyid}`, {
+      method: "PATCH",
+      headers: {
+        Accept: "*/*",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+    const d = await res.json()
+    console.log("updated", d)
+    setLoadingText(null)
+    return d["property"]
+  } catch (err) {
+    console.error(err)
+  }
 }
 
 export const uploadImage = async (file, dir) => {

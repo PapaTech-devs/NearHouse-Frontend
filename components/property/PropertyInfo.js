@@ -25,6 +25,7 @@ export default function PropertyInfo({ error, values, setValues }) {
         size="md"
         name="title"
         isInvalid={error.title}
+        value={values.title}
         onChange={(e) => handleInputChange(e, setValues, values)}
       />
       <Textarea
@@ -32,6 +33,7 @@ export default function PropertyInfo({ error, values, setValues }) {
         name="description"
         size="md"
         isInvalid={error.description}
+        value={values.description}
         onChange={(e) => handleInputChange(e, setValues, values)}
       />
       <Flex alignItems="center" ml={4} gap={4}>
@@ -39,11 +41,13 @@ export default function PropertyInfo({ error, values, setValues }) {
         <Checkbox
           onChange={(e) => setValues({ ...values, owner: e.target.checked })}
           size="md"
+          defaultChecked={values.owner}
         />
       </Flex>
       <Input
         placeholder="*Enter property address"
         size="md"
+        value={values.address}
         name="address"
         isInvalid={error.address}
         onChange={(e) => handleInputChange(e, setValues, values)}
@@ -52,6 +56,7 @@ export default function PropertyInfo({ error, values, setValues }) {
         onChange={(e) => handleInputChange(e, setValues, values)}
         placeholder="*Select region"
         isInvalid={error.region}
+        value={values.region}
         name="region"
       >
         {regions.map((region, index) => (
@@ -64,6 +69,7 @@ export default function PropertyInfo({ error, values, setValues }) {
         onChange={(e) => handleInputChange(e, setValues, values)}
         placeholder="*Select property type"
         name="propertyType"
+        value={values.propertyType}
         isInvalid={error.propertyType}
       >
         <option value="house">House</option>
@@ -76,6 +82,7 @@ export default function PropertyInfo({ error, values, setValues }) {
           type="number"
           placeholder="*Enter area"
           size="md"
+          value={values.area}
           isInvalid={error.area}
           name="area"
         />
@@ -83,6 +90,7 @@ export default function PropertyInfo({ error, values, setValues }) {
           onChange={(e) => handleInputChange(e, setValues, values)}
           placeholder="*Area metric"
           name="areaType"
+          value={values.areaType}
           isInvalid={error.areaType}
         >
           <option value="sqfeet">Sq. Feet</option>
@@ -94,6 +102,7 @@ export default function PropertyInfo({ error, values, setValues }) {
         onChange={(e) => handleInputChange(e, setValues, values)}
         placeholder="*Select facing"
         name="facing"
+        value={values.facing}
         isInvalid={error.facing}
       >
         <option value="north">North</option>
@@ -115,6 +124,7 @@ export default function PropertyInfo({ error, values, setValues }) {
         <Select
           placeholder="*Type of land"
           name="landType"
+          value={values.landType}
           isInvalid={error.landType}
           onChange={(e) => handleInputChange(e, setValues, values)}
         >
@@ -127,6 +137,7 @@ export default function PropertyInfo({ error, values, setValues }) {
         <Input
           onChange={(e) => handleInputChange(e, setValues, values)}
           type="number"
+          value={values.price}
           placeholder="*Price of the property"
           name="price"
           isInvalid={error.price}
@@ -135,6 +146,7 @@ export default function PropertyInfo({ error, values, setValues }) {
           onChange={(e) => handleInputChange(e, setValues, values)}
           placeholder="*Price type"
           name="priceType"
+          value={values.priceType}
           isInvalid={error.priceType}
         >
           <option value="emi">EMI</option>
@@ -145,6 +157,7 @@ export default function PropertyInfo({ error, values, setValues }) {
         placeholder="Enter video link(if any)"
         size="md"
         name="videoLink"
+        value={values.videoLink}
         onChange={(e) => handleInputChange(e, setValues, values)}
       />
       <Flex alignItems="center" ml={4} gap={4}>
@@ -152,6 +165,7 @@ export default function PropertyInfo({ error, values, setValues }) {
         <Checkbox
           onChange={(e) => setValues({ ...values, verified: e.target.checked })}
           size="md"
+          defaultChecked={values.verified}
         />
       </Flex>
     </Stack>

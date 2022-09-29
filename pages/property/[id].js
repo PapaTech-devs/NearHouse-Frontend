@@ -1,4 +1,3 @@
-import { properties } from "../../data"
 import {
   Box,
   Button,
@@ -74,7 +73,7 @@ export default function Property({ property }) {
               Contact Agent
             </Button>
             <Button
-              disabled={property.videoLink.length === 0}
+              disabled={!property.videoLink}
               w="full"
               colorScheme="telegram"
             >
@@ -106,8 +105,12 @@ export default function Property({ property }) {
 
 // This also gets called at build time
 export async function getStaticProps({ params }) {
+  const properties = await fetch(
+    `${process.env.NEXT_PUBLIC_FRONTEND_URL}/backend/properties/propertyList`
+  ).then((res) => res.json())
+
   const property = properties.filter(
-    (property) => property.propertyId.toString() === params.id
+    (property) => property.propertyid === params.id
   )
 
   // Pass post data to the page via props
@@ -116,9 +119,13 @@ export async function getStaticProps({ params }) {
 
 // This function gets called at build time
 export async function getStaticPaths() {
+  const properties = await fetch(
+    `${process.env.NEXT_PUBLIC_FRONTEND_URL}/backend/properties/propertyids`
+  ).then((res) => res.json())
+
   // Get the paths we want to pre-render based on posts
-  const paths = properties.map((property) => ({
-    params: { id: property.propertyId.toString() },
+  const paths = properties.map((propertyids) => ({
+    params: { id: propertyids },
   }))
 
   // We'll pre-render only these paths at build time.

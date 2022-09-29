@@ -1,5 +1,4 @@
 import { createContext, useContext, useEffect, useState } from "react"
-import { properties } from "../data"
 
 const propertyContext = createContext({
   loading: false,
@@ -15,6 +14,7 @@ const propertyContext = createContext({
   setRegions: () => {},
   myProperties: [],
   setMyProperties: () => {},
+  setLoading: () => {},
 })
 
 export function PropertyContextProvider({ children }) {
@@ -28,12 +28,13 @@ export function PropertyContextProvider({ children }) {
 
   useEffect(() => filterProperties(), [filterObject])
 
-  async function fetchProperties(region) {
+  async function fetchProperties(regionName) {
     setLoading(true)
     let data
     try {
-      //   data = fetch("url").then((res) => res.json())
-      data = properties
+      data = await fetch(`/backend/properties/region/${regionName}`).then(
+        (res) => res.json()
+      )
     } catch (err) {
       console.log(err)
     }
@@ -92,6 +93,7 @@ export function PropertyContextProvider({ children }) {
         setRegions: setRegions,
         myProperties: myProperties,
         setMyProperties: setMyProperties,
+        setLoading: setLoading,
       }}
     >
       {children}

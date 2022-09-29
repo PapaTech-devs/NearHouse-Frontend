@@ -1,10 +1,21 @@
-import { Button, Flex, Input, Text } from "@chakra-ui/react"
+import {
+  Box,
+  Flex,
+  Grid,
+  IconButton,
+  Image,
+  Input,
+  Text,
+  useToast,
+} from "@chakra-ui/react"
 import { ImImages } from "react-icons/im"
+import { BsTrashFill } from "react-icons/bs"
 import PreviewList from "./PreviewList"
-import imageCompression from "browser-image-compression"
-import { uploadImage } from "../../utils"
+import { useState } from "react"
 
 export default function PropertyPictures({ values, setValues }) {
+  const toast = useToast()
+  const [deleting, setDeleting] = useState(false)
   function handleFilesUpload(e) {
     let tempArr = []
     let fileList = []
@@ -16,7 +27,7 @@ export default function PropertyPictures({ values, setValues }) {
     }
     tempArr = tempArr.concat(values.preview)
     fileList = fileList.concat(values.files)
-    const elemsToDelete = tempArr.length - 10
+    const elemsToDelete = tempArr.length - (10 - values.images.length)
     if (elemsToDelete > 0) {
       tempArr.splice(tempArr.length - elemsToDelete, elemsToDelete)
       fileList.splice(fileList.length - elemsToDelete, elemsToDelete)
@@ -25,49 +36,59 @@ export default function PropertyPictures({ values, setValues }) {
     e.target.value = ""
   }
 
-  async function compressImages() {
-    setLoadingText("Compressing ")
-    let res = []
-    for (let image of values.files) {
-      const imageFile = image
-      const options = {
-        maxSizeMB: 1,
-        maxWidthOrHeight: 1920,
-        useWebWorker: true,
-      }
-      try {
-        const compressedImage = await imageCompression(imageFile, options)
-        res.push(compressedImage)
-      } catch (error) {
-        throw error
-      }
-    }
-    return res
-  }
+  async function deleteImage(url) {
+    setDeleting(true)
 
-  async function uploadImages(images) {
-    let res = []
-    setLoadingText("Uploading images")
-    for (let image of images) {
-      let link = await uploadImage(image, values.propertyid)
-      res.push(link)
-    }
-    return res
-  }
+    const index = url.lastIndexOf("/")
+    const key = values.propertyid + url.slice(index)
 
-  async function handleSubmit() {
-    setLoading(true)
-    const compressedFiles = await compressImages()
-    const links = await uploadImages(compressedFiles)
-    setValues({
-      ...values,
-      images: links,
-    })
-    setLoading(false)
+    const data = await fetch(`/api/deleteImage?key=${key}`).then((res) =>
+      res.json()
+    )
+
+    if (data.message === "success") {
+      let tempArr = [...values.images]
+      tempArr.splice(tempArr.indexOf(url), 1)
+      setValues({ ...values, images: tempArr })
+      toast({
+        title: "Success",
+        description: "Image is deleted",
+        status: "success",
+        duration: 5500,
+        isClosable: true,
+      })
+    }
+    setDeleting(false)
   }
 
   return (
     <>
+      <Grid
+        templateColumns={[
+          "repeat(1, 1fr)",
+          "repeat(2, 1fr)",
+          "repeat(3, 1fr)",
+          "repeat(4, 1fr)",
+        ]}
+        gap="3"
+        my="4"
+      >
+        {values.images.map((url, index) => (
+          <Box key={url + index} position="relative">
+            <IconButton
+              position="absolute"
+              right="10px"
+              top="10px"
+              size="sm"
+              isLoading={deleting}
+              colorScheme="orange"
+              icon={<BsTrashFill />}
+              onClick={() => deleteImage(url)}
+            />
+            <Image width="100%" height="fit-content" src={url} />
+          </Box>
+        ))}
+      </Grid>
       <label htmlFor="imageInput">
         <Flex
           border="2px"
@@ -87,7 +108,7 @@ export default function PropertyPictures({ values, setValues }) {
               Browse Images
             </Text>
             <Text fontSize="sm" textColor="gray.500">
-              Upload upto 10 images
+              Upload upto {10 - values.images.length} more images
             </Text>
           </Flex>
         </Flex>

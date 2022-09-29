@@ -10,6 +10,7 @@ export default function FlatInfo({ error, values, setValues }) {
         type="number"
         placeholder="*Enter BHK"
         size="md"
+        value={values.bhk}
         name="bhk"
         isInvalid={error.bhk}
       />
@@ -18,6 +19,7 @@ export default function FlatInfo({ error, values, setValues }) {
           type="number"
           placeholder="*Enter floor no."
           name="floorNo"
+          value={values.floorNo}
           isInvalid={error.floorNo}
           onChange={(e) => handleInputChange(e, setValues, values)}
         />
@@ -25,6 +27,7 @@ export default function FlatInfo({ error, values, setValues }) {
           type="number"
           placeholder="*Number of bathrooms"
           name="numBath"
+          value={values.numBath}
           isInvalid={error.numBath}
           onChange={(e) => handleInputChange(e, setValues, values)}
         />
@@ -32,6 +35,7 @@ export default function FlatInfo({ error, values, setValues }) {
       <Select
         placeholder="*Current Status"
         name="currentStatus"
+        value={values.currentStatus}
         isInvalid={error.currentStatus}
         onChange={(e) => handleInputChange(e, setValues, values)}
       >
@@ -41,6 +45,7 @@ export default function FlatInfo({ error, values, setValues }) {
       <Select
         placeholder="Furnished Type"
         name="furnishType"
+        value={values.furnishType}
         onChange={(e) => handleInputChange(e, setValues, values)}
       >
         <option value="fullfurnished">Full-furnished</option>
@@ -52,12 +57,14 @@ export default function FlatInfo({ error, values, setValues }) {
           type="number"
           placeholder="Dependent parking"
           name="numParkingDependent"
+          value={values.numParkingDependent}
           onChange={(e) => handleInputChange(e, setValues, values)}
         />
         <Input
           type="number"
           placeholder="Independent parking"
           name="numParkingIndependent"
+          value={values.numParkingIndependent}
           onChange={(e) => handleInputChange(e, setValues, values)}
         />
       </Stack>
@@ -65,6 +72,7 @@ export default function FlatInfo({ error, values, setValues }) {
         type="number"
         placeholder="No of balcony"
         name="numBalcony"
+        value={values.numBalcony}
         onChange={(e) => handleInputChange(e, setValues, values)}
       />
     </>

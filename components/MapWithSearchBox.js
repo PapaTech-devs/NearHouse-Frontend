@@ -33,11 +33,22 @@ function MapWithSearchBox({ values, setValues }) {
   }
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition(success, () => console.error, {
-      enableHighAccuracy: true,
-      timeout: 5000,
-      maximumAge: 0,
-    })
+    if (!values.location)
+      navigator.geolocation.getCurrentPosition(success, () => console.error, {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumAge: 0,
+      })
+    else {
+      setCenter({
+        lat: parseFloat(values.location.lat),
+        lng: parseFloat(values.location.lng),
+      })
+      setMarker({
+        lat: parseFloat(values.location.lat),
+        lng: parseFloat(values.location.lng),
+      })
+    }
   }, [])
 
   const onPlacesChanged = () => {

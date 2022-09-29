@@ -2,38 +2,63 @@ import { Flex, Button, Text } from "@chakra-ui/react"
 import Head from "next/head"
 import { useEffect, useState } from "react"
 import AddPropertyTabs from "../../components/property/AddPropertyTabs"
+import ListMyProperties from "../../components/property/ListMyProperties"
+import { useAuth } from "../../hooks/contextHooks"
 import { usePropertyContext } from "../../hooks/propertyContext"
 
 export default function PropertyPage() {
   const [add, setAdd] = useState(false)
-  const { setRegions } = usePropertyContext()
+  const { setRegions, setMyProperties, setLoading } = usePropertyContext()
+  const { authUser, loading } = useAuth()
+  const [editingProperty, setEditingProperty] = useState(null)
 
   useEffect(() => {
-    async function fetchRegions() {
+    async function fetchData() {
       try {
-        const res = await fetch("/backend/regions")
-        const data = await res.json()
-        setRegions(data)
+        setLoading(true)
+        let res = await fetch("/backend/regions")
+        const regionData = await res.json()
+        res = await fetch(`/backend/properties/user/${authUser.uid}`)
+        const propertyData = await res.json()
+        setRegions(regionData)
+        setMyProperties(propertyData)
+        setLoading(false)
       } catch (err) {
         console.error(err)
         alert(err.toString())
       }
     }
-    fetchRegions()
-  }, [])
+    if (!loading) fetchData()
+  }, [loading])
+
+  if (loading) return <>Loading contents</>
 
   return (
     <Flex px={["2rem", "2.5rem", "2.5rem", "3rem"]} direction="column">
       <Head>
         <title>Add Property</title>
       </Head>
-      <Flex w="100%" justifyContent="space-between" my="2">
+      <Flex w="100%" justifyContent="space-between" mt="2" mb="4">
         <Text fontSize="xl" fontWeight="bold">
           {add ? "Add Property" : "Your Listed Properties"}
         </Text>
-        <Button onClick={() => setAdd(!add)}>{add ? "Close" : "Add"}</Button>
+        <Button
+          onClick={() => {
+            setEditingProperty(null)
+            setAdd(!add)
+          }}
+        >
+          {add ? "Close" : "Add"}
+        </Button>
       </Flex>
-      {add ? <AddPropertyTabs /> : <p>Property Listing</p>}
+      {add ? (
+        <AddPropertyTabs editingProperty={editingProperty} setAdd={setAdd} />
+      ) : (
+        <ListMyProperties
+          setAdd={setAdd}
+          setEditingProperty={setEditingProperty}
+        />
+      )}
     </Flex>
   )
 }

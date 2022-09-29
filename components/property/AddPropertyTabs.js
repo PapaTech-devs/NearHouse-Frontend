@@ -6,41 +6,53 @@ import {
   Tabs,
   Button,
   Flex,
+  useToast,
 } from "@chakra-ui/react"
 import { useState } from "react"
 import PropertyInfo from "./PropertyInfo"
 import PropertyLocation from "./PropertyLocation"
 import PropertyPictures from "./PropertyPictures"
 import { v4 as uuidV4 } from "uuid"
+import { useAuth } from "../../hooks/contextHooks"
+import { storeProperty, updateProperty } from "../../utils"
+import { usePropertyContext } from "../../hooks/propertyContext"
 
-export default function AddPropertyTabs() {
+export default function AddPropertyTabs({ setAdd, editingProperty }) {
+  const toast = useToast()
+  const { authUser } = useAuth()
+  const { myProperties, setMyProperties } = usePropertyContext()
+  const [loadingText, setLoadingText] = useState(null)
   const [values, setValues] = useState({
-    propertyid: uuidV4(),
-    title: "",
-    description: "",
-    owner: false,
-    region: "",
-    propertyType: "",
-    bhk: "",
-    area: "",
-    areaType: "",
-    address: "",
-    facing: "",
-    verified: false,
-    price: "",
-    priceType: "",
-    landType: "",
-    numFloor: "",
-    numBath: "",
-    currentStatus: "",
-    furnishType: "",
-    numParkingDependent: "",
-    numParkingIndependent: "",
-    numBalcony: "",
-    floorNo: "",
-    videoLink: "",
-    images: [],
-    location: null,
+    propertyid: editingProperty ? editingProperty.propertyid : uuidV4(),
+    title: editingProperty ? editingProperty.title : "",
+    description: editingProperty ? editingProperty.description : "",
+    owner: editingProperty ? editingProperty.owner : "",
+    region: editingProperty ? editingProperty.region : "",
+    propertyType: editingProperty ? editingProperty.propertyType : "",
+    bhk: editingProperty ? editingProperty.bhk : "",
+    area: editingProperty ? editingProperty.area : "",
+    areaType: editingProperty ? editingProperty.areaType : "",
+    address: editingProperty ? editingProperty.address : "",
+    facing: editingProperty ? editingProperty.facing : "",
+    verified: editingProperty ? editingProperty.verified : "",
+    price: editingProperty ? editingProperty.price : "",
+    priceType: editingProperty ? editingProperty.priceType : "",
+    landType: editingProperty ? editingProperty.landType : "",
+    numFloor: editingProperty ? editingProperty.numFloor : "",
+    numBath: editingProperty ? editingProperty.numBath : "",
+    currentStatus: editingProperty ? editingProperty.currentStatus : "",
+    furnishType: editingProperty ? editingProperty.furnishType : "",
+    numParkingDependent: editingProperty
+      ? editingProperty.numParkingDependent
+      : "",
+    numParkingIndependent: editingProperty
+      ? editingProperty.numParkingIndependent
+      : "",
+    numBalcony: editingProperty ? editingProperty.numBalcony : "",
+    floorNo: editingProperty ? editingProperty.floorNo : "",
+    videoLink: editingProperty ? editingProperty.videoLink : "",
+    images: editingProperty ? editingProperty.images : [],
+    location: editingProperty ? editingProperty.location : null,
     files: [],
     preview: [],
   })
@@ -66,7 +78,7 @@ export default function AddPropertyTabs() {
     location: false,
   })
 
-  function handleSubmit() {
+  async function handleSubmit() {
     const errorObject = {
       title: false,
       description: false,
@@ -185,7 +197,13 @@ export default function AddPropertyTabs() {
 
     if (!values.location) {
       errorObject.location = true
-      alert("Please give the property location")
+      toast({
+        title: "Invalid Fields",
+        description: "Please give a valid location",
+        status: "error",
+        duration: 5500,
+        isClosable: true,
+      })
     } else {
       errorObject.location = false
     }
@@ -215,10 +233,46 @@ export default function AddPropertyTabs() {
           errorObject.floorNo ||
           errorObject.furnishType ||
           errorObject.currentStatus)) ||
-      (values.propertyType === "house" && errorObject.landType)
+      (values.propertyType === "plot" && errorObject.landType)
     ) {
+      toast({
+        title: "Invalid Fields",
+        description: "Please fill up all required fields",
+        status: "error",
+        duration: 5500,
+        isClosable: true,
+      })
       return
     }
+
+    if (!editingProperty) {
+      values.userid = authUser.uid
+      const uploadedProperty = await storeProperty(values, setLoadingText)
+      setMyProperties([...myProperties, uploadedProperty])
+      toast({
+        title: "Success",
+        description: "Your property is uploaded",
+        status: "success",
+        duration: 5500,
+        isClosable: true,
+      })
+    } else {
+      const updatedProperty = await updateProperty(values, setLoadingText)
+      setMyProperties([
+        ...myProperties.filter(
+          (property) => property.propertyid !== updatedProperty.propertyid
+        ),
+        updatedProperty,
+      ])
+      toast({
+        title: "Success",
+        description: "Your property is updated",
+        status: "success",
+        duration: 5500,
+        isClosable: true,
+      })
+    }
+    setAdd(false)
   }
 
   return (
@@ -245,6 +299,8 @@ export default function AddPropertyTabs() {
       <Button
         alignSelf="flex-end"
         size="lg"
+        isLoading={loadingText}
+        loadingText={loadingText}
         colorScheme="teal"
         onClick={handleSubmit}
       >

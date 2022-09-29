@@ -10,6 +10,7 @@ export default function HouseInfo({ error, values, setValues }) {
         placeholder="*Enter BHK"
         size="md"
         isInvalid={error.bhk}
+        value={values.bhk}
         name="bhk"
       />
       <Stack direction="row">
@@ -18,6 +19,7 @@ export default function HouseInfo({ error, values, setValues }) {
           placeholder="*Number of floors"
           name="numFloor"
           isInvalid={error.numFloor}
+          value={values.numFloor}
           onChange={(e) => handleInputChange(e, setValues, values)}
         />
         <Input
@@ -25,12 +27,14 @@ export default function HouseInfo({ error, values, setValues }) {
           placeholder="*Number of bathrooms"
           name="numBath"
           isInvalid={error.numBath}
+          value={values.numBath}
           onChange={(e) => handleInputChange(e, setValues, values)}
         />
       </Stack>
       <Select
         placeholder="*Current Status"
         name="currentStatus"
+        value={values.currentStatus}
         isInvalid={error.currentStatus}
         onChange={(e) => handleInputChange(e, setValues, values)}
       >
@@ -40,6 +44,7 @@ export default function HouseInfo({ error, values, setValues }) {
       <Select
         placeholder="Furnished Type"
         name="furnishType"
+        value={values.furnishType}
         onChange={(e) => handleInputChange(e, setValues, values)}
       >
         <option value="fullfurnished">Full-furnished</option>
@@ -49,6 +54,7 @@ export default function HouseInfo({ error, values, setValues }) {
       <Stack direction="row">
         <Input
           type="number"
+          value={values.numParkingDependent}
           placeholder="Dependent parking"
           name="numParkingDependent"
           onChange={(e) => handleInputChange(e, setValues, values)}
@@ -56,6 +62,7 @@ export default function HouseInfo({ error, values, setValues }) {
         <Input
           type="number"
           placeholder="Independent parking"
+          value={values.numParkingIndependent}
           name="numParkingIndependent"
           onChange={(e) => handleInputChange(e, setValues, values)}
         />
@@ -64,6 +71,7 @@ export default function HouseInfo({ error, values, setValues }) {
         type="number"
         placeholder="No of balcony"
         name="numBalcony"
+        value={values.numBalcony}
         onChange={(e) => handleInputChange(e, setValues, values)}
       />
     </>

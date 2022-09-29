@@ -74,8 +74,11 @@ export default function SearchPage() {
                 ) : (
                   filteredProperties.map((property) => (
                     <PropertyTab
-                      key={property.propertyId}
+                      key={property.propertyid}
                       property={property}
+                      maxWidth="450px"
+                      imageHeight="200px"
+                      type="search"
                     />
                   ))
                 )}

@@ -20,8 +20,8 @@ function Map({ width, properties }) {
       for (var i = 0; i < properties.length; i++) {
         bounds.extend(
           new window.google.maps.LatLng(
-            properties[i].location.lat,
-            properties[i].location.lng
+            parseFloat(properties[i].location.lat),
+            parseFloat(properties[i].location.lng)
           )
         )
       }
@@ -55,16 +55,24 @@ function Map({ width, properties }) {
     >
       {properties.map((property) => (
         <MarkerF
-          onMouseDown={() => setSelectedProperty(property.propertyId)}
-          onMouseOver={() => setSelectedProperty(property.propertyId)}
+          onMouseDown={() => setSelectedProperty(property.propertyid)}
+          onMouseOver={() => setSelectedProperty(property.propertyid)}
           onMouseUp={() => setSelectedProperty(null)}
           onMouseOut={() => setSelectedProperty(null)}
-          onClick={() => router.push(`/property/${property.propertyId}`)}
-          key={property.propertyId}
-          position={property.location}
+          onClick={() => router.push(`/property/${property.propertyid}`)}
+          key={property.propertyid}
+          position={{
+            lat: parseFloat(property.location.lat),
+            lng: parseFloat(property.location.lng),
+          }}
         >
-          {selectedProperty === property.propertyId && (
-            <InfoWindowF position={property.location}>
+          {selectedProperty === property.propertyid && (
+            <InfoWindowF
+              position={{
+                lat: parseFloat(property.location.lat),
+                lng: parseFloat(property.location.lng),
+              }}
+            >
               <Box w="125px">
                 <Text>
                   {property.title.length > 15
