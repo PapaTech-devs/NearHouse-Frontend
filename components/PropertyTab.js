@@ -64,7 +64,7 @@ export default function PropertyTab({
         boxShadow="base"
         position="relative"
         maxW={maxWidth}
-        minW={["330px", "335px", "345px", "350px"]}
+        minW={["345px", "345px", "345px", "350px"]}
         _hover={{
           boxShadow: "lg",
           transitionDuration: "0.1s",
