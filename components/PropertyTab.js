@@ -1,8 +1,19 @@
-import { Box, Flex, Image, Text, IconButton, useToast } from "@chakra-ui/react"
+import {
+  Box,
+  Flex,
+  Image,
+  Text,
+  IconButton,
+  useToast,
+  HStack,
+  Icon,
+  Tooltip,
+} from "@chakra-ui/react"
 import Link from "next/link"
 import { usePropertyContext } from "../hooks/propertyContext"
-import { MdModeEdit } from "react-icons/md"
-import { BsFillTrashFill } from "react-icons/bs"
+import { MdModeEdit, MdConstruction, MdVerified } from "react-icons/md"
+import { BsFillTrashFill, BsCompass } from "react-icons/bs"
+import { BiMedal } from "react-icons/bi"
 import { deleteProperty } from "../utils"
 import { useState } from "react"
 
@@ -17,6 +28,29 @@ export default function PropertyTab({
     usePropertyContext()
   const [deleteLoading, setDeleteLoading] = useState(false)
   const toast = useToast()
+  let formatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "INR",
+    maximumFractionDigits: 0,
+  })
+  const facingList = {
+    north: "North",
+    south: "South",
+    east: "East",
+    west: "West",
+    northwest: "North West",
+    northeast: "North East",
+    southeast: "South East",
+    southwest: "South West",
+  }
+  const statusList = {
+    underconstruction: "Under Construction",
+    readytomove: "Ready To Move",
+  }
+  function firstLetterCapital(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1)
+  }
+
   return (
     <Link href={`/property/${property.propertyid}`}>
       <Flex
@@ -30,7 +64,7 @@ export default function PropertyTab({
         boxShadow="base"
         position="relative"
         maxW={maxWidth}
-        minW="320px"
+        minW="345px"
         _hover={{
           boxShadow: "lg",
           transitionDuration: "0.1s",
@@ -48,6 +82,16 @@ export default function PropertyTab({
           borderTopRadius="2%"
           objectFit="cover"
           alt="property image"
+        />
+        <Icon
+          as={MdVerified}
+          position="absolute"
+          left="10px"
+          top="10px"
+          w={10}
+          h={10}
+          size="md"
+          color="yellow"
         />
         {type === "edit" && (
           <>
@@ -97,15 +141,46 @@ export default function PropertyTab({
         )}
         <Box py="4" gap={4} px="2">
           {property.priceType === "lumpsum" ? (
-            <Text fontWeight="bold" fontSize="3xl">
-              ₹{property.price}
+            <Text fontWeight="black" fontSize="4xl">
+              {formatter.format(parseFloat(property.price))}
             </Text>
           ) : (
-            <Text fontWeight="bold" fontSize="3xl">
+            <Text fontWeight="black" fontSize="4xl">
               EMI starts with ₹{property.price}/month
             </Text>
           )}
-          <Text color="gray.500">{property.title}</Text>
+          <HStack>
+            {property.propertyType !== "plot" && (
+              <Text fontWeight="bold" fontSize="lg">
+                {property.bhk} BHK
+              </Text>
+            )}
+            <Text fontSize="lg" fontWeight="semibold">
+              {firstLetterCapital(property.propertyType)}
+            </Text>
+            <Text fontSize="lg" fontWeight="bold">
+              {property.area} {firstLetterCapital(property.areaType)}
+            </Text>
+          </HStack>
+          <Text fontSize="lg" color="gray.500">
+            {property.address}
+          </Text>
+          <HStack mt="1.5">
+            <Icon as={BsCompass} w={5} h={5} />
+            <Text>{facingList[property.facing]}</Text>
+            {property.propertyType !== "plot" && (
+              <>
+                <Icon as={MdConstruction} w={5} h={5} />
+                <Text>{statusList[property.currentStatus]}</Text>
+              </>
+            )}
+            {property.propertyType === "plot" && (
+              <>
+                <Icon as={BiMedal} w={5} h={5} />
+                <Text>{firstLetterCapital(property.landType)}</Text>
+              </>
+            )}
+          </HStack>
         </Box>
       </Flex>
     </Link>

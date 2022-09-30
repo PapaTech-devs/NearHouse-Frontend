@@ -99,97 +99,97 @@ export default function AddPropertyTabs({ setAdd, editingProperty }) {
       location: false,
     }
 
-    if (values.title.length === 0) {
+    if (!values.title || values.title.length === 0) {
       errorObject.title = true
     } else {
       errorObject.title = false
     }
 
-    if (values.description.length === 0) {
+    if (!values.description || values.description.length === 0) {
       errorObject.description = true
     } else {
       errorObject.description = false
     }
 
-    if (values.region.length === 0) {
+    if (!values.region || values.region.length === 0) {
       errorObject.region = true
     } else {
       errorObject.region = false
     }
 
-    if (values.propertyType.length === 0) {
+    if (!values.propertyType || values.propertyType.length === 0) {
       errorObject.propertyType = true
     } else {
       errorObject.propertyType = false
     }
 
-    if (values.bhk.length === 0) {
+    if (!values.bhk || values.bhk.length === 0) {
       errorObject.bhk = true
     } else {
       errorObject.bhk = false
     }
 
-    if (values.area.length === 0) {
+    if (!values.area || values.area.length === 0) {
       errorObject.area = true
     } else {
       errorObject.area = false
     }
 
-    if (values.areaType.length === 0) {
+    if (!values.areaType || values.areaType.length === 0) {
       errorObject.areaType = true
     } else {
       errorObject.areaType = false
     }
 
-    if (values.address.length === 0) {
+    if (!values.address || values.address.length === 0) {
       errorObject.address = true
     } else {
       errorObject.address = false
     }
 
-    if (values.facing.length === 0) {
+    if (!values.facing || values.facing.length === 0) {
       errorObject.facing = true
     } else {
       errorObject.facing = false
     }
 
-    if (values.price.length === 0) {
+    if (!values.price || values.price.length === 0) {
       errorObject.price = true
     } else {
       errorObject.price = false
     }
 
-    if (values.priceType.length === 0) {
+    if (!values.priceType || values.priceType.length === 0) {
       errorObject.priceType = true
     } else {
       errorObject.priceType = false
     }
 
-    if (values.landType.length === 0) {
+    if (!values.landType || values.landType.length === 0) {
       errorObject.landType = true
     } else {
       errorObject.landType = false
     }
 
-    if (values.numFloor.length === 0) {
+    if (!values.numFloor || values.numFloor.length === 0) {
       errorObject.numFloor = true
     } else {
       errorObject.numFloor = false
     }
 
-    if (values.numBath.length === 0) {
+    if (!values.numBath || values.numBath.length === 0) {
       errorObject.numBath = true
     } else {
       errorObject.numBath = false
     }
 
-    if (values.currentStatus.length === 0) {
+    if (!values.currentStatus || values.currentStatus.length === 0) {
       errorObject.currentStatus = true
     } else {
       errorObject.currentStatus = false
     }
 
-    if (values.floorNo.length === 0) {
+    if (!values.floorNo || values.floorNo.length === 0) {
       errorObject.floorNo = true
     } else {
       errorObject.floorNo = false
@@ -246,7 +246,7 @@ export default function AddPropertyTabs({ setAdd, editingProperty }) {
     }
 
     if (!editingProperty) {
-      values.userid = authUser.uid
+      values.userid = authUser.userid
       const uploadedProperty = await storeProperty(values, setLoadingText)
       setMyProperties([...myProperties, uploadedProperty])
       toast({

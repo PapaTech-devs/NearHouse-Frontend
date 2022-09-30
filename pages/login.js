@@ -6,78 +6,78 @@ import {
   Input,
   Button,
   useToast,
-} from "@chakra-ui/react";
-import Head from "next/head";
-import { useRouter } from "next/router";
-import { useAuth } from "../hooks/contextHooks";
-import { useState } from "react";
-import PasswordInput from "../components/PasswordInput";
-import { validateEmail, showToast, handleInputChange } from "../utils";
+} from "@chakra-ui/react"
+import Head from "next/head"
+import { useRouter } from "next/router"
+import { useAuth } from "../hooks/contextHooks"
+import { useState } from "react"
+import PasswordInput from "../components/PasswordInput"
+import { validateEmail, showToast, handleInputChange } from "../utils"
 
 export default function LoginPage() {
-  const router = useRouter();
-  const toast = useToast();
+  const router = useRouter()
+  const toast = useToast()
   const [values, setValues] = useState({
     email: "",
     password: "",
-  });
-  const [loading, setLoading] = useState(false);
+  })
+  const [loading, setLoading] = useState(false)
   const [errors, setError] = useState({
     email: false,
     password: false,
-  });
-  const { signIn } = useAuth();
+  })
+  const { signIn } = useAuth()
 
   async function submitHandler() {
     const errorObject = {
       email: false,
       password: false,
-    };
+    }
 
     // check for email
     if (!validateEmail(values.email)) {
-      errorObject.email = true;
-      showToast("Enter a valid email", "error", toast);
+      errorObject.email = true
+      showToast("Enter a valid email", "error", toast)
     } else {
-      errorObject.email = false;
+      errorObject.email = false
     }
 
     // check for password
     if (values.password.length === 0) {
-      errorObject.password = true;
-      showToast("Please enter a password", "error", toast);
+      errorObject.password = true
+      showToast("Please enter a password", "error", toast)
     } else {
-      errorObject.password = false;
+      errorObject.password = false
     }
 
-    setError(errorObject);
+    setError(errorObject)
 
     if (errorObject.email || errorObject.password) {
-      return;
+      return
     }
 
-    setLoading(true);
+    setLoading(true)
     try {
-      await signIn(values.email, values.password);
-      showToast("Logged in successfully", "success", toast);
-      setLoading(false);
-      router.replace("/search");
+      await signIn(values.email, values.password)
+      showToast("Logged in successfully", "success", toast)
+      setLoading(false)
+      router.replace("/")
     } catch (e) {
       switch (e.code) {
         case "auth/user-not-found":
-          errorObject.email = true;
-          showToast("User does not exists.", "error", toast);
-          break;
+          errorObject.email = true
+          showToast("User does not exists.", "error", toast)
+          break
         case "auth/wrong-password":
-          errorObject.password = true;
-          showToast("Wrong password for the user.", "error", toast);
-          break;
+          errorObject.password = true
+          showToast("Wrong password for the user.", "error", toast)
+          break
         default:
-          errorObject.email = true;
-          showToast("Internal server error.", "error", toast);
+          errorObject.email = true
+          showToast("Internal server error.", "error", toast)
       }
-      setError(errorObject);
-      setLoading(false);
+      setError(errorObject)
+      setLoading(false)
     }
   }
 
@@ -132,5 +132,5 @@ export default function LoginPage() {
         </Stack>
       </Box>
     </Flex>
-  );
+  )
 }

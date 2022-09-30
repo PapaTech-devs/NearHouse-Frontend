@@ -10,16 +10,16 @@ import {
   Icon,
   VStack,
   Button,
-} from "@chakra-ui/react";
-import { useRef } from "react";
-import { FaHamburger } from "react-icons/fa";
-import * as NextLink from "next/link";
-import { useAuth } from "../hooks/contextHooks";
+} from "@chakra-ui/react"
+import { useRef } from "react"
+import { FaHamburger } from "react-icons/fa"
+import * as NextLink from "next/link"
+import { useAuth } from "../hooks/contextHooks"
 
 export default function Sidebar() {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const btnRef = useRef();
-  const { authUser, signMeOut } = useAuth();
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const btnRef = useRef()
+  const { authUser, signMeOut } = useAuth()
   return (
     <>
       <IconButton
@@ -39,9 +39,9 @@ export default function Sidebar() {
           <DrawerCloseButton />
           <DrawerBody>
             <VStack alignItems={"start"} spacing={4} pt="2">
-              <NextLink href="/search">
+              {/* <NextLink href="/search">
                 <Link fontSize="lg">Search</Link>
-              </NextLink>
+              </NextLink> */}
               <NextLink href="/property">
                 <Link fontSize="lg">List Property</Link>
               </NextLink>
@@ -68,5 +68,5 @@ export default function Sidebar() {
         </DrawerContent>
       </Drawer>
     </>
-  );
+  )
 }

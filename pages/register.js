@@ -8,127 +8,130 @@ import {
   InputGroup,
   InputLeftElement,
   useToast,
-} from "@chakra-ui/react";
-import Head from "next/head";
-import { useRouter } from "next/router";
-import { useState } from "react";
-import PasswordInput from "../components/PasswordInput";
-import { useAuth } from "../hooks/contextHooks";
-import { AiFillPhone } from "react-icons/ai";
+} from "@chakra-ui/react"
+import Head from "next/head"
+import { useRouter } from "next/router"
+import { useState } from "react"
+import PasswordInput from "../components/PasswordInput"
+import { useAuth } from "../hooks/contextHooks"
+import { AiFillPhone } from "react-icons/ai"
 import {
   handleInputChange,
   showToast,
+  storeUser,
   validateEmail,
   validatePhoneNumber,
-} from "../utils";
+} from "../utils"
 
 export default function RegisterPage() {
-  const router = useRouter();
-  const toast = useToast();
+  const router = useRouter()
+  const toast = useToast()
   const [values, setValues] = useState({
     password: "",
     confirmPassword: "",
     email: "",
-    name: "",
-    phoneNumber: "",
-  });
+    fullName: "",
+    mobile: "",
+  })
   const [errors, setErrors] = useState({
     password: false,
     confirmPassword: false,
     email: false,
-    name: false,
-    phoneNumber: false,
-  });
-  const { createUser } = useAuth();
-  const [loading, setLoading] = useState(false);
+    fullName: false,
+    mobile: false,
+  })
+  const { createUser, setAuthUser } = useAuth()
+  const [loading, setLoading] = useState(false)
 
   async function submitHandler() {
     const errorObject = {
-      name: false,
+      fullName: false,
       email: false,
       password: false,
       confirmPassword: false,
-      phoneNumber: false,
-    };
+      mobile: false,
+    }
 
     // check for email
     if (!validateEmail(values.email)) {
-      showToast("Enter a valid email", "error", toast);
-      errorObject.email = true;
+      showToast("Enter a valid email", "error", toast)
+      errorObject.email = true
     } else {
-      errorObject.email = false;
+      errorObject.email = false
     }
 
     // check for full name
-    if (values.name.length <= 6) {
-      errorObject.name = true;
-      showToast("Please enter your full name", "error", toast);
+    if (values.fullName.length <= 6) {
+      errorObject.fullName = true
+      showToast("Please enter your full name", "error", toast)
     } else {
-      errorObject.name = false;
+      errorObject.fullName = false
     }
 
     // check for mobile number
-    if (!validatePhoneNumber(values.phoneNumber)) {
-      errorObject.phoneNumber = true;
-      showToast("Please enter a valid mobile number", "error", toast);
+    if (!validatePhoneNumber(values.mobile)) {
+      errorObject.mobile = true
+      showToast("Please enter a valid mobile number", "error", toast)
     } else {
-      errorObject.phoneNumber = false;
+      errorObject.mobile = false
     }
 
     // check for password
     if (values.password.length <= 6) {
-      errorObject.password = true;
-      showToast("Please enter a password of length 7 or more", "error", toast);
+      errorObject.password = true
+      showToast("Please enter a password of length 7 or more", "error", toast)
     } else {
-      errorObject.password = false;
+      errorObject.password = false
     }
 
     // check for confirm password
     if (values.confirmPassword.length === 0) {
-      errorObject.confirmPassword = true;
-      showToast("Please enter your password again", "error", toast);
+      errorObject.confirmPassword = true
+      showToast("Please enter your password again", "error", toast)
     } else if (values.confirmPassword !== values.password) {
-      errorObject.confirmPassword = true;
-      showToast("Passwords doesn't match", "error", toast);
+      errorObject.confirmPassword = true
+      showToast("Passwords doesn't match", "error", toast)
     } else {
-      errorObject.confirmPassword = false;
+      errorObject.confirmPassword = false
     }
 
-    setErrors(errorObject);
+    setErrors(errorObject)
     if (
       errorObject.email ||
       errorObject.confirmPassword ||
-      errorObject.name ||
-      errorObject.phoneNumber ||
+      errorObject.fullName ||
+      errorObject.mobile ||
       errorObject.password
     ) {
-      return;
+      return
     }
 
-    setLoading(true);
+    setLoading(true)
     try {
-      const userid = await createUser(values.email, values.password);
-      values.userid = userid;
+      const firebaseUser = await createUser(values.email, values.password)
+      values.userid = firebaseUser.user.uid
+      await storeUser(values, setAuthUser)
       // store user here
-      showToast(`Account created for ${values.name}`, "success", toast);
-      setLoading(false);
-      router.replace("/search");
+      showToast(`Account created for ${values.fullName}`, "success", toast)
+      setLoading(false)
+      router.replace("/")
     } catch (e) {
+      console.error(e)
       switch (e.code) {
         case "auth/email-already-in-use":
-          errorObject.email = true;
-          showToast("User with this email already exists.", "error", toast);
-          break;
+          errorObject.email = true
+          showToast("User with this email already exists.", "error", toast)
+          break
         case "auth/weak-password":
-          errorObject.password = true;
-          showToast("Try a stronger password.", "error", toast);
-          break;
+          errorObject.password = true
+          showToast("Try a stronger password.", "error", toast)
+          break
         default:
-          errorObject.email = true;
-          showToast("Internal server error.", "error", toast);
+          errorObject.email = true
+          showToast("Internal server error.", "error", toast)
       }
-      setErrors(errorObject);
-      setLoading(false);
+      setErrors(errorObject)
+      setLoading(false)
     }
   }
 
@@ -153,7 +156,7 @@ export default function RegisterPage() {
           <Input
             placeholder="Full name"
             size="md"
-            name="name"
+            name="fullName"
             isInvalid={errors.name}
             onChange={(e) => handleInputChange(e, setValues, values)}
           />
@@ -169,8 +172,8 @@ export default function RegisterPage() {
               <AiFillPhone />
             </InputLeftElement>
             <Input
-              isInvalid={errors.phoneNumber}
-              name="phoneNumber"
+              isInvalid={errors.mobile}
+              name="mobile"
               onChange={(e) => handleInputChange(e, setValues, values)}
               type="tel"
               placeholder="Phone number"
@@ -208,5 +211,5 @@ export default function RegisterPage() {
         </Stack>
       </Box>
     </Flex>
-  );
+  )
 }

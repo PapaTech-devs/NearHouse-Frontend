@@ -77,7 +77,7 @@ export default function SearchPage() {
                       key={property.propertyid}
                       property={property}
                       maxWidth="450px"
-                      imageHeight="200px"
+                      imageHeight="215px"
                       type="search"
                     />
                   ))
@@ -95,7 +95,7 @@ export default function SearchPage() {
             {/* <Box w="46%" h="80vh" bg="red.200" borderRadius="5px">
             Map
           </Box> */}
-            <Map properties={filteredProperties} width="46%" />
+            <Map properties={filteredProperties} width="48%" />
           </Show>
           <Hide above="md">
             <Button

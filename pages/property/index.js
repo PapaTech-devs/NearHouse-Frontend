@@ -18,7 +18,7 @@ export default function PropertyPage() {
         setLoading(true)
         let res = await fetch("/backend/regions")
         const regionData = await res.json()
-        res = await fetch(`/backend/properties/user/${authUser.uid}`)
+        res = await fetch(`/backend/properties/user/${authUser.userid}`)
         const propertyData = await res.json()
         setRegions(regionData)
         setMyProperties(propertyData)
@@ -34,7 +34,7 @@ export default function PropertyPage() {
   if (loading) return <>Loading contents</>
 
   return (
-    <Flex px={["2rem", "2.5rem", "2.5rem", "3rem"]} direction="column">
+    <Flex px={["2rem", "2.5rem", "2.5rem", "3rem"]} direction="column" pb={4}>
       <Head>
         <title>Add Property</title>
       </Head>

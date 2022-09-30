@@ -1,17 +1,47 @@
 import {
+  Badge,
   Box,
   Button,
   Divider,
   Flex,
-  HStack,
+  Grid,
   Image,
   Text,
+  useToast,
 } from "@chakra-ui/react"
 import "react-responsive-carousel/lib/styles/carousel.min.css" // requires a loader
 import { Carousel } from "react-responsive-carousel"
 import Head from "next/head"
 
 export default function Property({ property }) {
+  function firstLetterCapital(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1)
+  }
+  const facingList = {
+    north: "North",
+    south: "South",
+    east: "East",
+    west: "West",
+    northwest: "North West",
+    northeast: "North East",
+    southeast: "South East",
+    southwest: "South West",
+  }
+  const statusList = {
+    underconstruction: "Under Construction",
+    readytomove: "Ready To Move",
+  }
+  const furnishedType = {
+    fullfurnished: "Full Furnished",
+    semifurnished: "Semi Furnished",
+    unfurnished: "Unfurnished",
+  }
+  let formatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "INR",
+    maximumFractionDigits: 0,
+  })
+
   return (
     <Flex px={["2rem", "2.5rem", "2.5rem", "3rem"]} direction="column" pt={5}>
       <Head>
@@ -35,7 +65,13 @@ export default function Property({ property }) {
             showStatus={false}
           >
             {property.images.map((image, key) => (
-              <Image key={key} src={image} alt={`${property.title} images`} />
+              <Image
+                maxH="85vh"
+                objectFit="contain"
+                key={key}
+                src={image}
+                alt={`${property.title} images`}
+              />
             ))}
           </Carousel>
         </Box>
@@ -52,25 +88,44 @@ export default function Property({ property }) {
           }}
         >
           <Box>
-            <HStack alignItems="flex-end" gap={1}>
+            <Flex
+              direction={["column", "row", "row", "row"]}
+              alignItems={["flex-start", "flex-end", "flex-end", "flex-end"]}
+              gap={[0, 0, 0, 4]}
+            >
               {property.priceType === "lumpsum" ? (
                 <Text fontWeight="bold" fontSize="4xl">
-                  ₹{property.price}
+                  {formatter.format(property.price)}
                 </Text>
               ) : (
                 <Text fontWeight="bold" fontSize="4xl">
-                  EMI starts with ₹{property.price}/month
+                  EMI starts with {formatter.format(property.price)}/month
                 </Text>
               )}
-              <Text fontWeight="bold" fontSize="lg" paddingBottom={1}>
-                {property.area} {property.areaType}
-              </Text>
-            </HStack>
+              <Flex alignItems="center" gap="2">
+                <Text fontWeight="bold" fontSize="2xl">
+                  {firstLetterCapital(property.propertyType)}
+                </Text>
+                <Text fontWeight="bold" fontSize="2xl">
+                  {property.area} {firstLetterCapital(property.areaType)}
+                </Text>
+              </Flex>
+            </Flex>
             <Text fontSize="lg">{property.address}</Text>
+            {property.verified && (
+              <Badge mt="2" colorScheme="green">
+                Property verified by NearHouse
+              </Badge>
+            )}
           </Box>
           <Flex gap={3} my={1}>
-            <Button w="full" colorScheme="teal">
-              Contact Agent
+            <Button
+              onClick={() => {
+                window.location.href = "tel:+918918542704"
+              }}
+              w="full"
+            >
+              Call Now
             </Button>
             <Button
               disabled={!property.videoLink}
@@ -88,15 +143,133 @@ export default function Property({ property }) {
             <Text>{property.description}</Text>
           </Box>
           <Divider my={2} />
-          <Box>
-            Ea fugiat veniam officia exercitation commodo do sint pariatur anim
-            ullamco irure labore Lorem laboris. Nisi id ex amet excepteur sint
-            occaecat pariatur tempor est pariatur amet. Fugiat magna non culpa
-            quis. Ad veniam pariatur enim eiusmod elit ut. Proident dolore id
-            consequat eiusmod ullamco esse sint nostrud exercitation anim
-            deserunt culpa incididunt amet. Velit eiusmod nostrud ad in
-            reprehenderit consectetur ut qui ad nulla ipsum deserunt nisi.
-          </Box>
+          <Text fontSize="xl" fontWeight="bold">
+            Property Details
+          </Text>
+          <Grid
+            columnGap={2}
+            rowGap={4}
+            templateColumns={[
+              "repeat(1, 1fr)",
+              "repeat(2, 1fr)",
+              "repeat(2, 1fr)",
+              "repeat(3, 1fr)",
+            ]}
+          >
+            {property.propertyType !== "plot" ? (
+              <>
+                <Flex
+                  justifyContent="space-between"
+                  direction={["row", "column", "column", "column"]}
+                >
+                  <Text>BHK</Text>
+                  <Text fontSize="lg" fontWeight="bold">
+                    {property.bhk}
+                  </Text>
+                </Flex>
+                <Flex
+                  justifyContent="space-between"
+                  direction={["row", "column", "column", "column"]}
+                >
+                  <Text>Bathrooms</Text>
+                  <Text fontSize="lg" fontWeight="bold">
+                    {property.numBath}
+                  </Text>
+                </Flex>
+                {property.propertyType === "flat" && (
+                  <Flex
+                    justifyContent="space-between"
+                    direction={["row", "column", "column", "column"]}
+                  >
+                    <Text>Floor No.</Text>
+                    <Text fontSize="lg" fontWeight="bold">
+                      {property.floorNo}
+                    </Text>
+                  </Flex>
+                )}
+                {property.propertyType === "house" && (
+                  <Flex
+                    justifyContent="space-between"
+                    direction={["row", "column", "column", "column"]}
+                  >
+                    <Text>Number of floors</Text>
+                    <Text fontSize="lg" fontWeight="bold">
+                      {property.numFloor}
+                    </Text>
+                  </Flex>
+                )}
+                <Flex
+                  justifyContent="space-between"
+                  direction={["row", "column", "column", "column"]}
+                >
+                  <Text>Status</Text>
+                  <Text fontSize="lg" fontWeight="bold">
+                    {statusList[property.currentStatus]}
+                  </Text>
+                </Flex>
+                <Flex
+                  justifyContent="space-between"
+                  direction={["row", "column", "column", "column"]}
+                >
+                  <Text>Furnished</Text>
+                  <Text fontSize="lg" fontWeight="bold">
+                    {furnishedType[property.furnishType]}
+                  </Text>
+                </Flex>
+                <Flex
+                  justifyContent="space-between"
+                  direction={["row", "column", "column", "column"]}
+                >
+                  <Text>Number of balcony</Text>
+                  <Text fontSize="lg" fontWeight="bold">
+                    {property.numBalcony}
+                  </Text>
+                </Flex>
+                <Flex
+                  justifyContent="space-between"
+                  direction={["row", "column", "column", "column"]}
+                >
+                  <Text>Dependent Parking</Text>
+                  <Text fontSize="lg" fontWeight="bold">
+                    {property.numParkingDependent ?? "No data"}
+                  </Text>
+                </Flex>
+                <Flex
+                  justifyContent="space-between"
+                  direction={["row", "column", "column", "column"]}
+                >
+                  <Text>Independent Parking</Text>
+                  <Text fontSize="lg" fontWeight="bold">
+                    {property.numParkingIndependent ?? "No data"}
+                  </Text>
+                </Flex>{" "}
+              </>
+            ) : (
+              <Flex
+                justifyContent="space-between"
+                direction={["row", "column", "column", "column"]}
+              >
+                <Text>Type of land</Text>
+                <Text fontSize="lg" fontWeight="bold">
+                  {property.landType}
+                </Text>
+              </Flex>
+            )}
+            <Flex
+              justifyContent="space-between"
+              direction={["row", "column", "column", "column"]}
+            >
+              <Text>Facing</Text>
+              <Text fontSize="lg" fontWeight="bold">
+                {facingList[property.facing]}
+              </Text>
+            </Flex>
+          </Grid>
+          <Divider my={2} />
+          <Text fontSize="xl" fontWeight="bold">
+            Contact Number
+          </Text>
+          <Text>+91 8918542704</Text>
         </Flex>
       </Flex>
     </Flex>

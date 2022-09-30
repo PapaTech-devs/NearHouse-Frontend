@@ -32,7 +32,7 @@ async function compressImages(values) {
   for (let image of values.files) {
     const imageFile = image
     const options = {
-      maxSizeMB: 1,
+      maxSizeMB: 0.5,
       maxWidthOrHeight: 1920,
       useWebWorker: true,
     }
@@ -53,6 +53,38 @@ async function uploadImages(images, id) {
     res.push(link)
   }
   return res
+}
+
+export const storeUser = async (values, setAuthUser) => {
+  let data = {}
+  for (let key in values)
+    if (key !== "password" && key !== "confirmPassword") data[key] = values[key]
+
+  setAuthUser(data)
+  try {
+    const res = await fetch(`/backend/user`, {
+      method: "POST",
+      headers: {
+        Accept: "*/*",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+    const d = await res.json()
+    return d["user"]
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+export const getUser = async (userid) => {
+  try {
+    const res = await fetch(`/backend/user/${userid}`)
+    const d = await res.json()
+    return d["User"]
+  } catch (err) {
+    console.error(err)
+  }
 }
 
 export const storeProperty = async (values, setLoadingText) => {

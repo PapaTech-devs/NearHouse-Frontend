@@ -1,5 +1,5 @@
-import { createContext, useContext } from "react";
-import useFirebaseAuth from "../firebase/client";
+import { createContext, useContext } from "react"
+import useFirebaseAuth from "../firebase/client"
 
 const authUserContext = createContext({
   authUser: null,
@@ -7,13 +7,14 @@ const authUserContext = createContext({
   signIn: async () => {},
   createUser: async () => {},
   signMeOut: async () => {},
-});
+  setAuthUser: () => {},
+})
 
 export function AuthUserProvider({ children }) {
-  const auth = useFirebaseAuth();
+  const auth = useFirebaseAuth()
   return (
     <authUserContext.Provider value={auth}>{children}</authUserContext.Provider>
-  );
+  )
 }
 
-export const useAuth = () => useContext(authUserContext);
+export const useAuth = () => useContext(authUserContext)
