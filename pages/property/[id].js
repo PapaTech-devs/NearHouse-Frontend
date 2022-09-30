@@ -251,7 +251,7 @@ export default function Property({ property }) {
               >
                 <Text>Type of land</Text>
                 <Text fontSize="lg" fontWeight="bold">
-                  {property.landType}
+                  {firstLetterCapital(property.landType)}
                 </Text>
               </Flex>
             )}
