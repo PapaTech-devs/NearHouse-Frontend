@@ -52,7 +52,7 @@ function Map({ width, properties }) {
     <GoogleMap
       id="searchbox-example"
       mapContainerStyle={mapContainerStyle}
-      zoom={15}
+      zoom={6}
       onLoad={onLoad}
       onUnmount={onUnmount}
       options={{ streetViewControl: false }}
