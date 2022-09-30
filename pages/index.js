@@ -38,7 +38,7 @@ export default function SearchPage() {
   }, [])
 
   return (
-    <Flex px={["2rem", "2.5rem", "2.5rem", "3rem"]} direction="column">
+    <Flex px={["1.5rem", "2.5rem", "2.5rem", "3rem"]} direction="column">
       <Head>
         <title>Search Property</title>
       </Head>

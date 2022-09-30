@@ -11,7 +11,7 @@ export default function Navbar() {
   console.log("AuthUser", authUser)
   return (
     <Flex
-      px={["2rem", "2.5rem", "2.5rem", "3rem"]}
+      px={["1.5rem", "2.5rem", "2.5rem", "3rem"]}
       h="10vh"
       align="center"
       justify="space-between"

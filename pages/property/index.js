@@ -34,7 +34,7 @@ export default function PropertyPage() {
   if (loading) return <>Loading contents</>
 
   return (
-    <Flex px={["2rem", "2.5rem", "2.5rem", "3rem"]} direction="column" pb={4}>
+    <Flex px={["1.5rem", "2.5rem", "2.5rem", "3rem"]} direction="column" pb={4}>
       <Head>
         <title>Add Property</title>
       </Head>
