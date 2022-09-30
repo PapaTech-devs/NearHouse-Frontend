@@ -37,9 +37,9 @@ export default function Navbar() {
               <Link>List Property</Link>
             </NextLink>
           )}
-          <NextLink href="/about" passHref>
+          {/* <NextLink href="/about" passHref>
             <Link>About</Link>
-          </NextLink>
+          </NextLink> */}
         </Flex>
       </Hide>
       <Hide below="md">

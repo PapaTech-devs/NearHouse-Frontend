@@ -77,8 +77,9 @@ export default function Property({ property }) {
         <Flex
           w={["100%", "100%", "90%", "40%"]}
           direction="column"
-          h="90vh"
+          h={["fit-content", "90vh", "90vh", "90vh"]}
           gap={2}
+          pb={4}
           overflowY={"auto"}
           sx={{
             "::-webkit-scrollbar": {

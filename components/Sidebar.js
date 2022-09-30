@@ -42,12 +42,14 @@ export default function Sidebar() {
               {/* <NextLink href="/search">
                 <Link fontSize="lg">Search</Link>
               </NextLink> */}
-              <NextLink href="/property">
-                <Link fontSize="lg">List Property</Link>
-              </NextLink>
-              <NextLink href="/about">
+              {authUser && (
+                <NextLink href="/property">
+                  <Link fontSize="lg">List Property</Link>
+                </NextLink>
+              )}
+              {/* <NextLink href="/about">
                 <Link fontSize="lg">About</Link>
-              </NextLink>
+              </NextLink> */}
               {!authUser ? (
                 <NextLink href="/login">
                   <Link fontSize="lg">Login</Link>

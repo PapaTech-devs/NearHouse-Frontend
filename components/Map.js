@@ -13,9 +13,13 @@ function Map({ width, properties }) {
   const { selectedProperty, setSelectedProperty } = usePropertyContext()
   const [map, setMap] = React.useState(null)
   const router = useRouter()
+  const center = {
+    lat: 24.506333431042226,
+    lng: 88.00143583489339,
+  }
 
   useEffect(() => {
-    if (map) {
+    if (map && properties.length > 0) {
       var bounds = new window.google.maps.LatLngBounds()
       for (var i = 0; i < properties.length; i++) {
         bounds.extend(
@@ -48,10 +52,11 @@ function Map({ width, properties }) {
     <GoogleMap
       id="searchbox-example"
       mapContainerStyle={mapContainerStyle}
-      zoom={10}
+      zoom={15}
       onLoad={onLoad}
       onUnmount={onUnmount}
       options={{ streetViewControl: false }}
+      center={properties.length === 0 ? center : null}
     >
       {properties.map((property) => (
         <MarkerF

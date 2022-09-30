@@ -56,8 +56,7 @@ export default function SearchPage() {
               }}
             >
               <Grid
-                rowGap={4}
-                columnGap={8}
+                gap={5}
                 templateColumns={[
                   "repeat(1, 1fr)",
                   "repeat(1, 1fr)",
@@ -66,7 +65,7 @@ export default function SearchPage() {
                 ]}
               >
                 {filteredProperties.length === 0 ? (
-                  <Text fontSize="lg" fontWeight="bold">
+                  <Text fontWeight="semibold">
                     {allProperties.length === 0
                       ? "Please search for a region"
                       : "No properties found"}
