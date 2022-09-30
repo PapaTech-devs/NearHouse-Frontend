@@ -28,13 +28,14 @@ export function PropertyContextProvider({ children }) {
 
   useEffect(() => filterProperties(), [filterObject])
 
-  async function fetchProperties(regionName) {
+  async function fetchProperties(regionName, callback) {
     setLoading(true)
     let data
     try {
       data = await fetch(`/backend/properties/region/${regionName}`).then(
         (res) => res.json()
       )
+      if (data.length === 0) callback()
     } catch (err) {
       console.log(err)
     }

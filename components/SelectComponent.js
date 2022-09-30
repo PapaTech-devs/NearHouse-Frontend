@@ -5,15 +5,19 @@ import {
   Select,
   Show,
   useDisclosure,
+  useToast,
 } from "@chakra-ui/react"
 import { CgMoreO } from "react-icons/cg"
 import { usePropertyContext } from "../hooks/propertyContext"
 import MoreFilterComponents from "./MoreFilterComponents"
 import PropertySortModal from "./PropertySortModal"
 import { default as ReactSelect } from "react-select"
+import { useState } from "react"
+import { showToast } from "../utils"
 
 export default function SelectComponent() {
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const toast = useToast()
   const price = [
     1000000, 2000000, 3000000, 4000000, 5000000, 6000000, 7000000, 8000000,
     9000000,
@@ -49,7 +53,14 @@ export default function SelectComponent() {
             isSearchable={true}
             isClearable={true}
             onChange={(data) => {
-              if (data) fetchProperties(data.value)
+              if (data)
+                fetchProperties(data.value, () =>
+                  showToast(
+                    "No properties found in this region",
+                    "error",
+                    toast
+                  )
+                )
             }}
             options={regions.map((region) => ({
               value: region,
