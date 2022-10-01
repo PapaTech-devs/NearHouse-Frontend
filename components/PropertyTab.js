@@ -24,8 +24,15 @@ export default function PropertyTab({
   type,
   editProperty,
 }) {
-  const { setSelectedProperty, myProperties, setMyProperties } =
-    usePropertyContext()
+  const {
+    setSelectedProperty,
+    myProperties,
+    setMyProperties,
+    setAllProperties,
+    allProperties,
+    setFilteredProperties,
+    filteredProperties,
+  } = usePropertyContext()
   const [deleteLoading, setDeleteLoading] = useState(false)
   const toast = useToast()
   let formatter = new Intl.NumberFormat("en-US", {
@@ -83,16 +90,18 @@ export default function PropertyTab({
           objectFit="cover"
           alt="property image"
         />
-        <Icon
-          as={MdVerified}
-          position="absolute"
-          left="10px"
-          top="10px"
-          w={10}
-          h={10}
-          size="md"
-          color="yellow"
-        />
+        {property.verified && (
+          <Icon
+            as={MdVerified}
+            position="absolute"
+            left="10px"
+            top="10px"
+            w={10}
+            h={10}
+            size="md"
+            color="yellow"
+          />
+        )}
         {type === "edit" && (
           <>
             <IconButton
@@ -124,6 +133,16 @@ export default function PropertyTab({
                 setDeleteLoading(false)
                 setMyProperties(
                   myProperties.filter(
+                    (p) => p.propertyid !== property.propertyid
+                  )
+                )
+                setAllProperties(
+                  allProperties.filter(
+                    (p) => p.propertyid !== property.propertyid
+                  )
+                )
+                setFilteredProperties(
+                  filteredProperties.filter(
                     (p) => p.propertyid !== property.propertyid
                   )
                 )

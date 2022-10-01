@@ -56,6 +56,7 @@ export default function SearchPage() {
               }}
             >
               <Grid
+                pr={2}
                 gap={5}
                 templateColumns={[
                   "repeat(1, 1fr)",
@@ -94,7 +95,7 @@ export default function SearchPage() {
             {/* <Box w="46%" h="80vh" bg="red.200" borderRadius="5px">
             Map
           </Box> */}
-            <Map properties={filteredProperties} width="48%" />
+            <Map properties={filteredProperties} width="46%" />
           </Show>
           <Hide above="md">
             <Button

@@ -15,6 +15,8 @@ const propertyContext = createContext({
   myProperties: [],
   setMyProperties: () => {},
   setLoading: () => {},
+  setAllProperties: () => {},
+  setFilteredProperties: () => {},
 })
 
 export function PropertyContextProvider({ children }) {
@@ -95,6 +97,8 @@ export function PropertyContextProvider({ children }) {
         myProperties: myProperties,
         setMyProperties: setMyProperties,
         setLoading: setLoading,
+        setAllProperties: setAllProperties,
+        setFilteredProperties: setFilteredProperties,
       }}
     >
       {children}

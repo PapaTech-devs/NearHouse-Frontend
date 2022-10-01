@@ -63,15 +63,25 @@ export default function Property({ property }) {
             showThumbs={false}
             showStatus={false}
           >
-            {property.images.map((image, key) => (
+            {property.images.length !== 0 ? (
+              property.images.map((image, key) => (
+                <Image
+                  maxH="85vh"
+                  objectFit="contain"
+                  key={key}
+                  src={image}
+                  alt={`${property.title} images`}
+                />
+              ))
+            ) : (
               <Image
                 maxH="85vh"
                 objectFit="contain"
-                key={key}
-                src={image}
-                alt={`${property.title} images`}
+                key={"dummy image"}
+                src={"/images/dummy.png"}
+                alt={`Dummy property images`}
               />
-            ))}
+            )}
           </Carousel>
         </Box>
         <Flex
@@ -222,7 +232,7 @@ export default function Property({ property }) {
                 >
                   <Text>Number of balcony</Text>
                   <Text fontSize="lg" fontWeight="bold">
-                    {property.numBalcony}
+                    {property.balcony ?? "No data"}
                   </Text>
                 </Flex>
                 <Flex
