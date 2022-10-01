@@ -113,10 +113,12 @@ export default function Property({ property }) {
                 </Text>
               )}
               <Flex alignItems="center" gap="2">
-                <Text fontWeight="bold" fontSize="2xl">
+                <Box w={1} h={6} border="1px" borderColor="black" />
+                <Text fontWeight="bold" fontSize="2xl" px={1}>
                   {firstLetterCapital(property.propertyType)}
                 </Text>
-                <Text fontWeight="bold" fontSize="2xl">
+                <Box w={1} h={6} border="1px" borderColor="black" />
+                <Text fontWeight="bold" fontSize="2xl" px={1}>
                   {property.area} {firstLetterCapital(property.areaType)}
                 </Text>
               </Flex>
@@ -141,6 +143,9 @@ export default function Property({ property }) {
               disabled={!property.videoLink}
               w="full"
               colorScheme="telegram"
+              onClick={() => {
+                window.location.href = property.videoLink ?? ""
+              }}
             >
               View Tour
             </Button>
@@ -292,8 +297,6 @@ export async function getStaticProps({ params }) {
     `${process.env.NEXT_PUBLIC_FRONTEND_URL}/backend/properties/propertyList`
   ).then((res) => res.json())
 
-  console.log("Get static props", properties)
-
   const property = properties.filter(
     (property) => property.propertyid === params.id
   )
@@ -307,8 +310,6 @@ export async function getStaticPaths() {
   const properties = await fetch(
     `${process.env.NEXT_PUBLIC_FRONTEND_URL}/backend/properties/propertyids`
   ).then((res) => res.json())
-
-  console.log("Get static paths", properties)
 
   // Get the paths we want to pre-render based on posts
   const paths = properties.map((propertyids) => ({
