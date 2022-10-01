@@ -22,6 +22,7 @@ export default function AddPropertyTabs({ setAdd, editingProperty }) {
   const { authUser } = useAuth()
   const { myProperties, setMyProperties } = usePropertyContext()
   const [loadingText, setLoadingText] = useState(null)
+  const [tabIndex, setTabIndex] = useState(0)
   const [values, setValues] = useState({
     propertyid: editingProperty ? editingProperty.propertyid : uuidV4(),
     title: editingProperty ? editingProperty.title : "",
@@ -79,6 +80,11 @@ export default function AddPropertyTabs({ setAdd, editingProperty }) {
   })
 
   async function handleSubmit() {
+    if (tabIndex !== 2) {
+      setTabIndex(tabIndex + 1)
+      return
+    }
+
     const errorObject = {
       title: false,
       description: false,
@@ -277,7 +283,7 @@ export default function AddPropertyTabs({ setAdd, editingProperty }) {
 
   return (
     <Flex direction="column" rowGap="2" mb="4">
-      <Tabs isLazy>
+      <Tabs isLazy index={tabIndex} onChange={(index) => setTabIndex(index)}>
         <TabList>
           <Tab>Property Info</Tab>
           <Tab>Property Pictures</Tab>
@@ -304,7 +310,7 @@ export default function AddPropertyTabs({ setAdd, editingProperty }) {
         colorScheme="teal"
         onClick={handleSubmit}
       >
-        Submit
+        {tabIndex === 2 ? "Submit" : "Next"}
       </Button>
     </Flex>
   )
