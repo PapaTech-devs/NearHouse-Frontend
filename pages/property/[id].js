@@ -292,6 +292,8 @@ export async function getStaticProps({ params }) {
     `${process.env.NEXT_PUBLIC_FRONTEND_URL}/backend/properties/propertyList`
   ).then((res) => res.json())
 
+  console.log("Get static props", properties)
+
   const property = properties.filter(
     (property) => property.propertyid === params.id
   )
@@ -305,6 +307,8 @@ export async function getStaticPaths() {
   const properties = await fetch(
     `${process.env.NEXT_PUBLIC_FRONTEND_URL}/backend/properties/propertyids`
   ).then((res) => res.json())
+
+  console.log("Get static paths", properties)
 
   // Get the paths we want to pre-render based on posts
   const paths = properties.map((propertyids) => ({
