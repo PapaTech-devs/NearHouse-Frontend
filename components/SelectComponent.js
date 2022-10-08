@@ -80,7 +80,7 @@ export default function SelectComponent() {
           }
         >
           <option value="house">House</option>
-          <option value="commercial">Commercial</option>
+          <option value="flat">Flat</option>
           <option value="land">Land</option>
         </Select>
         <Select
