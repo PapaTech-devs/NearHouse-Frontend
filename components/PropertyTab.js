@@ -66,12 +66,12 @@ export default function PropertyTab({
         direction="column"
         cursor="pointer"
         border="1px"
-        borderColor="gray.200"
+        borderColor="gray.700"
         borderRadius="2%"
         boxShadow="base"
         position="relative"
-        maxW={maxWidth}
-        minW={["345px", "345px", "345px", "350px"]}
+        bgColor="gray.800"
+        w="100%"
         _hover={{
           boxShadow: "lg",
           transitionDuration: "0.1s",

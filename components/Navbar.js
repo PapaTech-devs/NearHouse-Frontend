@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Heading, Hide, Show, Link } from "@chakra-ui/react"
+import { Box, Button, Flex, Hide, Show, Link, Image } from "@chakra-ui/react"
 import Sidebar from "./Sidebar"
 import { HiUser, HiOutlineLogout } from "react-icons/hi"
 import * as NextLink from "next/link"
@@ -14,12 +14,17 @@ export default function Navbar() {
       h="10vh"
       align="center"
       justify="space-between"
+      bgColor="black"
+      color="white"
+      pt="1"
     >
-      <Heading minWidth="fit-content" w="30%" size={["md", "md", "md", "lg"]}>
+      <Box w="25%">
         <NextLink href="/" passHref>
-          <Link>NearHouse</Link>
+          <Link>
+            <Image w="29%" src="/images/brand.png" />
+          </Link>
         </NextLink>
-      </Heading>
+      </Box>
       <Hide below="md">
         <Flex
           w="50%"
@@ -46,23 +51,19 @@ export default function Navbar() {
           {!authUser ? (
             <Button
               rightIcon={<HiUser />}
-              colorScheme="gray"
-              variant="ghost"
+              variant="dark"
               fontSize="lg"
-              fontWeight="semibold"
-              float={"right"}
+              float="right"
               onClick={() => router.push("/login")}
             >
               Login
             </Button>
           ) : (
             <Button
-              variant="ghost"
+              variant="dark"
               rightIcon={<HiOutlineLogout />}
               fontSize="lg"
-              colorScheme="gray"
-              fontWeight="semibold"
-              float={"right"}
+              float="right"
               onClick={async () => await signMeOut()}
             >
               Logout

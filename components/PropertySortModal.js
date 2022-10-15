@@ -24,7 +24,13 @@ export default function PropertySortModal({ isOpen, onClose }) {
   const baths = [1, 2, 3, 4, 5]
   const { filterObject, setFilterObject } = usePropertyContext()
   return (
-    <Modal isOpen={isOpen} onClose={onClose} isCentered size="sm">
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      isCentered
+      size="sm"
+      variant="dark"
+    >
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>Sort Properties</ModalHeader>
@@ -34,7 +40,9 @@ export default function PropertySortModal({ isOpen, onClose }) {
             <Select
               placeholder="Property type"
               variant="filled"
-              color="gray.500"
+              bgColor="gray.700"
+              color="white"
+              _hover={{ bgColor: "gray.50", color: "teal.800" }}
               value={filterObject.propertyType}
               onChange={(e) =>
                 setFilterObject({
@@ -50,7 +58,9 @@ export default function PropertySortModal({ isOpen, onClose }) {
             <Select
               placeholder="Min: Price"
               variant="filled"
-              color="gray.500"
+              bgColor="gray.700"
+              color="white"
+              _hover={{ bgColor: "gray.50", color: "teal.800" }}
               value={filterObject.minPrice}
               onChange={(e) => {
                 setFilterObject({ ...filterObject, minPrice: e.target.value })
@@ -74,7 +84,9 @@ export default function PropertySortModal({ isOpen, onClose }) {
             <Select
               placeholder="Max: Price"
               variant="filled"
-              color="gray.500"
+              bgColor="gray.700"
+              color="white"
+              _hover={{ bgColor: "gray.50", color: "teal.800" }}
               value={filterObject.maxPrice}
               onChange={(e) =>
                 setFilterObject({ ...filterObject, maxPrice: e.target.value })
@@ -102,7 +114,9 @@ export default function PropertySortModal({ isOpen, onClose }) {
                 setFilterObject({ ...filterObject, bhk: e.target.value })
               }
               variant="filled"
-              color="gray.500"
+              bgColor="gray.700"
+              color="white"
+              _hover={{ bgColor: "gray.50", color: "teal.800" }}
             >
               {bhk.map((val, index) => (
                 <option key={val + index} value={val}>
@@ -113,7 +127,9 @@ export default function PropertySortModal({ isOpen, onClose }) {
             <Select
               placeholder="Furnished Type"
               variant="filled"
-              color="gray.500"
+              bgColor="gray.700"
+              color="white"
+              _hover={{ bgColor: "gray.50", color: "teal.800" }}
               value={filterObject.furnishType}
               onChange={(e) =>
                 setFilterObject({
@@ -129,7 +145,9 @@ export default function PropertySortModal({ isOpen, onClose }) {
             <Select
               placeholder="Select Facing"
               variant="filled"
-              color="gray.500"
+              bgColor="gray.700"
+              color="white"
+              _hover={{ bgColor: "gray.50", color: "teal.800" }}
               value={filterObject.facing}
               onChange={(e) =>
                 setFilterObject({
@@ -150,7 +168,9 @@ export default function PropertySortModal({ isOpen, onClose }) {
             <Select
               placeholder="Min: EMI/month"
               variant="filled"
-              color="gray.500"
+              bgColor="gray.700"
+              color="white"
+              _hover={{ bgColor: "gray.50", color: "teal.800" }}
               value={filterObject.minEmiPrice}
               onChange={(e) => {
                 setFilterObject({
@@ -177,7 +197,9 @@ export default function PropertySortModal({ isOpen, onClose }) {
             <Select
               placeholder="Max: EMI/month"
               variant="filled"
-              color="gray.500"
+              bgColor="gray.700"
+              color="white"
+              _hover={{ bgColor: "gray.50", color: "teal.800" }}
               value={filterObject.maxEmiPrice}
               onChange={(e) =>
                 setFilterObject({
@@ -204,7 +226,9 @@ export default function PropertySortModal({ isOpen, onClose }) {
             <Select
               placeholder="Current Status"
               variant="filled"
-              color="gray.500"
+              bgColor="gray.700"
+              color="white"
+              _hover={{ bgColor: "gray.50", color: "teal.800" }}
               value={filterObject.currentStatus}
               onChange={(e) =>
                 setFilterObject({
@@ -219,7 +243,9 @@ export default function PropertySortModal({ isOpen, onClose }) {
             <Select
               placeholder="Number of Bathrooms"
               variant="filled"
-              color="gray.500"
+              bgColor="gray.700"
+              color="white"
+              _hover={{ bgColor: "gray.50", color: "teal.800" }}
               value={filterObject.numBath}
               onChange={(e) =>
                 setFilterObject({
@@ -250,7 +276,7 @@ export default function PropertySortModal({ isOpen, onClose }) {
           >
             Clear
           </Button>
-          <Button variant="ghost" onClick={onClose}>
+          <Button variant="dark" onClick={onClose}>
             Cancel
           </Button>
         </ModalFooter>

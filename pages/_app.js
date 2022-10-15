@@ -5,11 +5,12 @@ import { AuthUserProvider } from "../hooks/contextHooks"
 import { LoadScript } from "@react-google-maps/api"
 import { useState } from "react"
 import { PropertyContextProvider } from "../hooks/propertyContext"
+import theme from "../theme"
 
 function MyApp({ Component, pageProps }) {
   const [librariesProp, _] = useState(["places"])
   return (
-    <ChakraProvider>
+    <ChakraProvider theme={theme}>
       <AuthUserProvider>
         <PropertyContextProvider>
           <LoadScript

@@ -27,6 +27,7 @@ export default function Sidebar() {
         icon={<Icon as={FaHamburger} />}
         onClick={onOpen}
         ref={btnRef}
+        variant="dark"
       />
       <Drawer
         isOpen={isOpen}
@@ -36,8 +37,8 @@ export default function Sidebar() {
       >
         <DrawerOverlay />
         <DrawerContent>
-          <DrawerCloseButton />
-          <DrawerBody>
+          <DrawerCloseButton color="white" background="gray.800" />
+          <DrawerBody background="gray.900" color="white">
             <VStack alignItems={"start"} spacing={4} pt="2">
               {/* <NextLink href="/search">
                 <Link fontSize="lg">Search</Link>
@@ -57,8 +58,8 @@ export default function Sidebar() {
               ) : (
                 <Button
                   size="lg"
-                  color="black"
                   fontWeight="normal"
+                  color="white"
                   variant="link"
                   onClick={() => signMeOut()}
                 >

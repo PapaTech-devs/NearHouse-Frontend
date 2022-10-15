@@ -19,7 +19,13 @@ export default function MoreFilterComponents({ isOpen, onClose }) {
   ]
   const baths = [1, 2, 3, 4, 5]
   return (
-    <Modal isOpen={isOpen} onClose={onClose} isCentered size="sm">
+    <Modal
+      isOpen={isOpen}
+      onClose={onClose}
+      isCentered
+      size="sm"
+      variant="dark"
+    >
       <ModalOverlay />
       <ModalContent>
         <ModalHeader>More Options</ModalHeader>
@@ -29,7 +35,9 @@ export default function MoreFilterComponents({ isOpen, onClose }) {
             <Select
               placeholder="Furnished Type"
               variant="filled"
-              color="gray.500"
+              bgColor="gray.700"
+              color="white"
+              _hover={{ bgColor: "gray.50", color: "teal.800" }}
               value={filterObject.furnishType}
               onChange={(e) =>
                 setFilterObject({
@@ -45,7 +53,9 @@ export default function MoreFilterComponents({ isOpen, onClose }) {
             <Select
               placeholder="Select Facing"
               variant="filled"
-              color="gray.500"
+              bgColor="gray.700"
+              color="white"
+              _hover={{ bgColor: "gray.50", color: "teal.800" }}
               value={filterObject.facing}
               onChange={(e) =>
                 setFilterObject({
@@ -66,7 +76,9 @@ export default function MoreFilterComponents({ isOpen, onClose }) {
             <Select
               placeholder="Min: EMI/month"
               variant="filled"
-              color="gray.500"
+              bgColor="gray.700"
+              color="white"
+              _hover={{ bgColor: "gray.50", color: "teal.800" }}
               value={filterObject.minEmiPrice}
               onChange={(e) => {
                 setFilterObject({
@@ -93,7 +105,9 @@ export default function MoreFilterComponents({ isOpen, onClose }) {
             <Select
               placeholder="Max: EMI/month"
               variant="filled"
-              color="gray.500"
+              bgColor="gray.700"
+              color="white"
+              _hover={{ bgColor: "gray.50", color: "teal.800" }}
               value={filterObject.maxEmiPrice}
               onChange={(e) =>
                 setFilterObject({
@@ -120,7 +134,9 @@ export default function MoreFilterComponents({ isOpen, onClose }) {
             <Select
               placeholder="Current Status"
               variant="filled"
-              color="gray.500"
+              bgColor="gray.700"
+              color="white"
+              _hover={{ bgColor: "gray.50", color: "teal.800" }}
               value={filterObject.currentStatus}
               onChange={(e) =>
                 setFilterObject({
@@ -135,7 +151,9 @@ export default function MoreFilterComponents({ isOpen, onClose }) {
             <Select
               placeholder="Number of Bathrooms"
               variant="filled"
-              color="gray.500"
+              bgColor="gray.700"
+              color="white"
+              _hover={{ bgColor: "gray.50", color: "teal.800" }}
               value={filterObject.numBath}
               onChange={(e) =>
                 setFilterObject({
@@ -166,7 +184,7 @@ export default function MoreFilterComponents({ isOpen, onClose }) {
           >
             Clear
           </Button>
-          <Button variant="ghost" onClick={onClose}>
+          <Button variant="dark" onClick={onClose}>
             Cancel
           </Button>
         </ModalFooter>

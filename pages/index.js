@@ -22,7 +22,6 @@ export default function SearchPage() {
   const [showMap, setShowMap] = useState(false)
   const { filteredProperties, allProperties, setRegions, loading } =
     usePropertyContext()
-
   useEffect(() => {
     async function fetchRegions() {
       try {
@@ -38,7 +37,13 @@ export default function SearchPage() {
   }, [])
 
   return (
-    <Flex px={["1.5rem", "2.5rem", "2.5rem", "3rem"]} direction="column">
+    <Flex
+      px={["1.5rem", "2.5rem", "2.5rem", "3rem"]}
+      direction="column"
+      bgColor="black"
+      h="90vh"
+      color="white"
+    >
       <Head>
         <title>Search Property</title>
       </Head>

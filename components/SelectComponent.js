@@ -12,7 +12,6 @@ import { usePropertyContext } from "../hooks/propertyContext"
 import MoreFilterComponents from "./MoreFilterComponents"
 import PropertySortModal from "./PropertySortModal"
 import { default as ReactSelect } from "react-select"
-import { useState } from "react"
 import { showToast } from "../utils"
 
 export default function SelectComponent() {
@@ -28,26 +27,40 @@ export default function SelectComponent() {
 
   return (
     <Flex gap="3" pb="5" alignItems="center">
-      <Box w="full" h="full">
+      <Box w="full" h="full" color="white">
         {regions.length !== 0 && (
           <ReactSelect
             styles={{
-              valueContainer: (provided, _) => ({
+              control: (provided, _) => ({
                 ...provided,
-                backgroundColor: "#EDF2F7",
+                border: "none",
+                backgroundColor: "#2D3748",
+              }),
+              option: (provided, state) => ({
+                ...provided,
+                color: state.isSelected ? "white" : "black",
               }),
               dropdownIndicator: (provided, _) => ({
                 ...provided,
-                backgroundColor: "#EDF2F7",
-                color: "#718096",
+                backgroundColor: "#2D3748",
+                color: "#ffffff",
+                borderRadius: "5rem",
               }),
               indicatorSeparator: (provided, _) => ({
                 ...provided,
-                backgroundColor: "#EDF2F7",
+                backgroundColor: "#2D3748",
               }),
               indicatorsContainer: (provided, _) => ({
                 ...provided,
-                backgroundColor: "#EDF2F7",
+                backgroundColor: "#2D3748",
+              }),
+              placeholder: (provided, _) => ({
+                ...provided,
+                color: "#ffffff",
+              }),
+              singleValue: (provided, _) => ({
+                ...provided,
+                color: "#ffffff",
               }),
             }}
             isSearchable={true}
@@ -73,7 +86,9 @@ export default function SelectComponent() {
         <Select
           placeholder="Property type"
           variant="filled"
-          color="gray.500"
+          bgColor="gray.700"
+          color="white"
+          _hover={{ bgColor: "gray.50", color: "teal.800" }}
           value={filterObject.propertyType}
           onChange={(e) =>
             setFilterObject({ ...filterObject, propertyType: e.target.value })
@@ -86,7 +101,9 @@ export default function SelectComponent() {
         <Select
           placeholder="Min: Price"
           variant="filled"
-          color="gray.500"
+          bgColor="gray.700"
+          color="white"
+          _hover={{ bgColor: "gray.50", color: "teal.800" }}
           value={filterObject.minPrice}
           onChange={(e) => {
             setFilterObject({ ...filterObject, minPrice: e.target.value })
@@ -106,8 +123,10 @@ export default function SelectComponent() {
         </Select>
         <Select
           placeholder="Max: Price"
-          variant="filled"
-          color="gray.500"
+          variant="dark"
+          bgColor="gray.700"
+          color="white"
+          _hover={{ bgColor: "gray.50", color: "teal.800" }}
           value={filterObject.maxPrice}
           onChange={(e) =>
             setFilterObject({ ...filterObject, maxPrice: e.target.value })
@@ -132,7 +151,9 @@ export default function SelectComponent() {
             setFilterObject({ ...filterObject, bhk: e.target.value })
           }
           variant="filled"
-          color="gray.500"
+          bgColor="gray.700"
+          color="white"
+          _hover={{ bgColor: "gray.50", color: "teal.800" }}
         >
           {bhk.map((val, index) => (
             <option key={val + index} value={val}>
@@ -145,6 +166,9 @@ export default function SelectComponent() {
           aria-label="More options"
           icon={<CgMoreO />}
           onClick={onOpen}
+          bgColor="gray.700"
+          color="white"
+          _hover={{ bgColor: "gray.50", color: "teal.800" }}
         />
         <MoreFilterComponents isOpen={isOpen} onClose={onClose} />
       </Show>
@@ -154,6 +178,9 @@ export default function SelectComponent() {
           aria-label="More options"
           icon={<CgMoreO />}
           onClick={onOpen}
+          bgColor="gray.700"
+          color="white"
+          _hover={{ bgColor: "gray.50", color: "teal.800" }}
         />
         <PropertySortModal isOpen={isOpen} onClose={onClose} />
       </Show>

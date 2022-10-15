@@ -78,7 +78,7 @@ function Map({ width, properties }) {
                 lng: parseFloat(property.location.lng),
               }}
             >
-              <Box w="125px">
+              <Box w="125px" color="black">
                 <Text>
                   {property.title.length > 15
                     ? property.title.split("").splice(15).join("") + ".."
