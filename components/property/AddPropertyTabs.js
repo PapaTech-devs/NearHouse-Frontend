@@ -282,7 +282,7 @@ export default function AddPropertyTabs({ setAdd, editingProperty }) {
   }
 
   return (
-    <Flex direction="column" rowGap="2" mb="4">
+    <Flex direction="column" rowGap="2" bgColor="black" color="white">
       <Tabs isLazy index={tabIndex} onChange={(index) => setTabIndex(index)}>
         <TabList>
           <Tab>Property Info</Tab>
@@ -309,6 +309,7 @@ export default function AddPropertyTabs({ setAdd, editingProperty }) {
         loadingText={loadingText}
         colorScheme="teal"
         onClick={handleSubmit}
+        mb={5}
       >
         {tabIndex === 2 ? "Submit" : "Next"}
       </Button>

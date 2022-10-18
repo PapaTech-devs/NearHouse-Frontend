@@ -5,12 +5,14 @@ import {
   Divider,
   Flex,
   Grid,
+  IconButton,
   Image,
   Text,
 } from "@chakra-ui/react"
 import "react-responsive-carousel/lib/styles/carousel.min.css" // requires a loader
 import { Carousel } from "react-responsive-carousel"
 import Head from "next/head"
+import { AiFillPhone, AiOutlineWhatsApp, AiFillSchedule } from "react-icons/ai"
 
 export default function Property({ property }) {
   function firstLetterCapital(str) {
@@ -42,7 +44,14 @@ export default function Property({ property }) {
   })
 
   return (
-    <Flex px={["1.5rem", "2.5rem", "2.5rem", "3rem"]} direction="column" pt={5}>
+    <Flex
+      h="90vh"
+      bgColor="black"
+      px={["1.5rem", "2.5rem", "2.5rem", "3rem"]}
+      direction="column"
+      pt={5}
+      color="white"
+    >
       <Head>
         <title>{property.title}</title>
       </Head>
@@ -113,17 +122,19 @@ export default function Property({ property }) {
                 </Text>
               )}
               <Flex alignItems="center" gap="2">
-                <Box w={1} h={6} border="1px" borderColor="black" />
+                <Box w={1} h={6} border="1px" bgColor="white" />
                 <Text fontWeight="bold" fontSize="2xl" px={1}>
                   {firstLetterCapital(property.propertyType)}
                 </Text>
-                <Box w={1} h={6} border="1px" borderColor="black" />
+                <Box w={1} h={6} border="1px" bgColor="white" />
                 <Text fontWeight="bold" fontSize="2xl" px={1}>
                   {property.area} {firstLetterCapital(property.areaType)}
                 </Text>
               </Flex>
             </Flex>
-            <Text fontSize="lg">{property.address}</Text>
+            <Text my={2} fontSize="lg" color="white">
+              {property.address}
+            </Text>
             {property.verified && (
               <Badge mt="2" colorScheme="green">
                 Property verified by NearHouse
@@ -131,14 +142,36 @@ export default function Property({ property }) {
             )}
           </Box>
           <Flex gap={3} my={1}>
-            <Button
+            {/* // Call Now
+            // Whatsapp
+            // Appointment
+            // View Tour */}
+            <IconButton
+              icon={<AiFillPhone size="20" />}
+              color="white"
+              colorScheme="facebook"
               onClick={() => {
                 window.location.href = "tel:+918918542704"
               }}
               w="full"
-            >
-              Call Now
-            </Button>
+            />
+            <IconButton
+              icon={<AiOutlineWhatsApp size={20} />}
+              color="white"
+              colorScheme="whatsapp"
+              onClick={() => {
+                window.location.href = "https://wa.me/8918542704"
+              }}
+              w="full"
+            />
+            <IconButton
+              icon={<AiFillSchedule size="20" />}
+              colorScheme="twitter"
+              onClick={() => {
+                window.location.href = "tel:+918918542704"
+              }}
+              w="full"
+            />
             <Button
               disabled={!property.videoLink}
               w="full"
@@ -280,11 +313,6 @@ export default function Property({ property }) {
               </Text>
             </Flex>
           </Grid>
-          <Divider my={2} />
-          <Text fontSize="xl" fontWeight="bold">
-            Contact Number
-          </Text>
-          <Text>+91 8918542704</Text>
         </Flex>
       </Flex>
     </Flex>

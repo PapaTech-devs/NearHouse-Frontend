@@ -13,12 +13,14 @@ import {
 } from "@chakra-ui/react"
 import { useRef } from "react"
 import { FaHamburger } from "react-icons/fa"
-import * as NextLink from "next/link"
+import { useRouter } from "next/router"
 import { useAuth } from "../hooks/contextHooks"
+import * as NextLink from "next/link"
 
 export default function Sidebar() {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const btnRef = useRef()
+  const router = useRouter()
   const { authUser, signMeOut } = useAuth()
   return (
     <>
@@ -44,24 +46,41 @@ export default function Sidebar() {
                 <Link fontSize="lg">Search</Link>
               </NextLink> */}
               {authUser && (
-                <NextLink href="/property">
-                  <Link fontSize="lg">List Property</Link>
-                </NextLink>
+                <Button
+                  variant="link"
+                  color="white"
+                  onClick={() => {
+                    onClose()
+                    router.push("/property")
+                  }}
+                >
+                  List Property
+                </Button>
               )}
               {/* <NextLink href="/about">
                 <Link fontSize="lg">About</Link>
               </NextLink> */}
               {!authUser ? (
-                <NextLink href="/login">
-                  <Link fontSize="lg">Login</Link>
-                </NextLink>
+                <Button
+                  variant="link"
+                  color="white"
+                  onClick={() => {
+                    onClose()
+                    router.push("/login")
+                  }}
+                >
+                  Login
+                </Button>
               ) : (
                 <Button
                   size="lg"
                   fontWeight="normal"
                   color="white"
                   variant="link"
-                  onClick={() => signMeOut()}
+                  onClick={() => {
+                    onClose()
+                    signMeOut()
+                  }}
                 >
                   Logout
                 </Button>

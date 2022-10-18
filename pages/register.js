@@ -136,18 +136,20 @@ export default function RegisterPage() {
   }
 
   return (
-    <Flex h="90vh" justify={"center"} align={"center"}>
+    <Flex h="90vh" justify="center" align="center" bgColor="black">
       <Head>
         <title>Register Page</title>
       </Head>
       <Box
         px={[6, 10, 10, 10]}
-        py={6}
+        py={10}
         w={["20rem", "24rem", "24rem", "24rem"]}
         border="1px"
-        borderColor="gray.200"
+        borderColor="gray.700"
         borderRadius="2%"
         boxShadow="base"
+        bgColor="gray.800"
+        color="white"
       >
         <Stack spacing={5}>
           <Heading textAlign="center" size="lg">
@@ -157,6 +159,10 @@ export default function RegisterPage() {
             placeholder="Full name"
             size="md"
             name="fullName"
+            _placeholder={{ color: "gray.400" }}
+            border="none"
+            bgColor="gray.700"
+            color="white"
             isInvalid={errors.name}
             onChange={(e) => handleInputChange(e, setValues, values)}
           />
@@ -165,6 +171,10 @@ export default function RegisterPage() {
             size="md"
             isInvalid={errors.email}
             name="email"
+            _placeholder={{ color: "gray.400" }}
+            border="none"
+            bgColor="gray.700"
+            color="white"
             onChange={(e) => handleInputChange(e, setValues, values)}
           />
           <InputGroup>
@@ -174,6 +184,10 @@ export default function RegisterPage() {
             <Input
               isInvalid={errors.mobile}
               name="mobile"
+              _placeholder={{ color: "gray.400" }}
+              border="none"
+              bgColor="gray.700"
+              color="white"
               onChange={(e) => handleInputChange(e, setValues, values)}
               type="tel"
               placeholder="Phone number"

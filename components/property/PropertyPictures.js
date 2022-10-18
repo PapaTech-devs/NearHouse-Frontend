@@ -99,12 +99,12 @@ export default function PropertyPictures({ values, setValues }) {
           justifyContent="center"
           gap="4"
           h="10rem"
-          bg="gray.100"
+          bg="gray.900"
           borderRadius="2px"
         >
           <ImImages size="25" color="gray" />
           <Flex direction="column">
-            <Text fontSize="lg" textColor="gray.700">
+            <Text fontSize="lg" textColor="white">
               Browse Images
             </Text>
             <Text fontSize="sm" textColor="gray.500">

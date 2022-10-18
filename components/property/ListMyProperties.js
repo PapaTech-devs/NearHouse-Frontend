@@ -10,6 +10,8 @@ export default function ListMyProperties({ setAdd, setEditingProperty }) {
       rowGap={4}
       columnGap={8}
       justifyContent="center"
+      color="white"
+      pb={4}
       templateColumns={[
         "repeat(1, 1fr)",
         "repeat(1, 1fr)",

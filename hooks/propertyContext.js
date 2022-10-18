@@ -17,6 +17,8 @@ const propertyContext = createContext({
   setLoading: () => {},
   setAllProperties: () => {},
   setFilteredProperties: () => {},
+  mobileMapShow: false,
+  setMobileMapShow: () => {},
 })
 
 export function PropertyContextProvider({ children }) {
@@ -27,6 +29,7 @@ export function PropertyContextProvider({ children }) {
   const [myProperties, setMyProperties] = useState([])
   const [regions, setRegions] = useState([])
   const [loading, setLoading] = useState(false)
+  const [mobileMapShow, setMobileMapShow] = useState(false)
 
   useEffect(() => filterProperties(), [filterObject])
 
@@ -99,6 +102,8 @@ export function PropertyContextProvider({ children }) {
         setLoading: setLoading,
         setAllProperties: setAllProperties,
         setFilteredProperties: setFilteredProperties,
+        mobileMapShow: mobileMapShow,
+        setMobileMapShow: setMobileMapShow,
       }}
     >
       {children}

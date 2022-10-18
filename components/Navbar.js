@@ -18,7 +18,7 @@ export default function Navbar() {
       color="white"
       pt="1"
     >
-      <Box w="25%">
+      <Box w={["100%", "50%", "25%", "25%"]}>
         <NextLink href="/" passHref>
           <Link>
             <Image w="29%" src="/images/brand.png" />
@@ -54,6 +54,7 @@ export default function Navbar() {
               variant="dark"
               fontSize="lg"
               float="right"
+              _hover={{ color: "white", bg: "green.500" }}
               onClick={() => router.push("/login")}
             >
               Login
@@ -64,6 +65,7 @@ export default function Navbar() {
               rightIcon={<HiOutlineLogout />}
               fontSize="lg"
               float="right"
+              _hover={{ color: "white", bg: "red.500" }}
               onClick={async () => await signMeOut()}
             >
               Logout

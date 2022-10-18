@@ -15,7 +15,6 @@ const theme = extendTheme({
           bg: "gray.700",
           color: "white",
           fontWeight: "semibold",
-          _hover: { color: "teal.800", bg: "gray.50" },
         },
       },
     },

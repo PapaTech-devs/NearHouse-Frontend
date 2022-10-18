@@ -24,6 +24,10 @@ export default function PropertyInfo({ error, values, setValues }) {
         placeholder="*Enter property title"
         size="md"
         name="title"
+        _placeholder={{ color: "gray.400" }}
+        border="none"
+        bgColor="gray.700"
+        color="white"
         isInvalid={error.title}
         value={values.title}
         onChange={(e) => handleInputChange(e, setValues, values)}
@@ -32,6 +36,10 @@ export default function PropertyInfo({ error, values, setValues }) {
         placeholder="*Enter property description"
         name="description"
         size="md"
+        _placeholder={{ color: "gray.400" }}
+        border="none"
+        bgColor="gray.700"
+        color="white"
         isInvalid={error.description}
         value={values.description}
         onChange={(e) => handleInputChange(e, setValues, values)}
@@ -49,6 +57,10 @@ export default function PropertyInfo({ error, values, setValues }) {
         size="md"
         value={values.address}
         name="address"
+        _placeholder={{ color: "gray.400" }}
+        border="none"
+        bgColor="gray.700"
+        color="white"
         isInvalid={error.address}
         onChange={(e) => handleInputChange(e, setValues, values)}
       />
@@ -58,9 +70,16 @@ export default function PropertyInfo({ error, values, setValues }) {
         isInvalid={error.region}
         value={values.region}
         name="region"
+        variant="outline"
+        bgColor="gray.700"
+        border="none"
       >
         {regions.map((region, index) => (
-          <option key={region + index.toString()} value={region}>
+          <option
+            style={{ color: "black" }}
+            key={region + index.toString()}
+            value={region}
+          >
             {region}
           </option>
         ))}
@@ -71,10 +90,19 @@ export default function PropertyInfo({ error, values, setValues }) {
         name="propertyType"
         value={values.propertyType}
         isInvalid={error.propertyType}
+        bgColor="gray.700"
+        border="none"
+        variant="outline"
       >
-        <option value="house">House</option>
-        <option value="flat">Flat</option>
-        <option value="plot">Plot (Land)</option>
+        <option style={{ color: "black" }} value="house">
+          House
+        </option>
+        <option style={{ color: "black" }} value="flat">
+          Flat
+        </option>
+        <option style={{ color: "black" }} value="plot">
+          Plot (Land)
+        </option>
       </Select>
       <Stack direction="row">
         <Input
@@ -82,6 +110,10 @@ export default function PropertyInfo({ error, values, setValues }) {
           type="number"
           placeholder="*Enter area"
           size="md"
+          _placeholder={{ color: "gray.400" }}
+          border="none"
+          bgColor="gray.700"
+          color="white"
           value={values.area}
           isInvalid={error.area}
           name="area"
@@ -90,29 +122,58 @@ export default function PropertyInfo({ error, values, setValues }) {
           onChange={(e) => handleInputChange(e, setValues, values)}
           placeholder="*Area metric"
           name="areaType"
+          bgColor="gray.700"
+          variant="outline"
+          color="white"
+          border="none"
           value={values.areaType}
           isInvalid={error.areaType}
         >
-          <option value="sqfeet">Sq. Feet</option>
-          <option value="katha">Katha</option>
-          <option value="decimal">Decimal</option>
+          <option style={{ color: "black" }} value="sqfeet">
+            Sq. Feet
+          </option>
+          <option style={{ color: "black" }} value="katha">
+            Katha
+          </option>
+          <option style={{ color: "black" }} value="decimal">
+            Decimal
+          </option>
         </Select>
       </Stack>
       <Select
         onChange={(e) => handleInputChange(e, setValues, values)}
         placeholder="*Select facing"
         name="facing"
+        bgColor="gray.700"
+        border="none"
+        variant="outline"
         value={values.facing}
         isInvalid={error.facing}
       >
-        <option value="north">North</option>
-        <option value="south">South</option>
-        <option value="east">East</option>
-        <option value="west">West</option>
-        <option value="northwest">North West</option>
-        <option value="northeast">North East</option>
-        <option value="southeast">South East</option>
-        <option value="southwest">South West</option>
+        <option style={{ color: "black" }} value="north">
+          North
+        </option>
+        <option style={{ color: "black" }} value="south">
+          South
+        </option>
+        <option style={{ color: "black" }} value="east">
+          East
+        </option>
+        <option style={{ color: "black" }} value="west">
+          West
+        </option>
+        <option style={{ color: "black" }} value="northwest">
+          North West
+        </option>
+        <option style={{ color: "black" }} value="northeast">
+          North East
+        </option>
+        <option style={{ color: "black" }} value="southeast">
+          South East
+        </option>
+        <option style={{ color: "black" }} value="southwest">
+          South West
+        </option>
       </Select>
       {values.propertyType === "house" && (
         <HouseInfo error={error} values={values} setValues={setValues} />
@@ -124,19 +185,32 @@ export default function PropertyInfo({ error, values, setValues }) {
         <Select
           placeholder="*Type of land"
           name="landType"
+          bgColor="gray.700"
+          variant="outline"
+          border="none"
           value={values.landType}
           isInvalid={error.landType}
           onChange={(e) => handleInputChange(e, setValues, values)}
         >
-          <option value="krishi">Krishi</option>
-          <option value="shali">Shali</option>
-          <option value="bastu">Bastu</option>
+          <option style={{ color: "black" }} value="krishi">
+            Krishi
+          </option>
+          <option style={{ color: "black" }} value="shali">
+            Shali
+          </option>
+          <option style={{ color: "black" }} value="bastu">
+            Bastu
+          </option>
         </Select>
       )}
       <Stack direction="row">
         <Input
           onChange={(e) => handleInputChange(e, setValues, values)}
           type="number"
+          _placeholder={{ color: "gray.400" }}
+          border="none"
+          bgColor="gray.700"
+          color="white"
           value={values.price}
           placeholder="*Price of the property"
           name="price"
@@ -146,17 +220,28 @@ export default function PropertyInfo({ error, values, setValues }) {
           onChange={(e) => handleInputChange(e, setValues, values)}
           placeholder="*Price type"
           name="priceType"
+          bgColor="gray.700"
+          variant="outline"
+          border="none"
           value={values.priceType}
           isInvalid={error.priceType}
         >
-          <option value="emi">EMI</option>
-          <option value="lumpsum">Lumpsum</option>
+          <option style={{ color: "black" }} value="emi">
+            EMI
+          </option>
+          <option style={{ color: "black" }} value="lumpsum">
+            Lumpsum
+          </option>
         </Select>
       </Stack>
       <Input
         placeholder="Enter video link(if any)"
         size="md"
         name="videoLink"
+        _placeholder={{ color: "gray.400" }}
+        border="none"
+        bgColor="gray.700"
+        color="white"
         value={values.videoLink}
         onChange={(e) => handleInputChange(e, setValues, values)}
       />

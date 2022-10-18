@@ -31,6 +31,10 @@ export default function SelectComponent() {
         {regions.length !== 0 && (
           <ReactSelect
             styles={{
+              input: (provided, _) => ({
+                ...provided,
+                color: "white",
+              }),
               control: (provided, _) => ({
                 ...provided,
                 border: "none",

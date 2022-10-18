@@ -5,7 +5,7 @@ import theme from "../theme"
 export default class Document extends NextDocument {
   render() {
     return (
-      <Html lang="en">
+      <Html lang="en" style={{ backgroundColor: "black", color: "#ffffff" }}>
         <Head />
         <body>
           <ColorModeScript initialColorMode="dark" />

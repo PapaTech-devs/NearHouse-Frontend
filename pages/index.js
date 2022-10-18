@@ -13,15 +13,20 @@ import Map from "../components/Map"
 import PropertyTab from "../components/PropertyTab"
 import SelectComponent from "../components/SelectComponent"
 import Head from "next/head"
-import { useState, useEffect } from "react"
+import { useEffect } from "react"
 import { FiMapPin } from "react-icons/fi"
 import { AiOutlineUnorderedList } from "react-icons/ai"
 import { usePropertyContext } from "../hooks/propertyContext"
 
 export default function SearchPage() {
-  const [showMap, setShowMap] = useState(false)
-  const { filteredProperties, allProperties, setRegions, loading } =
-    usePropertyContext()
+  const {
+    filteredProperties,
+    allProperties,
+    setRegions,
+    loading,
+    mobileMapShow,
+    setMobileMapShow,
+  } = usePropertyContext()
   useEffect(() => {
     async function fetchRegions() {
       try {
@@ -50,7 +55,7 @@ export default function SearchPage() {
       <SelectComponent />
       {!loading ? (
         <Flex justify="space-between">
-          {!showMap ? (
+          {!mobileMapShow ? (
             <Box
               h="80vh"
               overflow="auto"
@@ -111,16 +116,16 @@ export default function SearchPage() {
               left="50%"
               transform="translate(-50%,-50%)"
               fontSize="xl"
-              onClick={() => setShowMap(!showMap)}
+              onClick={() => setMobileMapShow(!mobileMapShow)}
               rightIcon={
-                !showMap ? (
+                !mobileMapShow ? (
                   <Icon as={FiMapPin} size={25} mt="1" />
                 ) : (
                   <Icon as={AiOutlineUnorderedList} size={25} mt="1" />
                 )
               }
             >
-              {!showMap ? "Map View" : "List View"}
+              {!mobileMapShow ? "Map View" : "List View"}
             </Button>
           </Hide>
         </Flex>

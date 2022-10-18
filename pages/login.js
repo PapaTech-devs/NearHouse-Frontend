@@ -82,18 +82,20 @@ export default function LoginPage() {
   }
 
   return (
-    <Flex h="90vh" justify={"center"} align={"center"}>
+    <Flex h="90vh" justify="center" align="center" bgColor="black">
       <Head>
         <title>Login Page</title>
       </Head>
       <Box
         px={[6, 10, 10, 10]}
-        py={6}
+        py={10}
         w={["20rem", "24rem", "24rem", "24rem"]}
         border="1px"
-        borderColor="gray.200"
+        borderColor="gray.700"
         borderRadius="2%"
         boxShadow="base"
+        bgColor="gray.800"
+        color="white"
       >
         <Stack spacing={5}>
           <Heading textAlign="center" size="lg">
@@ -105,6 +107,10 @@ export default function LoginPage() {
             placeholder="Email"
             size="md"
             name="email"
+            _placeholder={{ color: "gray.400" }}
+            border="none"
+            bgColor="gray.700"
+            color="white"
           />
           <PasswordInput
             isInvalid={errors.password}

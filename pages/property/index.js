@@ -34,15 +34,23 @@ export default function PropertyPage() {
   if (loading) return <>Loading contents</>
 
   return (
-    <Flex px={["1.5rem", "2.5rem", "2.5rem", "3rem"]} direction="column" pb={4}>
+    <Flex
+      px={["1.5rem", "2.5rem", "2.5rem", "3rem"]}
+      direction="column"
+      pb={4}
+      bgColor="black"
+      h="90vh"
+    >
       <Head>
         <title>Add Property</title>
       </Head>
-      <Flex w="100%" justifyContent="space-between" mt="2" mb="4">
+      <Flex w="100%" justifyContent="space-between" mt="2" mb="4" color="white">
         <Text fontSize="xl" fontWeight="bold">
           {add ? "Add Property" : "Your Listed Properties"}
         </Text>
         <Button
+          variant="dark"
+          _hover={{ color: "white", bg: add ? "red.500" : "green.500" }}
           onClick={() => {
             setEditingProperty(null)
             setAdd(!add)

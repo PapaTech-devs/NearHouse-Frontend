@@ -3,9 +3,9 @@ import {
   Input,
   InputGroup,
   InputRightElement,
-} from "@chakra-ui/react";
-import { BiShow, BiHide } from "react-icons/bi";
-import { useState } from "react";
+} from "@chakra-ui/react"
+import { BiShow, BiHide } from "react-icons/bi"
+import { useState } from "react"
 
 export default function PasswordInput({
   onChange,
@@ -13,8 +13,8 @@ export default function PasswordInput({
   isInvalid,
   name,
 }) {
-  const [show, setShow] = useState(false);
-  const handleClick = () => setShow(!show);
+  const [show, setShow] = useState(false)
+  const handleClick = () => setShow(!show)
 
   return (
     <InputGroup size="md">
@@ -25,14 +25,20 @@ export default function PasswordInput({
         placeholder={placeholder}
         onChange={onChange}
         name={name}
+        _placeholder={{ color: "gray.400" }}
+        border="none"
+        bgColor="gray.700"
+        color="white"
       />
       <InputRightElement width="4.5rem">
         <IconButton
           size="sm"
+          variant="dark"
+          bg="gray.800"
           onClick={handleClick}
           icon={show ? <BiShow /> : <BiHide />}
         />
       </InputRightElement>
     </InputGroup>
-  );
+  )
 }
