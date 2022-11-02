@@ -87,6 +87,17 @@ export const getUser = async (userid) => {
   }
 }
 
+// check if user exists in the backend
+export const checkUser = async (email) => {
+  try {
+    const res = await fetch(`/backend/user/${email}`)
+    const d = await res.json()
+    return d["User"]
+  } catch (err) {
+    console.error(err)
+  }
+}
+
 export const storeProperty = async (values, setLoadingText) => {
   let data = {}
   for (let key in values)

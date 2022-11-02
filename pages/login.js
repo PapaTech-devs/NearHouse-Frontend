@@ -6,6 +6,9 @@ import {
   Input,
   Button,
   useToast,
+  Text,
+  HStack,
+  Divider,
 } from "@chakra-ui/react"
 import Head from "next/head"
 import { useRouter } from "next/router"
@@ -13,6 +16,7 @@ import { useAuth } from "../hooks/contextHooks"
 import { useState } from "react"
 import PasswordInput from "../components/PasswordInput"
 import { validateEmail, showToast, handleInputChange } from "../utils"
+import { GrGoogle } from "react-icons/gr"
 
 export default function LoginPage() {
   const router = useRouter()
@@ -26,7 +30,7 @@ export default function LoginPage() {
     email: false,
     password: false,
   })
-  const { signIn } = useAuth()
+  const { signIn, signInWithGoogle, signMeOut } = useAuth()
 
   async function submitHandler() {
     const errorObject = {
@@ -96,6 +100,7 @@ export default function LoginPage() {
         boxShadow="base"
         bgColor="gray.800"
         color="white"
+        textAlign="center"
       >
         <Stack spacing={5}>
           <Heading textAlign="center" size="lg">
@@ -118,6 +123,45 @@ export default function LoginPage() {
             onChange={(e) => handleInputChange(e, setValues, values)}
             name="password"
           />
+          <HStack>
+            <Divider color="gray.500" />
+            <Text color="gray.500">or</Text>
+            <Divider color="gray.500" />
+          </HStack>
+          <Button
+            isLoading={loading}
+            onClick={async () => {
+              try {
+                setLoading(true)
+                await signInWithGoogle()
+                showToast("Logged in successfully", "success", toast)
+                setLoading(false)
+                router.replace("/")
+              } catch (e) {
+                // switch (e.code) {
+                //   case "auth/user-not-found":
+                //     errorObject.email = true
+                //     showToast("User does not exists.", "error", toast)
+                //     break
+                //   case "auth/wrong-password":
+                //     errorObject.password = true
+                //     showToast("Wrong password for the user.", "error", toast)
+                //     break
+                //   default:
+                //     errorObject.email = true
+                //     showToast("Internal server error.", "error", toast)
+                //   }
+                showToast("Something went wrong.", "error", toast)
+                console.error(e.code)
+                setLoading(false)
+              }
+            }}
+            fontSize="md"
+            color="black"
+            rightIcon={<GrGoogle />}
+          >
+            Sign in with Google
+          </Button>
           <Stack direction="row" justify="space-between">
             <Button
               colorScheme="green"
@@ -130,7 +174,8 @@ export default function LoginPage() {
             <Button
               colorScheme="teal"
               disabled={loading}
-              onClick={() => router.push("/register")}
+              // onClick={() => router.push("/register")}
+              onClick={() => signMeOut()}
             >
               Create Account
             </Button>

@@ -5,6 +5,7 @@ const authUserContext = createContext({
   authUser: null,
   loading: true,
   signIn: async () => {},
+  signInWithGoogle: async () => {},
   createUser: async () => {},
   signMeOut: async () => {},
   setAuthUser: () => {},
