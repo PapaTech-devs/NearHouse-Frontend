@@ -8,7 +8,6 @@ import { useAuth } from "../hooks/contextHooks"
 export default function Navbar() {
   const router = useRouter()
   const { authUser, signMeOut } = useAuth()
-  console.log("authUser", authUser)
   return (
     <Flex
       px={["1.5rem", "2.5rem", "2.5rem", "3rem"]}
@@ -40,6 +39,11 @@ export default function Navbar() {
           {authUser && (
             <NextLink href="/property" passHref>
               <Link>List Property</Link>
+            </NextLink>
+          )}
+          {authUser && authUser.role === "admin" && (
+            <NextLink href="/appointments" passHref>
+              <Link>Appointments</Link>
             </NextLink>
           )}
           {/* <NextLink href="/about" passHref>

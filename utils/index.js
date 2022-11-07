@@ -77,6 +77,31 @@ export const storeUser = async (values, setAuthUser) => {
   }
 }
 
+export const getAppointment = async () => {
+  try {
+    const res = await fetch("/backend/appointment")
+    const d = await res.json()
+    return d
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+export const storeAppointment = async (values) => {
+  try {
+    await fetch("/backend/appointment", {
+      method: "POST",
+      headers: {
+        Accept: "*/*",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
+    })
+  } catch (err) {
+    console.error(err)
+  }
+}
+
 export const getUser = async (userid) => {
   try {
     const res = await fetch(`/backend/user/${userid}`)
@@ -123,6 +148,20 @@ export const storeProperty = async (values, setLoadingText) => {
     const d = await res.json()
     setLoadingText(null)
     return d["property"]
+  } catch (err) {
+    console.error(err)
+  }
+}
+
+export const deleteAppointment = async (propertyid) => {
+  try {
+    const res = await fetch(`/backend/appointment/${propertyid}`, {
+      method: "DELETE",
+      headers: {
+        Accept: "*/*",
+        "Content-Type": "application/json",
+      },
+    })
   } catch (err) {
     console.error(err)
   }
