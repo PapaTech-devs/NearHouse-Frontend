@@ -11,6 +11,7 @@ import {
 } from "firebase/auth";
 import { useState, useEffect } from "react";
 import { getUser } from "../utils";
+import { useRouter } from "next/router";
 
 const FirebaseCredentials = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_PUBLIC_API_KEY,
@@ -35,9 +36,9 @@ export default function useFirebaseAuth() {
   const [loading, setLoading] = useState(true);
   const auth = getAuth();
   const provider = new GoogleAuthProvider();
+  const router = useRouter();
 
   const authStateChanged = async (authState) => {
-    console.log("authStateChanged", authState);
     if (!authState) {
       setAuthUser(null);
       setLoading(false);
@@ -86,6 +87,7 @@ export default function useFirebaseAuth() {
 
   const signMeOut = async () => {
     await signOut(auth);
+    router.push("/");
   };
 
   // listen for app state change

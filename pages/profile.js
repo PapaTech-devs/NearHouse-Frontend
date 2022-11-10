@@ -11,10 +11,12 @@ import { useAuth } from "../hooks/contextHooks";
 import { FaUserAlt } from "react-icons/fa";
 import { BsFillTelephoneFill } from "react-icons/bs";
 import { AiFillMail, AiFillHome } from "react-icons/ai";
+import Head from "next/head";
 
 export default function ProfilePage() {
   const { authUser } = useAuth();
 
+  if (!authUser) return <></>;
   return (
     <Flex
       h="90vh"
@@ -23,7 +25,9 @@ export default function ProfilePage() {
       direction="column"
       gap={4}
     >
-      <title>Profile Page</title>
+      <Head>
+        <title>Profile Page</title>
+      </Head>
       <Text fontSize="2xl" fontWeight="bold">
         Account Details
       </Text>

@@ -7,38 +7,47 @@ import {
   Input,
   Text,
   useToast,
-} from "@chakra-ui/react"
-import { useEffect, useState } from "react"
-import { deleteAppointment, getAppointment, showToast } from "../utils"
-import { BsFillTrashFill } from "react-icons/bs"
-import Link from "next/link"
-import Head from "next/head"
+} from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+import { deleteAppointment, getAppointment, showToast } from "../utils";
+import { BsFillTrashFill } from "react-icons/bs";
+import Link from "next/link";
+import Head from "next/head";
+import { useRouter } from "next/router";
+import { useAuth } from "../hooks/contextHooks";
 
 export default function AppointmentPage() {
-  const [appointments, setAppointments] = useState([])
-  const [deleteLoading, setDeleteLoading] = useState(false)
-  const [searchDate, setSearchDate] = useState(null)
-  const [filterAppointments, setFilterAppointments] = useState([])
-  const toast = useToast()
+  const [appointments, setAppointments] = useState([]);
+  const [deleteLoading, setDeleteLoading] = useState(false);
+  const [searchDate, setSearchDate] = useState(null);
+  const [filterAppointments, setFilterAppointments] = useState([]);
+  const toast = useToast();
+  const router = useRouter();
+  const { authUser, loading } = useAuth();
+
   useEffect(() => {
     async function fetchAppointments() {
-      const list = await getAppointment()
+      const list = await getAppointment();
       let pastDates = list.filter(
         (item) => new Date(item.appointmentDate) < new Date()
-      )
+      );
       let futureDates = list.filter(
         (item) => new Date(item.appointmentDate) >= new Date()
-      )
+      );
       futureDates.sort((a, b) =>
         new Date(a.appointmentDate) < new Date(b.appointmentDate) ? -1 : 1
-      )
-      const sortedList = [...futureDates, ...pastDates]
-      setAppointments(sortedList)
-      setFilterAppointments(sortedList)
+      );
+      const sortedList = [...futureDates, ...pastDates];
+      setAppointments(sortedList);
+      setFilterAppointments(sortedList);
     }
-    fetchAppointments()
-  }, [])
+    fetchAppointments();
+  }, []);
 
+  if (loading || !authUser || (authUser && authUser.role !== "admin")) {
+    router.push("/");
+    return <></>;
+  }
   return (
     <Flex
       bgColor="black"
@@ -62,12 +71,12 @@ export default function AppointmentPage() {
           ml={4}
           colorScheme="whatsapp"
           onClick={() => {
-            setSearchDate(null)
+            setSearchDate(null);
             setFilterAppointments(
               appointments.filter(
                 (appointment) => appointment.appointmentDate === searchDate
               )
-            )
+            );
           }}
         >
           Search
@@ -76,7 +85,7 @@ export default function AppointmentPage() {
           ml={4}
           colorScheme="linkedin"
           onClick={() => {
-            setFilterAppointments(appointments)
+            setFilterAppointments(appointments);
           }}
         >
           All
@@ -117,20 +126,20 @@ export default function AppointmentPage() {
                 size="md"
                 colorScheme="red"
                 onClick={async (_) => {
-                  setDeleteLoading(true)
-                  await deleteAppointment(appointment.appointmentid)
+                  setDeleteLoading(true);
+                  await deleteAppointment(appointment.appointmentid);
                   setFilterAppointments(
                     filterAppointments.filter(
                       (item) => item.appointmentid !== appointment.appointmentid
                     )
-                  )
+                  );
                   setAppointments(
                     appointments.filter(
                       (item) => item.appointmentid !== appointment.appointmentid
                     )
-                  )
-                  showToast("Appointment Deleted", "success", toast)
-                  setDeleteLoading(false)
+                  );
+                  showToast("Appointment Deleted", "success", toast);
+                  setDeleteLoading(false);
                 }}
                 icon={<BsFillTrashFill />}
               />
@@ -147,5 +156,5 @@ export default function AppointmentPage() {
           ))}
       </Grid>
     </Flex>
-  )
+  );
 }
