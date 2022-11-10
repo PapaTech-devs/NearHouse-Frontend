@@ -1,37 +1,37 @@
-import { Flex, Button, Text } from "@chakra-ui/react"
-import Head from "next/head"
-import { useEffect, useState } from "react"
-import AddPropertyTabs from "../../components/property/AddPropertyTabs"
-import ListMyProperties from "../../components/property/ListMyProperties"
-import { useAuth } from "../../hooks/contextHooks"
-import { usePropertyContext } from "../../hooks/propertyContext"
+import { Flex, Button, Text } from "@chakra-ui/react";
+import Head from "next/head";
+import { useEffect, useState } from "react";
+import AddPropertyTabs from "../../components/property/AddPropertyTabs";
+import ListMyProperties from "../../components/property/ListMyProperties";
+import { useAuth } from "../../hooks/contextHooks";
+import { usePropertyContext } from "../../hooks/propertyContext";
 
 export default function PropertyPage() {
-  const [add, setAdd] = useState(false)
-  const { setRegions, setMyProperties, setLoading } = usePropertyContext()
-  const { authUser, loading } = useAuth()
-  const [editingProperty, setEditingProperty] = useState(null)
+  const [add, setAdd] = useState(false);
+  const { setRegions, setMyProperties, setLoading } = usePropertyContext();
+  const { authUser, loading } = useAuth();
+  const [editingProperty, setEditingProperty] = useState(null);
 
   useEffect(() => {
     async function fetchData() {
       try {
-        setLoading(true)
-        let res = await fetch("/backend/regions")
-        const regionData = await res.json()
-        res = await fetch(`/backend/properties/user/${authUser.userid}`)
-        const propertyData = await res.json()
-        setRegions(regionData)
-        setMyProperties(propertyData)
-        setLoading(false)
+        setLoading(true);
+        let res = await fetch("/backend/regions");
+        const regionData = await res.json();
+        res = await fetch(`/backend/properties/user/${authUser.userid}`);
+        const propertyData = await res.json();
+        setRegions(regionData);
+        setMyProperties(propertyData);
+        setLoading(false);
       } catch (err) {
-        console.error(err)
-        alert(err.toString())
+        console.error(err);
+        alert(err.toString());
       }
     }
-    if (!loading) fetchData()
-  }, [loading])
+    if (!loading) fetchData();
+  }, [loading]);
 
-  if (loading) return <>Loading contents</>
+  if (loading) return <>Loading contents</>;
 
   return (
     <Flex
@@ -52,8 +52,8 @@ export default function PropertyPage() {
           variant="dark"
           _hover={{ color: "white", bg: add ? "red.500" : "green.500" }}
           onClick={() => {
-            setEditingProperty(null)
-            setAdd(!add)
+            setEditingProperty(null);
+            setAdd(!add);
           }}
         >
           {add ? "Close" : "Add"}
@@ -68,5 +68,5 @@ export default function PropertyPage() {
         />
       )}
     </Flex>
-  )
+  );
 }

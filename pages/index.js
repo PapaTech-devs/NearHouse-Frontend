@@ -8,15 +8,17 @@ import {
   Icon,
   CircularProgress,
   Text,
-} from "@chakra-ui/react"
-import Map from "../components/Map"
-import PropertyTab from "../components/PropertyTab"
-import SelectComponent from "../components/SelectComponent"
-import Head from "next/head"
-import { useEffect } from "react"
-import { FiMapPin } from "react-icons/fi"
-import { AiOutlineUnorderedList } from "react-icons/ai"
-import { usePropertyContext } from "../hooks/propertyContext"
+  useDisclosure,
+} from "@chakra-ui/react";
+import Map from "../components/Map";
+import PropertyTab from "../components/PropertyTab";
+import SelectComponent from "../components/SelectComponent";
+import Head from "next/head";
+import { useEffect } from "react";
+import { FiMapPin } from "react-icons/fi";
+import { AiOutlineUnorderedList } from "react-icons/ai";
+import { usePropertyContext } from "../hooks/propertyContext";
+import { useAuth } from "../hooks/contextHooks";
 
 export default function SearchPage() {
   const {
@@ -26,20 +28,22 @@ export default function SearchPage() {
     loading,
     mobileMapShow,
     setMobileMapShow,
-  } = usePropertyContext()
+  } = usePropertyContext();
+  const { authUser } = useAuth();
+  const { isOpen, onOpen, onClose } = useDisclosure();
   useEffect(() => {
     async function fetchRegions() {
       try {
-        const res = await fetch("/backend/regions")
-        const data = await res.json()
-        setRegions(data)
+        const res = await fetch("/backend/regions");
+        const data = await res.json();
+        setRegions(data);
       } catch (err) {
-        console.error(err)
-        alert(err.toString())
+        console.error(err);
+        alert(err.toString());
       }
     }
-    fetchRegions()
-  }, [])
+    fetchRegions();
+  }, []);
 
   return (
     <Flex
@@ -82,15 +86,27 @@ export default function SearchPage() {
                       : "No properties found"}
                   </Text>
                 ) : (
-                  filteredProperties.map((property) => (
-                    <PropertyTab
-                      key={property.propertyid}
-                      property={property}
-                      maxWidth="450px"
-                      imageHeight="215px"
-                      type="search"
-                    />
-                  ))
+                  filteredProperties.map((property) => {
+                    if (authUser && authUser.role === "admin")
+                      return (
+                        <PropertyTab
+                          key={property.propertyid}
+                          property={property}
+                          maxWidth="450px"
+                          imageHeight="215px"
+                          type="edit"
+                        />
+                      );
+                    return (
+                      <PropertyTab
+                        key={property.propertyid}
+                        property={property}
+                        maxWidth="450px"
+                        imageHeight="215px"
+                        type="search"
+                      />
+                    );
+                  })
                 )}
               </Grid>
             </Box>
@@ -133,5 +149,5 @@ export default function SearchPage() {
         <CircularProgress isIndeterminate />
       )}
     </Flex>
-  )
+  );
 }

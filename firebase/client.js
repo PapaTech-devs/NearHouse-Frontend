@@ -1,4 +1,4 @@
-import * as firebase from "firebase/app"
+import * as firebase from "firebase/app";
 import {
   getAuth,
   signInWithEmailAndPassword,
@@ -7,9 +7,11 @@ import {
   GoogleAuthProvider,
   signOut,
   onAuthStateChanged,
-} from "firebase/auth"
-import { useState, useEffect } from "react"
-import { getUser } from "../utils"
+  sendPasswordResetEmail,
+} from "firebase/auth";
+import { useState, useEffect } from "react";
+import { getUser } from "../utils";
+import { useRouter } from "next/router";
 
 const FirebaseCredentials = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_PUBLIC_API_KEY,
@@ -19,42 +21,46 @@ const FirebaseCredentials = {
   messagingSenderId: "673515990511",
   appId: "1:673515990511:web:b36a597a2e8256ce23da1a",
   measurementId: "G-2GL40YGPX7",
-}
+};
 
 // if a Firebase instance doesn't exist, create one
-firebase.initializeApp(FirebaseCredentials)
+firebase.initializeApp(FirebaseCredentials);
 
 const formatAuthUser = async (user) => {
-  const tempUser = getUser(user.uid)
-  return tempUser
-}
+  const tempUser = getUser(user.uid);
+  return tempUser;
+};
 
 export default function useFirebaseAuth() {
-  const [authUser, setAuthUser] = useState(null)
-  const [loading, setLoading] = useState(true)
-  const auth = getAuth()
-  const provider = new GoogleAuthProvider()
+  const [authUser, setAuthUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const auth = getAuth();
+  const provider = new GoogleAuthProvider();
+  const router = useRouter();
 
   const authStateChanged = async (authState) => {
-    console.log("authStateChanged", authState)
     if (!authState) {
-      setAuthUser(null)
-      setLoading(false)
-      return
+      setAuthUser(null);
+      setLoading(false);
+      return;
     }
 
-    setLoading(true)
-    var formattedUser = await formatAuthUser(authState)
-    setAuthUser(formattedUser)
-    setLoading(false)
-  }
+    setLoading(true);
+    var formattedUser = await formatAuthUser(authState);
+    setAuthUser(formattedUser);
+    setLoading(false);
+  };
 
   const signIn = async (email, password) => {
-    await signInWithEmailAndPassword(auth, email, password)
-  }
+    await signInWithEmailAndPassword(auth, email, password);
+  };
+
+  const resetPassword = async (email) => {
+    await sendPasswordResetEmail(auth, email);
+  };
 
   const signInWithGoogle = async () => {
-    const result = await signInWithPopup(auth, provider)
+    const result = await signInWithPopup(auth, provider);
 
     // .then((result) => {
     //   // This gives you a Google Access Token. You can use it to access the Google API.
@@ -73,21 +79,22 @@ export default function useFirebaseAuth() {
     //   const credential = GoogleAuthProvider.credentialFromError(error);
     //   // ...
     // });
-  }
+  };
 
   const createUser = async (email, password) => {
-    return await createUserWithEmailAndPassword(auth, email, password)
-  }
+    return await createUserWithEmailAndPassword(auth, email, password);
+  };
 
   const signMeOut = async () => {
-    await signOut(auth)
-  }
+    await signOut(auth);
+    router.push("/");
+  };
 
   // listen for app state change
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, authStateChanged)
-    return () => unsubscribe()
-  }, [])
+    const unsubscribe = onAuthStateChanged(auth, authStateChanged);
+    return () => unsubscribe();
+  }, []);
 
   return {
     authUser,
@@ -97,5 +104,6 @@ export default function useFirebaseAuth() {
     signMeOut,
     setAuthUser,
     signInWithGoogle,
-  }
+    resetPassword,
+  };
 }
