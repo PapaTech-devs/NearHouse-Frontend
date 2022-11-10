@@ -47,6 +47,7 @@ export default function Sidebar() {
               </NextLink> */}
               {authUser && (
                 <Button
+                  size="lg"
                   variant="link"
                   color="white"
                   onClick={() => {
@@ -57,11 +58,25 @@ export default function Sidebar() {
                   List Property
                 </Button>
               )}
+              {authUser && authUser.role === "admin" && (
+                <Button
+                  size="lg"
+                  variant="link"
+                  color="white"
+                  onClick={() => {
+                    onClose()
+                    router.push("/appointments")
+                  }}
+                >
+                  Appointments
+                </Button>
+              )}
               {/* <NextLink href="/about">
                 <Link fontSize="lg">About</Link>
               </NextLink> */}
               {!authUser ? (
                 <Button
+                  size="lg"
                   variant="link"
                   color="white"
                   onClick={() => {

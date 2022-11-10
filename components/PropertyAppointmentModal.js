@@ -10,79 +10,95 @@ import {
   Stack,
   Input,
   useToast,
-} from "@chakra-ui/react";
-import { useState } from "react";
+} from "@chakra-ui/react"
+import { useState } from "react"
 import {
   handleInputChange,
   showToast,
   validateEmail,
   validatePhoneNumber,
-} from "../utils";
+  storeAppointment,
+} from "../utils"
+import { v4 as uuidV4 } from "uuid"
 
 export default function PropertyAppointmentModal({
   values,
   setValues,
   isOpen,
   onClose,
+  propertyid,
 }) {
   const [error, setError] = useState({
     userName: false,
     userEmail: false,
     userMobileNo: false,
     appointmentDate: false,
-  });
-  const toast = useToast();
+  })
+  const toast = useToast()
 
-  function handleSubmit() {
+  async function handleSubmit() {
     const errorObject = {
       userName: false,
       userEmail: false,
       userMobileNo: false,
       appointmentDate: false,
-    };
+    }
 
     // check for email
     if (!validateEmail(values.userEmail)) {
-      showToast("Enter a valid email", "error", toast);
-      errorObject.userEmail = true;
+      showToast("Enter a valid email", "error", toast)
+      errorObject.userEmail = true
     } else {
-      errorObject.userEmail = false;
+      errorObject.userEmail = false
     }
 
     // check for full name
     if (values.userName.length <= 6) {
-      errorObject.userName = true;
-      showToast("Please enter your full name", "error", toast);
+      errorObject.userName = true
+      showToast("Please enter your full name", "error", toast)
     } else {
-      errorObject.userName = false;
+      errorObject.userName = false
     }
 
     // check for mobile number
     if (!validatePhoneNumber(values.userMobileNo)) {
-      errorObject.userMobileNo = true;
-      showToast("Please enter a valid mobile number", "error", toast);
+      errorObject.userMobileNo = true
+      showToast("Please enter a valid mobile number", "error", toast)
     } else {
-      errorObject.userMobileNo = false;
+      errorObject.userMobileNo = false
     }
 
     // check for date
     if (values.appointmentDate.length === 0) {
-      errorObject.appointmentDate = true;
-      showToast("Please give a date of visit", "error", toast);
+      errorObject.appointmentDate = true
+      showToast("Please give a date of visit", "error", toast)
     } else {
-      errorObject.appointmentDate = false;
+      errorObject.appointmentDate = false
     }
 
-    setError(errorObject);
+    setError(errorObject)
     if (
       errorObject.userEmail ||
       errorObject.appointmentDate ||
       errorObject.userName ||
       errorObject.userMobileNo
     ) {
-      return;
+      return
     }
-    console.log(values);
+    let data = {}
+    data.fullname = values.userName
+    data.email = values.userEmail
+    data.mobile = values.userMobileNo
+    data.appointmentDate = values.appointmentDate
+    data.propertyid = propertyid
+    data.appointmentid = uuidV4()
+    await storeAppointment(data)
+    showToast(
+      "Appointment booked. We will reach you shortly. Thank you.",
+      "success",
+      toast
+    )
+    onClose()
   }
 
   return (
@@ -145,14 +161,14 @@ export default function PropertyAppointmentModal({
                 userEmail: false,
                 userMobileNo: false,
                 appointmentDate: false,
-              });
+              })
               setValues({
                 userName: "",
                 userEmail: "",
                 userMobileNo: "",
                 appointmentDate: "",
-              });
-              onClose();
+              })
+              onClose()
             }}
           >
             Cancel
@@ -160,5 +176,5 @@ export default function PropertyAppointmentModal({
         </ModalFooter>
       </ModalContent>
     </Modal>
-  );
+  )
 }
