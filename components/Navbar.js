@@ -51,9 +51,9 @@ export default function Navbar() {
               <Link>Appointments</Link>
             </NextLink>
           )}
-          {/* <NextLink href="/about" passHref>
-            <Link>About</Link>
-          </NextLink> */}
+          <NextLink href="/blogs" passHref>
+            <Link>Blogs</Link>
+          </NextLink>
         </Flex>
       </Hide>
       <Hide below="md">
