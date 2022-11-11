@@ -193,7 +193,14 @@ export default function LoginPage() {
             Sign in with Google
           </Button> */}
           <Flex justifyContent="flex-end">
-            <Button variant="link" onClick={resetPasswordHandler}>
+            <Button
+              variant="link"
+              onClick={async () => {
+                setLoading(true);
+                await resetPasswordHandler();
+                setLoading(false);
+              }}
+            >
               Forgot Password?
             </Button>
           </Flex>
