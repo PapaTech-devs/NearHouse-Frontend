@@ -152,7 +152,7 @@ export default function LoginPage() {
             onChange={(e) => handleInputChange(e, setValues, values)}
             name="password"
           />
-          <HStack>
+          {/* <HStack>
             <Divider />
             <Text color="gray.500">or</Text>
             <Divider />
@@ -191,7 +191,7 @@ export default function LoginPage() {
             rightIcon={<GrGoogle />}
           >
             Sign in with Google
-          </Button>
+          </Button> */}
           <Flex justifyContent="flex-end">
             <Button variant="link" onClick={resetPasswordHandler}>
               Forgot Password?

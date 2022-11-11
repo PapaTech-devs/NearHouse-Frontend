@@ -41,9 +41,9 @@ export default function Navbar() {
               <NextLink href="/property" passHref>
                 <Link>List Property</Link>
               </NextLink>
-              <NextLink href="/profile" passHref>
+              {/* <NextLink href="/profile" passHref>
                 <Link>Profile</Link>
-              </NextLink>
+              </NextLink> */}
             </>
           )}
           {authUser && authUser.role === "admin" && (
