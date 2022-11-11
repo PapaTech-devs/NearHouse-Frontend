@@ -111,6 +111,7 @@ export default function AppointmentPage() {
               position="relative"
               bgColor="gray.800"
               p={4}
+              key={appointment.appointmentid}
               w="100%"
               _hover={{
                 boxShadow: "lg",
