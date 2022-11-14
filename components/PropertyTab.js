@@ -8,15 +8,15 @@ import {
   HStack,
   useDisclosure,
   Icon,
-} from "@chakra-ui/react";
-import Link from "next/link";
-import { usePropertyContext } from "../hooks/propertyContext";
-import { MdModeEdit, MdConstruction, MdVerified } from "react-icons/md";
-import { BsFillTrashFill, BsCompass } from "react-icons/bs";
-import { BiMedal } from "react-icons/bi";
-import { deleteProperty } from "../utils";
-import { useState } from "react";
-import PropertyDeleteConfirmation from "./DeleteConfirmation";
+} from "@chakra-ui/react"
+import Link from "next/link"
+import { usePropertyContext } from "../hooks/propertyContext"
+import { MdModeEdit, MdConstruction, MdVerified } from "react-icons/md"
+import { BsFillTrashFill, BsCompass } from "react-icons/bs"
+import { BiMedal } from "react-icons/bi"
+import { deleteProperty } from "../utils"
+import { useState } from "react"
+import PropertyDeleteConfirmation from "./DeleteConfirmation"
 
 export default function PropertyTab({
   property,
@@ -33,37 +33,37 @@ export default function PropertyTab({
     allProperties,
     setFilteredProperties,
     filteredProperties,
-  } = usePropertyContext();
-  const [deleteLoading, setDeleteLoading] = useState(false);
-  const toast = useToast();
-  const { onClose, onOpen, isOpen } = useDisclosure();
+  } = usePropertyContext()
+  const [deleteLoading, setDeleteLoading] = useState(false)
+  const toast = useToast()
+  const { onClose, onOpen, isOpen } = useDisclosure()
   let formatter = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "INR",
-    maximumFractionDigits: 0,
-  });
+    maximumFractionDigits: 2,
+  })
 
   const deletePropertyHandler = async () => {
-    setDeleteLoading(true);
-    await deleteProperty(property);
-    setDeleteLoading(false);
+    setDeleteLoading(true)
+    await deleteProperty(property)
+    setDeleteLoading(false)
     setMyProperties(
       myProperties.filter((p) => p.propertyid !== property.propertyid)
-    );
+    )
     setAllProperties(
       allProperties.filter((p) => p.propertyid !== property.propertyid)
-    );
+    )
     setFilteredProperties(
       filteredProperties.filter((p) => p.propertyid !== property.propertyid)
-    );
+    )
     toast({
       title: "Property Deleted",
       description: "Property is deleted successfully",
       status: "success",
       duration: 5500,
       isClosable: true,
-    });
-  };
+    })
+  }
 
   const facingList = {
     north: "North",
@@ -74,13 +74,13 @@ export default function PropertyTab({
     northeast: "North East",
     southeast: "South East",
     southwest: "South West",
-  };
+  }
   const statusList = {
     underconstruction: "Under Construction",
     readytomove: "Ready To Move",
-  };
+  }
   function firstLetterCapital(str) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
+    return str.charAt(0).toUpperCase() + str.slice(1)
   }
 
   return (
@@ -138,9 +138,9 @@ export default function PropertyTab({
                 size="md"
                 colorScheme="whatsapp"
                 onClick={(e) => {
-                  e.stopPropagation();
-                  e.preventDefault();
-                  editProperty();
+                  e.stopPropagation()
+                  e.preventDefault()
+                  editProperty()
                 }}
                 icon={<MdModeEdit />}
               />
@@ -153,9 +153,9 @@ export default function PropertyTab({
               size="md"
               colorScheme="red"
               onClick={async (e) => {
-                e.stopPropagation();
-                e.preventDefault();
-                onOpen();
+                e.stopPropagation()
+                e.preventDefault()
+                onOpen()
               }}
               icon={<BsFillTrashFill />}
             />
@@ -164,7 +164,7 @@ export default function PropertyTab({
         <Box py="4" gap={4} px="2">
           {property.priceType === "lumpsum" ? (
             <Text fontWeight="black" fontSize="4xl">
-              {formatter.format(parseFloat(property.price))}
+              {formatter.format(parseFloat(property.price) / 1e5)} Lacs
             </Text>
           ) : (
             <Text fontWeight="black" fontSize="4xl">
@@ -211,5 +211,5 @@ export default function PropertyTab({
         />
       </Flex>
     </Link>
-  );
+  )
 }

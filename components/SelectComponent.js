@@ -7,7 +7,7 @@ import {
   useDisclosure,
   useToast,
 } from "@chakra-ui/react"
-import { CgMoreO } from "react-icons/cg"
+import { FiFilter } from "react-icons/fi"
 import { usePropertyContext } from "../hooks/propertyContext"
 import MoreFilterComponents from "./MoreFilterComponents"
 import PropertySortModal from "./PropertySortModal"
@@ -100,6 +100,7 @@ export default function SelectComponent() {
         >
           <option value="house">House</option>
           <option value="flat">Flat</option>
+          <option value="commercial">Commercial</option>
           <option value="land">Land</option>
         </Select>
         <Select
@@ -168,7 +169,7 @@ export default function SelectComponent() {
         <IconButton
           colorScheme="gray"
           aria-label="More options"
-          icon={<CgMoreO />}
+          icon={<FiFilter />}
           onClick={onOpen}
           bgColor="gray.700"
           color="white"
@@ -180,7 +181,7 @@ export default function SelectComponent() {
         <IconButton
           colorScheme="gray"
           aria-label="More options"
-          icon={<CgMoreO />}
+          icon={<FiFilter />}
           onClick={onOpen}
           bgColor="gray.700"
           color="white"

@@ -201,6 +201,9 @@ export default function PropertyInfo({ error, values, setValues }) {
           <option style={{ color: "black" }} value="bastu">
             Bastu
           </option>
+          <option style={{ color: "black" }} value="danga">
+            Danga
+          </option>
         </Select>
       )}
       <Stack direction="row">

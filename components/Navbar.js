@@ -1,13 +1,25 @@
-import { Box, Button, Flex, Hide, Show, Link, Image } from "@chakra-ui/react";
-import Sidebar from "./Sidebar";
-import { HiUser, HiOutlineLogout } from "react-icons/hi";
-import * as NextLink from "next/link";
-import { useRouter } from "next/router";
-import { useAuth } from "../hooks/contextHooks";
+import {
+  Icon,
+  Box,
+  Button,
+  Flex,
+  Hide,
+  Show,
+  Link,
+  Image,
+  Text,
+} from "@chakra-ui/react"
+import Sidebar from "./Sidebar"
+import { HiUser, HiOutlineLogout } from "react-icons/hi"
+import { AiFillHome } from "react-icons/ai"
+import { IoIosAddCircle } from "react-icons/io"
+import * as NextLink from "next/link"
+import { useRouter } from "next/router"
+import { useAuth } from "../hooks/contextHooks"
 
 export default function Navbar() {
-  const router = useRouter();
-  const { authUser, signMeOut } = useAuth();
+  const router = useRouter()
+  const { authUser, signMeOut } = useAuth()
   return (
     <Flex
       px={["1.5rem", "2.5rem", "2.5rem", "3rem"]}
@@ -31,7 +43,8 @@ export default function Navbar() {
           justify="center"
           align="center"
           gap={10}
-          fontSize={["xs", "sm", "md", "lg"]}
+          fontWeight="semibold"
+          fontSize={["xs", "sm", "md", "md"]}
         >
           {/* <NextLink href="/search" passHref>
             <Link>Search</Link>
@@ -39,7 +52,12 @@ export default function Navbar() {
           {authUser && (
             <>
               <NextLink href="/property" passHref>
-                <Link>List Property</Link>
+                <Link>
+                  <Flex gap={1} justifyContent="center">
+                    <Icon w={6} h={6} as={IoIosAddCircle} color="white" />
+                    <Text>Add Properties</Text>
+                  </Flex>
+                </Link>
               </NextLink>
               {/* <NextLink href="/profile" passHref>
                 <Link>Profile</Link>
@@ -87,5 +105,5 @@ export default function Navbar() {
         <Sidebar />
       </Show>
     </Flex>
-  );
+  )
 }

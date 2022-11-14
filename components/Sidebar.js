@@ -12,10 +12,13 @@ import {
   Button,
 } from "@chakra-ui/react"
 import { useRef } from "react"
-import { FaHamburger } from "react-icons/fa"
+import { GiHamburgerMenu } from "react-icons/gi"
 import { useRouter } from "next/router"
 import { useAuth } from "../hooks/contextHooks"
 import * as NextLink from "next/link"
+import { IoIosAddCircle } from "react-icons/io"
+import { FaUserAlt } from "react-icons/fa"
+import { HiOutlineLogout } from "react-icons/hi"
 
 export default function Sidebar() {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -26,7 +29,7 @@ export default function Sidebar() {
     <>
       <IconButton
         aria-label="Menu Icon"
-        icon={<Icon as={FaHamburger} />}
+        icon={<Icon as={GiHamburgerMenu} />}
         onClick={onOpen}
         ref={btnRef}
         variant="dark"
@@ -41,7 +44,7 @@ export default function Sidebar() {
         <DrawerContent>
           <DrawerCloseButton color="white" background="gray.800" />
           <DrawerBody background="gray.900" color="white">
-            <VStack alignItems={"start"} spacing={4} pt="2">
+            <VStack alignItems={"start"} spacing={4} pt="8">
               {/* <NextLink href="/search">
                 <Link fontSize="lg">Search</Link>
               </NextLink> */}
@@ -50,12 +53,13 @@ export default function Sidebar() {
                   size="lg"
                   variant="link"
                   color="white"
+                  leftIcon={<IoIosAddCircle />}
                   onClick={() => {
                     onClose()
                     router.push("/property")
                   }}
                 >
-                  List Property
+                  Add Properties
                 </Button>
               )}
               {authUser && authUser.role === "admin" && (
@@ -79,6 +83,7 @@ export default function Sidebar() {
                   size="lg"
                   variant="link"
                   color="white"
+                  leftIcon={<FaUserAlt />}
                   onClick={() => {
                     onClose()
                     router.push("/login")
@@ -89,8 +94,8 @@ export default function Sidebar() {
               ) : (
                 <Button
                   size="lg"
-                  fontWeight="normal"
                   color="white"
+                  leftIcon={<HiOutlineLogout />}
                   variant="link"
                   onClick={() => {
                     onClose()

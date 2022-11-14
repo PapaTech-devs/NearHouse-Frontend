@@ -10,15 +10,15 @@ import {
   Text,
   useDisclosure,
   useToast,
-} from "@chakra-ui/react";
-import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-import { Carousel } from "react-responsive-carousel";
-import Head from "next/head";
-import { AiFillPhone, AiOutlineWhatsApp, AiFillSchedule } from "react-icons/ai";
-import PropertyAppointmentModal from "../../components/PropertyAppointmentModal";
-import { useState } from "react";
-import { useAuth } from "../../hooks/contextHooks";
-import { showToast } from "../../utils";
+} from "@chakra-ui/react"
+import "react-responsive-carousel/lib/styles/carousel.min.css" // requires a loader
+import { Carousel } from "react-responsive-carousel"
+import Head from "next/head"
+import { AiFillPhone, AiOutlineWhatsApp, AiFillSchedule } from "react-icons/ai"
+import PropertyAppointmentModal from "../../components/PropertyAppointmentModal"
+import { useState } from "react"
+import { useAuth } from "../../hooks/contextHooks"
+import { showToast } from "../../utils"
 
 export default function Property({ property }) {
   const [values, setValues] = useState({
@@ -26,12 +26,12 @@ export default function Property({ property }) {
     userEmail: "",
     userMobileNo: "",
     appointmentDate: "",
-  });
-  const toast = useToast();
-  const { authUser } = useAuth();
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  })
+  const toast = useToast()
+  const { authUser } = useAuth()
+  const { isOpen, onOpen, onClose } = useDisclosure()
   function firstLetterCapital(str) {
-    return str.charAt(0).toUpperCase() + str.slice(1);
+    return str.charAt(0).toUpperCase() + str.slice(1)
   }
   const facingList = {
     north: "North",
@@ -42,21 +42,21 @@ export default function Property({ property }) {
     northeast: "North East",
     southeast: "South East",
     southwest: "South West",
-  };
+  }
   const statusList = {
     underconstruction: "Under Construction",
     readytomove: "Ready To Move",
-  };
+  }
   const furnishedType = {
     fullfurnished: "Full Furnished",
     semifurnished: "Semi Furnished",
     unfurnished: "Unfurnished",
-  };
+  }
   let formatter = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "INR",
-    maximumFractionDigits: 0,
-  });
+    maximumFractionDigits: 2,
+  })
 
   return (
     <Flex
@@ -129,7 +129,7 @@ export default function Property({ property }) {
             >
               {property.priceType === "lumpsum" ? (
                 <Text fontWeight="bold" fontSize="4xl">
-                  {formatter.format(property.price)}
+                  {formatter.format(property.price / 1e5)} Lacs
                 </Text>
               ) : (
                 <Text fontWeight="bold" fontSize="4xl">
@@ -162,7 +162,7 @@ export default function Property({ property }) {
               color="black"
               colorScheme="facebook"
               onClick={() => {
-                window.location.href = "tel:+918918542704";
+                window.location.href = "tel:+918918542704"
               }}
               w="full"
             />
@@ -171,7 +171,7 @@ export default function Property({ property }) {
               color="black"
               colorScheme="whatsapp"
               onClick={() => {
-                window.location.href = "https://wa.me/8918542704";
+                window.location.href = "https://wa.me/8918542704"
               }}
               w="full"
             />
@@ -180,9 +180,9 @@ export default function Property({ property }) {
               colorScheme="twitter"
               color="black"
               onClick={() => {
-                if (authUser) onOpen();
+                if (authUser) onOpen()
                 else
-                  showToast("Please login to fix appointment.", "error", toast);
+                  showToast("Please login to fix appointment.", "error", toast)
               }}
               w="full"
             />
@@ -192,7 +192,7 @@ export default function Property({ property }) {
               color="black"
               colorScheme="telegram"
               onClick={() => {
-                window.location.href = property.videoLink ?? "";
+                window.location.href = property.videoLink ?? ""
               }}
             >
               View Tour
@@ -338,35 +338,35 @@ export default function Property({ property }) {
         </Flex>
       </Flex>
     </Flex>
-  );
+  )
 }
 
 // This also gets called at build time
 export async function getStaticProps({ params }) {
   const properties = await fetch(
     `${process.env.NEXT_PUBLIC_FRONTEND_URL}/backend/properties/propertyList`
-  ).then((res) => res.json());
+  ).then((res) => res.json())
 
   const property = properties.filter(
     (property) => property.propertyid === params.id
-  );
+  )
 
   // Pass post data to the page via props
-  return { props: { property: property[0] } };
+  return { props: { property: property[0] } }
 }
 
 // This function gets called at build time
 export async function getStaticPaths() {
   const properties = await fetch(
     `${process.env.NEXT_PUBLIC_FRONTEND_URL}/backend/properties/propertyids`
-  ).then((res) => res.json());
+  ).then((res) => res.json())
 
   // Get the paths we want to pre-render based on posts
   const paths = properties.map((propertyids) => ({
     params: { id: propertyids },
-  }));
+  }))
 
   // We'll pre-render only these paths at build time.
   // { fallback: false } means other routes should 404.
-  return { paths, fallback: true };
+  return { paths, fallback: true }
 }
