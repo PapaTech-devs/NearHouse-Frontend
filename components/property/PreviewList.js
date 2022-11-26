@@ -1,13 +1,13 @@
-import { Grid, IconButton, Box, Image } from "@chakra-ui/react"
-import { GrClose } from "react-icons/gr"
+import { Grid, IconButton, Box, Image } from "@chakra-ui/react";
+import { GrClose } from "react-icons/gr";
 
 export default function PreviewList({ values, setValues }) {
   function removeImg(index) {
-    let newPreview = [...values.preview]
-    let newFiles = [...values.files]
-    newPreview.splice(index, 1)
-    newFiles.splice(index, 1)
-    setValues({ ...values, preview: newPreview, files: newFiles })
+    let newPreview = [...values.preview];
+    let newFiles = [...values.files];
+    newPreview.splice(index, 1);
+    newFiles.splice(index, 1);
+    setValues({ ...values, preview: newPreview, files: newFiles });
   }
 
   return (
@@ -33,7 +33,8 @@ export default function PreviewList({ values, setValues }) {
           />
           <Image width="100%" height="fit-content" src={url} />
         </Box>
+        // add titles as alt tags
       ))}
     </Grid>
-  )
+  );
 }
