@@ -1,5 +1,5 @@
-import Link from "next/link"
-import { Box, Heading, Text } from "@chakra-ui/react"
+import Link from "next/link";
+import { Box, Heading, Text } from "@chakra-ui/react";
 
 function ArticleInfo(props) {
   return (
@@ -19,7 +19,7 @@ function ArticleInfo(props) {
         </Box>
       </Box>
     </Link>
-  )
+  );
 }
 
-export default ArticleInfo
+export default ArticleInfo;
