@@ -30,7 +30,6 @@ export default function SearchPage() {
     setMobileMapShow,
   } = usePropertyContext()
   const { authUser } = useAuth()
-  const { isOpen, onOpen, onClose } = useDisclosure()
   useEffect(() => {
     async function fetchRegions() {
       try {
@@ -107,6 +106,9 @@ export default function SearchPage() {
                       />
                     )
                   })
+                )}
+                {filteredProperties.length === 1 && (
+                  <Box height="215px" width="450px" />
                 )}
               </Grid>
             </Box>

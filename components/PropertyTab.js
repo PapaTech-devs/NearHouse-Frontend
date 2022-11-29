@@ -24,6 +24,7 @@ export default function PropertyTab({
   imageHeight,
   type,
   editProperty,
+  width,
 }) {
   const {
     setSelectedProperty,
@@ -96,6 +97,7 @@ export default function PropertyTab({
         boxShadow="base"
         position="relative"
         bgColor="gray.800"
+        width={width}
         w="100%"
         _hover={{
           boxShadow: "lg",

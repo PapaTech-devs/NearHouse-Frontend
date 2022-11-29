@@ -85,7 +85,12 @@ export default function PropertyPictures({ values, setValues }) {
               icon={<BsTrashFill />}
               onClick={() => deleteImage(url)}
             />
-            <Image width="100%" height="fit-content" src={url} />
+            <Image
+              alt="property images already uploaded"
+              width="100%"
+              height="fit-content"
+              src={url}
+            />
           </Box>
         ))}
       </Grid>

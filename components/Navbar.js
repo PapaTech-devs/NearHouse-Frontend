@@ -34,7 +34,11 @@ export default function Navbar() {
       <Box w={["100%", "50%", "25%", "25%"]}>
         <NextLink href="/" passHref>
           <Link>
-            <Image w="29%" src="/images/brand.png" />
+            <Image
+              alt="nearhouse brand image"
+              w="29%"
+              src="/images/brand.png"
+            />
           </Link>
         </NextLink>
       </Box>
