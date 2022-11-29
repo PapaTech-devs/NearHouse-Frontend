@@ -1,21 +1,25 @@
-import { Box, Heading, Text } from "@chakra-ui/react";
+import Link from "next/link"
+import { Box, Heading, Text } from "@chakra-ui/react"
+
 function ArticleInfo(props) {
   return (
-    <Box
-      p={5}
-      justifyContent="space-between"
-      d="flex"
-      shadow="md"
-      borderWidth="1px"
-      border="2px solid green"
-      {...ArticleInfo}
-    >
-      <Box d="flex" flexDirection="column">
-        <Heading fontSize="xl">{props.title}</Heading>
-        <Text mt={4}>{props.description}</Text>
+    <Link href={`/blogs/${props.slug}`}>
+      <Box
+        p={5}
+        justifyContent="space-between"
+        d="flex"
+        shadow="md"
+        borderWidth="1px"
+        border="2px solid green"
+        cursor="pointer"
+      >
+        <Box d="flex" flexDirection="column">
+          <Heading fontSize="xl">{props.title}</Heading>
+          <Text mt={4}>{props.description}</Text>
+        </Box>
       </Box>
-    </Box>
-  );
+    </Link>
+  )
 }
 
-export default ArticleInfo;
+export default ArticleInfo

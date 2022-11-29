@@ -1,44 +1,18 @@
-import { articles } from "../../data";
-import { Box, Flex, Heading, Stack } from "@chakra-ui/react";
-import ArticleInfo from "../../components/blog/articleInfo";
-// This gets called on every request
-//   export async function getServerSideProps() {
-//     // Fetch data from external API
-//     // const res = await fetch(`https://.../data`)
-//     const data = articles//await res.json()
+import { articles } from "../../data"
+import { Box, Flex, Heading, Stack } from "@chakra-ui/react"
+import ArticleInfo from "../../components/blog/articleInfo"
+import Link from "next/link"
 
-//     // Pass data to the page via props
-//     return { props: { data } }
-//   }
+export default function BlogList({ articles }) {
+  console.log(articles)
 
-function BlogList() {
-  //   const article = articles;
-  //   console.log(article);
-  //   const articleList = articles.map((element) => {
-  //     return (
-  //       <ul type="disc">
-  //         <li
-  //           style={{
-  //             fontWeight: "bold",
-  //             color: "red",
-  //           }}
-  //         >
-  //           {element.title}
-  //         </li>
-  //         <li>{element.description}</li>
-  //       </ul>
-  //     );
-  //   });
-  //   return <div>{articleList}</div>;
-  //   return <div>{articles}</div>;
-
-  console.log(articles);
   return (
     <Flex
       height="100vh"
       justifyContent="center"
       alignItems="center"
       flexDirection="column"
+      bgColor="black"
     >
       <Box width="85%">
         <Box
@@ -57,6 +31,7 @@ function BlogList() {
             {articles.map((article) => (
               <ArticleInfo
                 key={article._id}
+                slug={article.slug}
                 title={article.title}
                 description={article.description}
               />
@@ -65,7 +40,12 @@ function BlogList() {
         </Box>
       </Box>
     </Flex>
-  );
+  )
 }
 
-export default BlogList;
+export async function getServerSideProps(context) {
+  // ** Fetch data here **
+  return {
+    props: { articles }, // will be passed to the page component as props
+  }
+}

@@ -1,50 +1,17 @@
 import {
-  Box,
   Button,
   Flex,
   Grid,
-  Hide,
-  Show,
-  Icon,
-  CircularProgress,
+  Image,
   Text,
-  useDisclosure,
-} from "@chakra-ui/react";
-import Map from "../components/Map";
-import PropertyTab from "../components/PropertyTab";
-import SelectComponent from "../components/SelectComponent";
-import Head from "next/head";
-import { useEffect } from "react";
-import { FiMapPin } from "react-icons/fi";
-import { AiOutlineUnorderedList } from "react-icons/ai";
-import { usePropertyContext } from "../hooks/propertyContext";
-import { useAuth } from "../hooks/contextHooks";
+  Square,
+  Box,
+  Show,
+} from "@chakra-ui/react"
+import Head from "next/head"
+import { BsSearch } from "react-icons/bs"
 
-export default function SearchPage() {
-  const {
-    filteredProperties,
-    allProperties,
-    setRegions,
-    loading,
-    mobileMapShow,
-    setMobileMapShow,
-  } = usePropertyContext();
-  const { authUser } = useAuth();
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  useEffect(() => {
-    async function fetchRegions() {
-      try {
-        const res = await fetch("/backend/regions");
-        const data = await res.json();
-        setRegions(data);
-      } catch (err) {
-        console.error(err);
-        alert(err.toString());
-      }
-    }
-    fetchRegions();
-  }, []);
-
+export default function HomePage() {
   return (
     <Flex
       px={["1.5rem", "2.5rem", "2.5rem", "3rem"]}
@@ -54,100 +21,132 @@ export default function SearchPage() {
       color="white"
     >
       <Head>
-        <title>Search Property</title>
+        <title>Nearhouse</title>
       </Head>
-      <SelectComponent />
-      {!loading ? (
-        <Flex justify="space-between">
-          {!mobileMapShow ? (
-            <Box
-              h="80vh"
-              overflow="auto"
-              sx={{
-                "::-webkit-scrollbar": {
-                  display: "none",
-                },
-              }}
-            >
-              <Grid
-                pr={2}
-                gap={5}
-                templateColumns={[
-                  "repeat(1, 1fr)",
-                  "repeat(1, 1fr)",
-                  "repeat(2, 1fr)",
-                  "repeat(2, 1fr)",
-                ]}
-              >
-                {filteredProperties.length === 0 ? (
-                  <Text fontWeight="semibold">
-                    {allProperties.length === 0
-                      ? "Please search for a region"
-                      : "No properties found"}
-                  </Text>
-                ) : (
-                  filteredProperties.map((property) => {
-                    if (authUser && authUser.role === "admin")
-                      return (
-                        <PropertyTab
-                          key={property.propertyid}
-                          property={property}
-                          maxWidth="450px"
-                          imageHeight="215px"
-                          type="edit"
-                        />
-                      );
-                    return (
-                      <PropertyTab
-                        key={property.propertyid}
-                        property={property}
-                        maxWidth="450px"
-                        imageHeight="215px"
-                        type="search"
-                      />
-                    );
-                  })
-                )}
-              </Grid>
-            </Box>
-          ) : (
-            // <Box w="100%" h="80vh" bg="red.200" borderRadius="5px">
-            //   Map
-            // </Box>
-            <Map properties={filteredProperties} width="100%" />
-          )}
-
-          <Show above="md">
-            {/* <Box w="46%" h="80vh" bg="red.200" borderRadius="5px">
-            Map
-          </Box> */}
-            <Map properties={filteredProperties} width="46%" />
-          </Show>
-          <Hide above="md">
-            <Button
-              size="lg"
-              position="absolute"
-              colorScheme="teal"
-              bottom="75px"
-              left="50%"
-              transform="translate(-50%,-50%)"
-              fontSize="xl"
-              onClick={() => setMobileMapShow(!mobileMapShow)}
-              rightIcon={
-                !mobileMapShow ? (
-                  <Icon as={FiMapPin} size={25} mt="1" />
-                ) : (
-                  <Icon as={AiOutlineUnorderedList} size={25} mt="1" />
-                )
-              }
-            >
-              {!mobileMapShow ? "Map View" : "List View"}
-            </Button>
-          </Hide>
-        </Flex>
-      ) : (
-        <CircularProgress isIndeterminate />
-      )}
+      <Button
+        leftIcon={<BsSearch />}
+        mt="2"
+        bgColor="white"
+        color="black"
+        fontSize={["xl", "lg", "lg", "lg"]}
+        fontWeight="bold"
+        textAlign="left"
+        h="6vh"
+      >
+        Search properties near you
+      </Button>
+      <Grid
+        my={20}
+        gap={3}
+        templateColumns={[
+          "repeat(2, 1fr)",
+          "repeat(3, 1fr)",
+          "repeat(6, 1fr)",
+          "repeat(6, 1fr)",
+        ]}
+      >
+        <Square border="2px" borderColor="whiteAlpha.300" borderRadius="xl">
+          <Flex
+            py={["5", "5", "5", "8"]}
+            alignItems="center"
+            justifyContent="space-between"
+            direction="column"
+            gap={3}
+          >
+            <Image w="55%" src="/images/house_icons.jpg" alt="house icon" />
+            <Text fontSize="2xl" fontWeight="bold">
+              House
+            </Text>
+          </Flex>
+        </Square>
+        <Square border="2px" borderColor="whiteAlpha.300" borderRadius="xl">
+          <Flex
+            py={["5", "5", "5", "8"]}
+            alignItems="center"
+            justifyContent="space-between"
+            direction="column"
+            gap={3}
+          >
+            <Image w="55%" src="/images/house_icons.jpg" alt="house icon" />
+            <Text fontSize="2xl" fontWeight="bold">
+              House
+            </Text>
+          </Flex>
+        </Square>
+        <Square border="2px" borderColor="whiteAlpha.300" borderRadius="xl">
+          <Flex
+            py={["5", "5", "5", "8"]}
+            alignItems="center"
+            justifyContent="space-between"
+            direction="column"
+            gap={3}
+          >
+            <Image w="55%" src="/images/house_icons.jpg" alt="house icon" />
+            <Text fontSize="2xl" fontWeight="bold">
+              House
+            </Text>
+          </Flex>
+        </Square>
+        <Square border="2px" borderColor="whiteAlpha.300" borderRadius="xl">
+          <Flex
+            py={["5", "5", "5", "8"]}
+            direction="column"
+            alignItems="center"
+            justifyContent="space-between"
+            gap={3}
+          >
+            <Image w="55%" src="/images/house_icons.jpg" alt="house icon" />
+            <Text fontSize="2xl" fontWeight="bold">
+              House
+            </Text>
+          </Flex>
+        </Square>
+        <Square border="2px" borderColor="whiteAlpha.300" borderRadius="xl">
+          <Flex
+            py={["5", "5", "5", "8"]}
+            alignItems="center"
+            justifyContent="space-between"
+            direction="column"
+            gap={3}
+          >
+            <Image w="55%" src="/images/house_icons.jpg" alt="house icon" />
+            <Text fontSize="2xl" fontWeight="bold">
+              House
+            </Text>
+          </Flex>
+        </Square>
+        <Square border="2px" borderColor="whiteAlpha.300" borderRadius="xl">
+          <Flex
+            py={["5", "5", "5", "8"]}
+            alignItems="center"
+            justifyContent="space-between"
+            direction="column"
+            gap={3}
+          >
+            <Image w="55%" src="/images/house_icons.jpg" alt="house icon" />
+            <Text fontSize="2xl" fontWeight="bold">
+              House
+            </Text>
+          </Flex>
+        </Square>
+      </Grid>
+      <Box
+        border="4px"
+        borderColor="yellow.200"
+        textAlign="center"
+        p={6}
+        position="relative"
+      >
+        {/* <Image
+          position="absolute"
+          right={0}
+          src="/images/sparkle.png"
+          alt="sparle image"
+        /> */}
+        <Text fontSize="3xl" fontWeight="bold">
+          List Properties for free and Get Unlimited Leads
+        </Text>
+      </Box>
     </Flex>
-  );
+  )
 }

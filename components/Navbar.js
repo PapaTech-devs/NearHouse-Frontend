@@ -11,11 +11,12 @@ import {
 } from "@chakra-ui/react"
 import Sidebar from "./Sidebar"
 import { HiUser, HiOutlineLogout } from "react-icons/hi"
-import { AiFillHome } from "react-icons/ai"
+import { GiBookCover } from "react-icons/gi"
 import { IoIosAddCircle } from "react-icons/io"
 import * as NextLink from "next/link"
 import { useRouter } from "next/router"
 import { useAuth } from "../hooks/contextHooks"
+import { AiOutlineSearch } from "react-icons/ai"
 
 export default function Navbar() {
   const router = useRouter()
@@ -49,6 +50,14 @@ export default function Navbar() {
           {/* <NextLink href="/search" passHref>
             <Link>Search</Link>
           </NextLink> */}
+          <NextLink href="/search" passHref>
+            <Link>
+              <Flex gap={1} justifyContent="center">
+                <Icon w={6} h={6} as={AiOutlineSearch} color="white" />
+                <Text>Search</Text>
+              </Flex>
+            </Link>
+          </NextLink>
           {authUser && (
             <>
               <NextLink href="/property" passHref>
@@ -64,6 +73,14 @@ export default function Navbar() {
               </NextLink> */}
             </>
           )}
+          <NextLink href="/blogs" passHref>
+            <Link>
+              <Flex gap={1} justifyContent="center">
+                <Icon w={6} h={6} pr={1} as={GiBookCover} color="white" />
+                <Text>Blogs</Text>
+              </Flex>
+            </Link>
+          </NextLink>
           {authUser && authUser.role === "admin" && (
             <NextLink href="/appointments" passHref>
               <Link>Appointments</Link>
