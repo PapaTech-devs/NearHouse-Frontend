@@ -1,10 +1,10 @@
-import { articles } from "../../data"
-import { Box, Flex, Heading, Stack } from "@chakra-ui/react"
-import ArticleInfo from "../../components/blog/articleInfo"
-import Link from "next/link"
+import { articles } from "../../data";
+import { Box, Flex, Heading, Stack } from "@chakra-ui/react";
+import ArticleInfo from "../../components/blog/articleInfo";
+import Link from "next/link";
 
 export default function BlogList({ articles }) {
-  console.log(articles)
+  console.log(articles);
 
   return (
     <Flex
@@ -40,12 +40,13 @@ export default function BlogList({ articles }) {
         </Box>
       </Box>
     </Flex>
-  )
+  );
 }
 
 export async function getServerSideProps(context) {
   // ** Fetch data here **
+
   return {
     props: { articles }, // will be passed to the page component as props
-  }
+  };
 }
