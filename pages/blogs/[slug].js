@@ -42,12 +42,9 @@ export default function ArticleComponent({ article }) {
       <Head>
         <title>{article.title}</title>
       </Head>
-      <ReactMarkdown
-        style={{ padding: "20px" }}
-        components={ChakraUIRenderer(newTheme)}
-        children={article.markdown}
-        skipHtml
-      />
+      <ReactMarkdown components={ChakraUIRenderer(newTheme)} skipHtml>
+        {article.markdown}
+      </ReactMarkdown>
     </Box>
   )
 }
