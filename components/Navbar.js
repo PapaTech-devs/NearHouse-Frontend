@@ -70,12 +70,12 @@ export default function Navbar() {
                   </Flex>
                 </Link>
               </NextLink>
-              <NextLink href="/profile" passHref>
+              {/* <NextLink href="/profile" passHref>
                 <Flex gap={1} justifyContent="center">
                   <Icon w={6} h={6} as={CgProfile} color="white" />
                   <Link>Profile</Link>
                 </Flex>
-              </NextLink>
+              </NextLink> */}
             </>
           )}
           <NextLink href="/blogs" passHref>
