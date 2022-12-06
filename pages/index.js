@@ -197,9 +197,9 @@ export default function HomePage() {
         <Button
           bgColor="#4FE44C"
           color="black"
-          px={[4, 4, 8, 8]}
+          px={[3, 4, 8, 8]}
           h="75px"
-          fontSize={["lg", "lg", "2xl", "2xl"]}
+          fontSize={["md", "lg", "2xl", "2xl"]}
           sx={{ borderRadius: "20px" }}
           leftIcon={
             <Image
@@ -220,10 +220,10 @@ export default function HomePage() {
         </Button>
         <Button
           bgColor="#4FE44C"
-          px={[4, 4, 8, 8]}
+          px={[3, 4, 8, 8]}
           color="black"
           h="75px"
-          fontSize={["lg", "lg", "2xl", "2xl"]}
+          fontSize={["md", "lg", "2xl", "2xl"]}
           sx={{ borderRadius: "20px" }}
           bgGradient="linear(to-b, #FFFFFF 0%, #4FE44C 20%,#026f00 100%)"
           leftIcon={
