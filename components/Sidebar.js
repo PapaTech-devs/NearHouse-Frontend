@@ -6,19 +6,19 @@ import {
   DrawerBody,
   DrawerCloseButton,
   IconButton,
-  Link,
   Icon,
   VStack,
   Button,
 } from "@chakra-ui/react"
 import { useRef } from "react"
-import { GiHamburgerMenu } from "react-icons/gi"
+import { GiBookCover, GiHamburgerMenu } from "react-icons/gi"
 import { useRouter } from "next/router"
 import { useAuth } from "../hooks/contextHooks"
-import * as NextLink from "next/link"
 import { IoIosAddCircle } from "react-icons/io"
 import { FaUserAlt } from "react-icons/fa"
 import { HiOutlineLogout } from "react-icons/hi"
+import { CgProfile } from "react-icons/cg"
+import { AiOutlineSearch, AiTwotoneCalendar } from "react-icons/ai"
 
 export default function Sidebar() {
   const { isOpen, onOpen, onClose } = useDisclosure()
@@ -45,28 +45,64 @@ export default function Sidebar() {
           <DrawerCloseButton color="white" background="gray.800" />
           <DrawerBody background="gray.900" color="white">
             <VStack alignItems={"start"} spacing={4} pt="8">
-              {/* <NextLink href="/search">
-                <Link fontSize="lg">Search</Link>
-              </NextLink> */}
               {authUser && (
-                <Button
-                  size="lg"
-                  variant="link"
-                  color="white"
-                  leftIcon={<IoIosAddCircle />}
-                  onClick={() => {
-                    onClose()
-                    router.push("/property")
-                  }}
-                >
-                  Add Properties
-                </Button>
+                <>
+                  <Button
+                    size="lg"
+                    variant="link"
+                    color="white"
+                    leftIcon={<IoIosAddCircle />}
+                    onClick={() => {
+                      onClose()
+                      router.push("/property")
+                    }}
+                  >
+                    Add Properties
+                  </Button>
+                  <Button
+                    size="lg"
+                    variant="link"
+                    color="white"
+                    leftIcon={<CgProfile />}
+                    onClick={() => {
+                      onClose()
+                      router.push("/profile")
+                    }}
+                  >
+                    Profile
+                  </Button>
+                </>
               )}
+              <Button
+                size="lg"
+                variant="link"
+                color="white"
+                leftIcon={<AiOutlineSearch />}
+                onClick={() => {
+                  onClose()
+                  router.push("/search")
+                }}
+              >
+                Search
+              </Button>
+              <Button
+                size="lg"
+                variant="link"
+                color="white"
+                leftIcon={<GiBookCover />}
+                onClick={() => {
+                  onClose()
+                  router.push("/blogs")
+                }}
+              >
+                Blogs
+              </Button>
               {authUser && authUser.role === "admin" && (
                 <Button
                   size="lg"
                   variant="link"
                   color="white"
+                  leftIcon={<AiTwotoneCalendar />}
                   onClick={() => {
                     onClose()
                     router.push("/appointments")
@@ -75,9 +111,6 @@ export default function Sidebar() {
                   Appointments
                 </Button>
               )}
-              {/* <NextLink href="/about">
-                <Link fontSize="lg">About</Link>
-              </NextLink> */}
               {!authUser ? (
                 <Button
                   size="lg"

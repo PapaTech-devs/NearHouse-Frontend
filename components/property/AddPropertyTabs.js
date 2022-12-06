@@ -36,6 +36,7 @@ export default function AddPropertyTabs({ setAdd, editingProperty }) {
     address: editingProperty ? editingProperty.address : "",
     facing: editingProperty ? editingProperty.facing : "",
     verified: editingProperty ? editingProperty.verified : "",
+    featured: editingProperty ? editingProperty.featured : "",
     price: editingProperty ? editingProperty.price : "",
     priceType: editingProperty ? editingProperty.priceType : "",
     landType: editingProperty ? editingProperty.landType : "",

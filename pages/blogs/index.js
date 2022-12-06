@@ -1,11 +1,7 @@
-import { articles } from "../../data"
 import { Box, Flex, Heading, Stack } from "@chakra-ui/react"
 import ArticleInfo from "../../components/blog/articleInfo"
-import Link from "next/link"
 
 export default function BlogList({ articles }) {
-  console.log(articles)
-
   return (
     <Flex
       height="100vh"
@@ -22,9 +18,6 @@ export default function BlogList({ articles }) {
           marginBottom="20px"
         >
           <Heading color="white">Article List</Heading>
-          {/* <Link to="/add-new-book">
-            <Button paddingX="3rem">Add</Button>
-          </Link> */}
         </Box>
         <Box rounded="md" color="white" px="15px" py="15px">
           <Stack spacing={8}>
@@ -45,6 +38,11 @@ export default function BlogList({ articles }) {
 
 export async function getServerSideProps(context) {
   // ** Fetch data here **
+
+  const articles = await fetch(
+    `${process.env.NEXT_PUBLIC_FRONTEND_URL}/backend/articles`
+  ).then((res) => res.json())
+
   return {
     props: { articles }, // will be passed to the page component as props
   }

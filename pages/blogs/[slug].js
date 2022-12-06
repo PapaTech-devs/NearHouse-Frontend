@@ -1,4 +1,3 @@
-import { articles } from "../../data"
 import { Box, Text } from "@chakra-ui/react"
 
 export default function ArticleComponent({ article }) {
@@ -12,11 +11,14 @@ export default function ArticleComponent({ article }) {
 // This also gets called at build time
 export async function getStaticProps({ params }) {
   //  ** Fetch individual post from backend using params.slug **
+  const article = await fetch(
+    `${process.env.NEXT_PUBLIC_FRONTEND_URL}/backend/articles/slugToBlog/${params.slug}`
+  ).then((res) => res.json())
 
   // Pass data to the page via props
   return {
     props: {
-      article: articles.filter((article) => article.slug === params.slug)[0],
+      article,
     },
   }
 }
@@ -24,8 +26,13 @@ export async function getStaticProps({ params }) {
 // This function gets called at build time
 export async function getStaticPaths() {
   // Get the paths we want to pre-render based on posts
-  const slugs = articles.map((article) => ({
-    params: { slug: article.slug },
+
+  const slugLists = await fetch(
+    `${process.env.NEXT_PUBLIC_FRONTEND_URL}/backend/articles/slugList`
+  ).then((res) => res.json())
+
+  const slugs = slugLists.map((path) => ({
+    params: { slug: path },
   }))
   return { paths: slugs, fallback: false }
 }

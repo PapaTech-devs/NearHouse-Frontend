@@ -16,7 +16,8 @@ import { IoIosAddCircle } from "react-icons/io"
 import * as NextLink from "next/link"
 import { useRouter } from "next/router"
 import { useAuth } from "../hooks/contextHooks"
-import { AiOutlineSearch } from "react-icons/ai"
+import { AiOutlineSearch, AiTwotoneCalendar } from "react-icons/ai"
+import { CgProfile } from "react-icons/cg"
 
 export default function Navbar() {
   const router = useRouter()
@@ -51,9 +52,6 @@ export default function Navbar() {
           fontWeight="semibold"
           fontSize={["xs", "sm", "md", "md"]}
         >
-          {/* <NextLink href="/search" passHref>
-            <Link>Search</Link>
-          </NextLink> */}
           <NextLink href="/search" passHref>
             <Link>
               <Flex gap={1} justifyContent="center">
@@ -72,9 +70,12 @@ export default function Navbar() {
                   </Flex>
                 </Link>
               </NextLink>
-              {/* <NextLink href="/profile" passHref>
-                <Link>Profile</Link>
-              </NextLink> */}
+              <NextLink href="/profile" passHref>
+                <Flex gap={1} justifyContent="center">
+                  <Icon w={6} h={6} as={CgProfile} color="white" />
+                  <Link>Profile</Link>
+                </Flex>
+              </NextLink>
             </>
           )}
           <NextLink href="/blogs" passHref>
@@ -87,12 +88,12 @@ export default function Navbar() {
           </NextLink>
           {authUser && authUser.role === "admin" && (
             <NextLink href="/appointments" passHref>
-              <Link>Appointments</Link>
+              <Flex gap={1} justifyContent="center">
+                <Icon w={6} h={6} as={AiTwotoneCalendar} color="white" />
+                <Link>Appointments</Link>
+              </Flex>
             </NextLink>
           )}
-          {/* <NextLink href="/blogs" passHref>
-            <Link>Blogs</Link>
-          </NextLink> */}
         </Flex>
       </Hide>
       <Hide below="md">

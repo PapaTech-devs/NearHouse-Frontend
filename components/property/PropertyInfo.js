@@ -11,9 +11,11 @@ import FlatInfo from "./FlatInfo"
 import HouseInfo from "./HouseInfo"
 import { handleInputChange } from "../../utils"
 import { usePropertyContext } from "../../hooks/propertyContext"
+import { useAuth } from "../../hooks/contextHooks"
 
 export default function PropertyInfo({ error, values, setValues }) {
   const { regions } = usePropertyContext()
+  const { authUser } = useAuth()
 
   return (
     <Stack w="100%" rowGap={1}>
@@ -44,6 +46,18 @@ export default function PropertyInfo({ error, values, setValues }) {
         value={values.description}
         onChange={(e) => handleInputChange(e, setValues, values)}
       />
+      {authUser && authUser.role === "admin" && (
+        <Flex alignItems="center" ml={4} gap={4}>
+          <Text>Is the property featured on Landing Page?</Text>
+          <Checkbox
+            onChange={(e) =>
+              setValues({ ...values, featured: e.target.checked })
+            }
+            size="md"
+            defaultChecked={values.featured}
+          />
+        </Flex>
+      )}
       <Flex alignItems="center" ml={4} gap={4}>
         <Text>Are you the owner?</Text>
         <Checkbox

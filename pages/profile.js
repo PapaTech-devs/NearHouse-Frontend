@@ -6,17 +6,66 @@ import {
   InputLeftElement,
   Stack,
   Text,
-} from "@chakra-ui/react";
-import { useAuth } from "../hooks/contextHooks";
-import { FaUserAlt } from "react-icons/fa";
-import { BsFillTelephoneFill } from "react-icons/bs";
-import { AiFillMail, AiFillHome } from "react-icons/ai";
-import Head from "next/head";
+} from "@chakra-ui/react"
+import { useAuth } from "../hooks/contextHooks"
+import { FaUserAlt } from "react-icons/fa"
+import { BsFillTelephoneFill } from "react-icons/bs"
+import { AiFillMail, AiFillHome } from "react-icons/ai"
+import Head from "next/head"
+import { useState } from "react"
+import { handleInputChange, updateUser, validatePhoneNumber } from "../utils"
 
 export default function ProfilePage() {
-  const { authUser } = useAuth();
+  const { authUser, setAuthUser } = useAuth()
+  const copyUser = JSON.parse(JSON.stringify(authUser))
+  const [userData, setUserData] = useState(copyUser)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState({
+    fullName: false,
+    mobile: false,
+  })
 
-  if (!authUser) return <></>;
+  // Add profile page update functionality
+
+  async function handleUpdate() {
+    const cmp = JSON.stringify(authUser) !== JSON.stringify(userData)
+    if (!cmp) return
+
+    const errorObject = {
+      fullName: false,
+      email: false,
+      password: false,
+      confirmPassword: false,
+      mobile: false,
+    }
+
+    // check for full name
+    if (values.fullName.length <= 6) {
+      errorObject.fullName = true
+      showToast("Please enter your full name", "error", toast)
+    } else {
+      errorObject.fullName = false
+    }
+
+    // check for mobile number
+    if (!validatePhoneNumber(values.mobile)) {
+      errorObject.mobile = true
+      showToast("Please enter a valid mobile number", "error", toast)
+    } else {
+      errorObject.mobile = false
+    }
+
+    setErrors(errorObject)
+    if (errorObject.fullName || errorObject.mobile) {
+      return
+    }
+
+    setLoading(true)
+    await updateUser(userData, setAuthUser)
+    setLoading(true)
+  }
+
+  if (!authUser) return <></>
   return (
     <Flex
       h="90vh"
@@ -24,6 +73,7 @@ export default function ProfilePage() {
       px={["1.5rem", "2.5rem", "2.5rem", "3rem"]}
       direction="column"
       gap={4}
+      color="white"
     >
       <Head>
         <title>Profile Page</title>
@@ -37,11 +87,11 @@ export default function ProfilePage() {
             <FaUserAlt />
           </InputLeftElement>
           <Input
-            placeholder="Enter your name"
+            placeholder="Enter your name (required)"
             _placeholder={{ color: "gray.500" }}
             name="userName"
             defaultValue={authUser.fullName ?? ""}
-            //   onChange={(e) => handleInputChange(e, setValues, values)}
+            onChange={(e) => handleInputChange(e, setUserData, userData)}
             //   isInvalid={error.userName}
           />
         </InputGroup>
@@ -50,13 +100,13 @@ export default function ProfilePage() {
             <BsFillTelephoneFill />
           </InputLeftElement>
           <Input
-            placeholder="Enter your phone number"
+            placeholder="Enter your phone number (required)"
             _placeholder={{ color: "gray.500" }}
             type="tel"
-            name="userMobileNo"
-            value={authUser.mobile ?? ""}
+            name="mobile"
+            defaultValue={authUser.mobile ?? ""}
             //   isInvalid={error.userMobileNo}
-            //   onChange={(e) => handleInputChange(e, setValues, values)}
+            onChange={(e) => handleInputChange(e, setUserData, userData)}
           />
         </InputGroup>
         <InputGroup>
@@ -67,10 +117,9 @@ export default function ProfilePage() {
             placeholder="Enter your email"
             _placeholder={{ color: "gray.500" }}
             type="email"
-            name="userEmail"
+            name="email"
             value={authUser.email ?? ""}
-            //   isInvalid={error.userEmail}
-            //   onChange={(e) => handleInputChange(e, setValues, values)}
+            readOnly={true}
           />
         </InputGroup>
         <InputGroup>
@@ -81,15 +130,17 @@ export default function ProfilePage() {
             placeholder="Enter the address (optional)"
             _placeholder={{ color: "gray.500" }}
             name="address"
-            value={authUser.address ?? ""}
+            defaultValue={authUser.address ?? ""}
             //   isInvalid={error.appointmentDate}
-            //   onChange={(e) => handleInputChange(e, setValues, values)}
+            onChange={(e) => handleInputChange(e, setUserData, userData)}
           />
         </InputGroup>
       </Stack>
       <Flex justifyContent="flex-end">
-        <Button colorScheme="green">Save</Button>
+        <Button isLoading={loading} onClick={handleUpdate} colorScheme="green">
+          Save
+        </Button>
       </Flex>
     </Flex>
-  );
+  )
 }

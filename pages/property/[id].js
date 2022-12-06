@@ -125,7 +125,7 @@ export default function Property({ property }) {
             <Flex
               direction={["column", "row", "row", "row"]}
               alignItems={["flex-start", "flex-end", "flex-end", "flex-end"]}
-              gap={[0, 0, 0, 4]}
+              gap={4}
             >
               {property.priceType === "lumpsum" ? (
                 <Text fontWeight="bold" fontSize="4xl">
@@ -283,7 +283,9 @@ export default function Property({ property }) {
                 >
                   <Text>Furnished</Text>
                   <Text fontSize="lg" fontWeight="bold">
-                    {furnishedType[property.furnishType]}
+                    {property.furnishType
+                      ? furnishedType[property.furnishType]
+                      : "No Data"}
                   </Text>
                 </Flex>
                 <Flex
@@ -352,7 +354,7 @@ export async function getStaticProps({ params }) {
   )
 
   // Pass post data to the page via props
-  return { props: { property: property[0] } }
+  return { props: { property: property[0] }, revalidate: 10 }
 }
 
 // This function gets called at build time

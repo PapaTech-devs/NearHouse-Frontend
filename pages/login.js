@@ -9,55 +9,56 @@ import {
   Text,
   HStack,
   Divider,
-} from "@chakra-ui/react";
-import Head from "next/head";
-import { useRouter } from "next/router";
-import { useAuth } from "../hooks/contextHooks";
-import { useState } from "react";
-import PasswordInput from "../components/PasswordInput";
-import { validateEmail, showToast, handleInputChange } from "../utils";
-import { GrGoogle } from "react-icons/gr";
+} from "@chakra-ui/react"
+import Head from "next/head"
+import { useRouter } from "next/router"
+import { useAuth } from "../hooks/contextHooks"
+import { useState } from "react"
+import PasswordInput from "../components/PasswordInput"
+import { validateEmail, showToast, handleInputChange } from "../utils"
+import { GrGoogle } from "react-icons/gr"
 
 export default function LoginPage() {
-  const router = useRouter();
-  const toast = useToast();
+  const router = useRouter()
+  const toast = useToast()
   const [values, setValues] = useState({
     email: "",
     password: "",
-  });
-  const [loading, setLoading] = useState(false);
+  })
+  const [loading, setLoading] = useState(false)
   const [errors, setError] = useState({
     email: false,
     password: false,
-  });
-  const { signIn, signInWithGoogle, signMeOut, resetPassword } = useAuth();
+  })
+  const { signIn, signInWithGoogle, signMeOut, resetPassword, setAuthUser } =
+    useAuth()
 
   async function resetPasswordHandler() {
     const errorObject = {
       email: false,
       password: false,
-    };
+    }
 
     // check for email
     if (!validateEmail(values.email)) {
-      errorObject.email = true;
-      showToast("Enter a valid email", "error", toast);
+      errorObject.email = true
+      showToast("Enter a valid email", "error", toast)
     } else {
-      errorObject.email = false;
+      errorObject.email = false
     }
 
-    setError(errorObject);
+    setError(errorObject)
 
     if (errorObject.email) {
-      return;
+      return
     }
 
     try {
-      await resetPassword(values.email);
-      showToast("Password reset link sent.", "success", toast);
-      setError(errorObject);
+      await resetPassword(values.email)
+      showToast("Password reset link sent.", "success", toast)
+      setError(errorObject)
     } catch (e) {
-      console.error(e);
+      console.error(e)
     }
   }
 
@@ -65,52 +66,52 @@ export default function LoginPage() {
     const errorObject = {
       email: false,
       password: false,
-    };
+    }
 
     // check for email
     if (!validateEmail(values.email)) {
-      errorObject.email = true;
-      showToast("Enter a valid email", "error", toast);
+      errorObject.email = true
+      showToast("Enter a valid email", "error", toast)
     } else {
-      errorObject.email = false;
+      errorObject.email = false
     }
 
     // check for password
     if (values.password.length === 0) {
-      errorObject.password = true;
-      showToast("Please enter a password", "error", toast);
+      errorObject.password = true
+      showToast("Please enter a password", "error", toast)
     } else {
-      errorObject.password = false;
+      errorObject.password = false
     }
 
-    setError(errorObject);
+    setError(errorObject)
 
     if (errorObject.email || errorObject.password) {
-      return;
+      return
     }
 
-    setLoading(true);
+    setLoading(true)
     try {
-      await signIn(values.email, values.password);
-      showToast("Logged in successfully", "success", toast);
-      setLoading(false);
-      router.replace("/");
+      await signIn(values.email, values.password)
+      showToast("Logged in successfully", "success", toast)
+      setLoading(false)
+      router.replace("/")
     } catch (e) {
       switch (e.code) {
         case "auth/user-not-found":
-          errorObject.email = true;
-          showToast("User does not exists.", "error", toast);
-          break;
+          errorObject.email = true
+          showToast("User does not exists.", "error", toast)
+          break
         case "auth/wrong-password":
-          errorObject.password = true;
-          showToast("Wrong password for the user.", "error", toast);
-          break;
+          errorObject.password = true
+          showToast("Wrong password for the user.", "error", toast)
+          break
         default:
-          errorObject.email = true;
-          showToast("Internal server error.", "error", toast);
+          errorObject.email = true
+          showToast("Internal server error.", "error", toast)
       }
-      setError(errorObject);
-      setLoading(false);
+      setError(errorObject)
+      setLoading(false)
     }
   }
 
@@ -152,38 +153,39 @@ export default function LoginPage() {
             onChange={(e) => handleInputChange(e, setValues, values)}
             name="password"
           />
-          {/* <HStack>
+          <HStack>
             <Divider />
             <Text color="gray.500">or</Text>
             <Divider />
           </HStack>
           <Button
-            colorScheme="cyan"
             isLoading={loading}
             onClick={async () => {
               try {
-                setLoading(true);
-                await signInWithGoogle();
-                showToast("Logged in successfully", "success", toast);
-                setLoading(false);
-                router.replace("/");
+                setLoading(true)
+                const user = await signInWithGoogle()
+                // check if user already exists with accounttype google
+                const data = await fetch(
+                  `/backend/user/checkEmail/${user.email}`
+                ).then((res) => res.json())
+                // if yes then just login
+                // else store user and then login
+                if (data == false) {
+                  let tempUser = {}
+                  tempUser.userid = user.uid
+                  tempUser.email = user.email
+                  tempUser.fullName = user.displayName
+                  tempUser.mobile = user.phoneNumber
+
+                  await storeUser(tempUser, setAuthUser)
+                }
+                showToast("Logged in successfully", "success", toast)
+                setLoading(false)
+                router.replace("/")
               } catch (e) {
-                // switch (e.code) {
-                //   case "auth/user-not-found":
-                //     errorObject.email = true
-                //     showToast("User does not exists.", "error", toast)
-                //     break
-                //   case "auth/wrong-password":
-                //     errorObject.password = true
-                //     showToast("Wrong password for the user.", "error", toast)
-                //     break
-                //   default:
-                //     errorObject.email = true
-                //     showToast("Internal server error.", "error", toast)
-                //   }
-                showToast("Something went wrong.", "error", toast);
-                console.error(e.code);
-                setLoading(false);
+                showToast("Something went wrong.", "error", toast)
+                console.error(e.code)
+                setLoading(false)
               }
             }}
             fontSize="md"
@@ -191,14 +193,14 @@ export default function LoginPage() {
             rightIcon={<GrGoogle />}
           >
             Sign in with Google
-          </Button> */}
+          </Button>
           <Flex justifyContent="flex-end">
             <Button
               variant="link"
               onClick={async () => {
-                setLoading(true);
-                await resetPasswordHandler();
-                setLoading(false);
+                setLoading(true)
+                await resetPasswordHandler()
+                setLoading(false)
               }}
             >
               Forgot Password?
@@ -225,5 +227,5 @@ export default function LoginPage() {
         </Stack>
       </Box>
     </Flex>
-  );
+  )
 }

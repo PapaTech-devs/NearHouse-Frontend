@@ -8,15 +8,21 @@ import {
   HStack,
   useDisclosure,
   Icon,
+  Button,
 } from "@chakra-ui/react"
 import Link from "next/link"
 import { usePropertyContext } from "../hooks/propertyContext"
 import { MdModeEdit, MdConstruction, MdVerified } from "react-icons/md"
 import { BsFillTrashFill, BsCompass } from "react-icons/bs"
 import { BiMedal } from "react-icons/bi"
-import { deleteProperty } from "../utils"
+import { deleteProperty, showToast } from "../utils"
 import { useState } from "react"
 import PropertyDeleteConfirmation from "./DeleteConfirmation"
+import { BsWhatsapp } from "react-icons/bs"
+import { AiFillSchedule } from "react-icons/ai"
+import { ImLocation } from "react-icons/im"
+import { useAuth } from "../hooks/contextHooks"
+import PropertyAppointmentModal from "./PropertyAppointmentModal"
 
 export default function PropertyTab({
   property,
@@ -24,7 +30,7 @@ export default function PropertyTab({
   imageHeight,
   type,
   editProperty,
-  width,
+  minWidth,
 }) {
   const {
     setSelectedProperty,
@@ -37,12 +43,20 @@ export default function PropertyTab({
   } = usePropertyContext()
   const [deleteLoading, setDeleteLoading] = useState(false)
   const toast = useToast()
-  const { onClose, onOpen, isOpen } = useDisclosure()
+  const deleteModal = useDisclosure()
+  const bookAppointmentModal = useDisclosure()
   let formatter = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "INR",
     maximumFractionDigits: 2,
   })
+  const [values, setValues] = useState({
+    userName: "",
+    userEmail: "",
+    userMobileNo: "",
+    appointmentDate: "",
+  })
+  const { authUser } = useAuth()
 
   const deletePropertyHandler = async () => {
     setDeleteLoading(true)
@@ -97,7 +111,7 @@ export default function PropertyTab({
         boxShadow="base"
         position="relative"
         bgColor="gray.800"
-        width={width}
+        minWidth={minWidth}
         w="100%"
         _hover={{
           boxShadow: "lg",
@@ -157,7 +171,7 @@ export default function PropertyTab({
               onClick={async (e) => {
                 e.stopPropagation()
                 e.preventDefault()
-                onOpen()
+                deleteModal.onOpen()
               }}
               icon={<BsFillTrashFill />}
             />
@@ -173,43 +187,86 @@ export default function PropertyTab({
               EMI starts with ₹{property.price}/month
             </Text>
           )}
-          <HStack>
-            {property.propertyType !== "plot" && (
-              <Text fontWeight="bold" fontSize="lg">
-                {property.bhk} BHK
+          <Flex direction="column" justifyContent="space-between" gap={10}>
+            <Box>
+              <HStack>
+                {property.propertyType !== "plot" && (
+                  <Text fontWeight="bold" fontSize="lg">
+                    {property.bhk} BHK
+                  </Text>
+                )}
+                <Text fontSize="lg" fontWeight="semibold">
+                  {firstLetterCapital(property.propertyType)}
+                </Text>
+                <Text fontSize="lg" fontWeight="bold">
+                  {property.area} {firstLetterCapital(property.areaType)}
+                </Text>
+              </HStack>
+              <Text mt="1.5" fontSize="lg" color="white" fontWeight="bold">
+                <Icon as={ImLocation} w={5} h={5} />
+                {property.address.split("").splice(0, 35).join("")}
+                {property.address.length > 35 ? "..." : ""}
               </Text>
-            )}
-            <Text fontSize="lg" fontWeight="semibold">
-              {firstLetterCapital(property.propertyType)}
-            </Text>
-            <Text fontSize="lg" fontWeight="bold">
-              {property.area} {firstLetterCapital(property.areaType)}
-            </Text>
-          </HStack>
-          <Text fontSize="lg" color="gray.500">
-            {property.address}
-          </Text>
-          <HStack mt="1.5">
-            <Icon as={BsCompass} w={5} h={5} />
-            <Text>{facingList[property.facing]}</Text>
-            {property.propertyType !== "plot" && (
-              <>
-                <Icon as={MdConstruction} w={5} h={5} />
-                <Text>{statusList[property.currentStatus]}</Text>
-              </>
-            )}
-            {property.propertyType === "plot" && (
-              <>
-                <Icon as={BiMedal} w={5} h={5} />
-                <Text>{firstLetterCapital(property.landType)}</Text>
-              </>
-            )}
-          </HStack>
+              <HStack mt="1.5">
+                <Icon as={BsCompass} w={5} h={5} />
+                <Text>{facingList[property.facing]}</Text>
+                {property.propertyType !== "plot" && (
+                  <>
+                    <Icon as={MdConstruction} w={5} h={5} />
+                    <Text>{statusList[property.currentStatus]}</Text>
+                  </>
+                )}
+                {property.propertyType === "plot" && (
+                  <>
+                    <Icon as={BiMedal} w={5} h={5} />
+                    <Text>{firstLetterCapital(property.landType)}</Text>
+                  </>
+                )}
+              </HStack>
+            </Box>
+            <HStack>
+              <Button
+                colorScheme="whatsapp"
+                leftIcon={<BsWhatsapp />}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  e.preventDefault()
+                  window.location.href = "https://wa.me/8918542704"
+                }}
+              >
+                Contact us
+              </Button>
+              <Button
+                colorScheme="telegram"
+                leftIcon={<AiFillSchedule />}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  e.preventDefault()
+                  if (authUser) bookAppointmentModal.onOpen()
+                  else
+                    showToast(
+                      "Please login to fix appointment.",
+                      "error",
+                      toast
+                    )
+                }}
+              >
+                Book Appointment
+              </Button>
+            </HStack>
+          </Flex>
         </Box>
+        <PropertyAppointmentModal
+          values={values}
+          setValues={setValues}
+          isOpen={bookAppointmentModal.isOpen}
+          onClose={bookAppointmentModal.onClose}
+          propertyid={property.propertyid}
+        />
         <PropertyDeleteConfirmation
           handler={deletePropertyHandler}
-          isOpen={isOpen}
-          onClose={onClose}
+          isOpen={deleteModal.isOpen}
+          onClose={deleteModal.onClose}
         />
       </Flex>
     </Link>
