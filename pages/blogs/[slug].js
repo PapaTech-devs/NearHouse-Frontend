@@ -1,21 +1,49 @@
 import { Box, Text } from "@chakra-ui/react"
 import ChakraUIRenderer from "chakra-ui-markdown-renderer"
 import ReactMarkdown from "react-markdown"
+import Head from "next/head"
 
 export default function ArticleComponent({ article }) {
   const newTheme = {
     p: (props) => {
       const { children } = props
       return (
-        <Text mb={2} fontSize={"12px"}>
+        <Text my={2} fontSize="18px" lineHeight="8">
           {children}
         </Text>
       )
     },
+    blockquote: (props) => {
+      const { children } = props
+      return (
+        <Box
+          bgColor="gray.900"
+          fontSize="18px"
+          fontStyle="italic"
+          p={4}
+          borderLeft="4px"
+          borderColor="gray.500"
+          my={5}
+          color="whiteAlpha.800"
+        >
+          {children}
+        </Box>
+      )
+    },
   }
   return (
-    <Box pl={2}>
+    <Box
+      bgColor="black"
+      color="white"
+      px={["1.5rem", "2.5rem", "2.5rem", "3rem"]}
+      mt="-4"
+      mb="8"
+    >
+      <Head>
+        <title>{article.title}</title>
+      </Head>
       <ReactMarkdown
+        style={{ padding: "20px" }}
         components={ChakraUIRenderer(newTheme)}
         children={article.markdown}
         skipHtml

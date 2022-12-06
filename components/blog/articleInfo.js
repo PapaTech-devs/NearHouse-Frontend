@@ -1,7 +1,14 @@
-import Link from "next/link";
-import { Box, Heading, Text } from "@chakra-ui/react";
+import Link from "next/link"
+import { Box, Heading, Text } from "@chakra-ui/react"
 
 function ArticleInfo(props) {
+  const date = new Date(props.createdAt)
+  let options = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  }
   return (
     <Link href={`/blogs/${props.slug}`}>
       <Box
@@ -14,12 +21,17 @@ function ArticleInfo(props) {
         cursor="pointer"
       >
         <Box d="flex" flexDirection="column">
-          <Heading fontSize="xl">{props.title}</Heading>
-          <Text mt={4}>{props.description}</Text>
+          <Heading fontSize="2xl">{props.title}</Heading>
+          <Text mt={4} fontSize="md">
+            {props.description}
+          </Text>
+          <Text mt={4} fontSize="sm">
+            Published at : {date.toLocaleDateString("en-US", options)}
+          </Text>
         </Box>
       </Box>
     </Link>
-  );
+  )
 }
 
-export default ArticleInfo;
+export default ArticleInfo

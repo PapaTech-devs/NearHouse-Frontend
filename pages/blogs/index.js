@@ -1,25 +1,18 @@
 import { Box, Flex, Heading, Stack } from "@chakra-ui/react"
 import ArticleInfo from "../../components/blog/articleInfo"
+import Head from "next/head"
 
 export default function BlogList({ articles }) {
   return (
-    <Flex
-      height="100vh"
-      justifyContent="center"
-      alignItems="center"
-      flexDirection="column"
-      bgColor="black"
-    >
-      <Box width="85%">
-        <Box
-          d="flex"
-          flexDirection="row"
-          justifyContent="space-between"
-          marginBottom="20px"
-        >
-          <Heading color="white">Article List</Heading>
-        </Box>
-        <Box rounded="md" color="white" px="15px" py="15px">
+    <Flex height="90vh" flexDirection="column" bgColor="black">
+      <Head>
+        <title>Blogs</title>
+      </Head>
+      <Box height="90vh" px={["1.5rem", "2.5rem", "2.5rem", "3rem"]}>
+        <Heading color="white" mb={4}>
+          All Blogs
+        </Heading>
+        <Box rounded="md" color="white" py="15px">
           <Stack spacing={8}>
             {articles.map((article) => (
               <ArticleInfo
@@ -27,6 +20,7 @@ export default function BlogList({ articles }) {
                 slug={article.slug}
                 title={article.title}
                 description={article.description}
+                createdAt={article.createdAt}
               />
             ))}
           </Stack>
