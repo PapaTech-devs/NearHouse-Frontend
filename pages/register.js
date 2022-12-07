@@ -216,6 +216,7 @@ export default function RegisterPage() {
           </HStack>
           <Button
             isLoading={loading}
+            bgColor="white"
             onClick={async () => {
               try {
                 setLoading(true)

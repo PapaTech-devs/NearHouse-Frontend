@@ -160,6 +160,7 @@ export default function LoginPage() {
           </HStack>
           <Button
             isLoading={loading}
+            bgColor="white"
             onClick={async () => {
               try {
                 setLoading(true)

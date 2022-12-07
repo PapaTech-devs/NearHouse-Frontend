@@ -7,7 +7,7 @@ const propertyContext = createContext({
   filterObject: {},
   setFilterObject: () => {},
   fetchProperties: async (_) => {},
-  filterProperties: () => {},
+  filterProperties: (_) => {},
   selectedProperty: null,
   setSelectedProperty: () => {},
   regions: [],
@@ -31,7 +31,7 @@ export function PropertyContextProvider({ children }) {
   const [loading, setLoading] = useState(false)
   const [mobileMapShow, setMobileMapShow] = useState(false)
 
-  useEffect(() => filterProperties(), [filterObject])
+  useEffect(() => filterProperties(allProperties), [filterObject])
 
   async function fetchProperties(regionName, callback) {
     setLoading(true)
@@ -45,12 +45,12 @@ export function PropertyContextProvider({ children }) {
       console.log(err)
     }
     setAllProperties(data)
-    setFilteredProperties(data)
+    filterProperties(data)
     setLoading(false)
   }
 
-  function filterProperties() {
-    let tempArray = [...allProperties]
+  function filterProperties(properties) {
+    let tempArray = [...properties]
     for (let key in filterObject) {
       if (
         (key === "maxPrice" || key === "maxEmiPrice") &&

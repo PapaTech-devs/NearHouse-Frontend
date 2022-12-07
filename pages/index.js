@@ -74,6 +74,7 @@ export default function HomePage() {
         fontWeight="bold"
         textAlign="left"
         h={["10vh", "10vh", "10vh", "6vh"]}
+        onClick={() => router.push("/search")}
       >
         Search properties near you
       </Button>
