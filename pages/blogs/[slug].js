@@ -61,6 +61,7 @@ export async function getStaticProps({ params }) {
     props: {
       article,
     },
+    revalidate: 10,
   }
 }
 
