@@ -20,7 +20,7 @@ import { useState } from "react"
 import { useAuth } from "../../hooks/contextHooks"
 import { showToast } from "../../utils"
 
-export default function Property({ property }) {
+export default function Property({ property, user }) {
   const [values, setValues] = useState({
     userName: "",
     userEmail: "",
@@ -161,8 +161,19 @@ export default function Property({ property }) {
               icon={<AiFillPhone size="20" />}
               color="black"
               colorScheme="facebook"
+              disabled={
+                user.mobile === null ||
+                user.mobile === "" ||
+                user.mobile === undefined
+              }
               onClick={() => {
-                window.location.href = "tel:+918918542704"
+                if (user.mobile) window.location.href = `tel:+91${user.mobile}`
+                else
+                  showToast(
+                    "Please update your mobile number.",
+                    "warning",
+                    toast
+                  )
               }}
               w="full"
             />
@@ -170,8 +181,20 @@ export default function Property({ property }) {
               icon={<AiOutlineWhatsApp size={20} />}
               color="black"
               colorScheme="whatsapp"
+              disabled={
+                user.mobile === null ||
+                user.mobile === "" ||
+                user.mobile === undefined
+              }
               onClick={() => {
-                window.location.href = "https://wa.me/8918542704"
+                if (user.mobile)
+                  window.location.href = `https://wa.me/${user.mobile}`
+                else
+                  showToast(
+                    "Please update your mobile number.",
+                    "warning",
+                    toast
+                  )
               }}
               w="full"
             />
@@ -345,16 +368,12 @@ export default function Property({ property }) {
 
 // This also gets called at build time
 export async function getStaticProps({ params }) {
-  const properties = await fetch(
-    `${process.env.NEXT_PUBLIC_FRONTEND_URL}/backend/properties/propertyList`
+  const data = await fetch(
+    `${process.env.NEXT_PUBLIC_FRONTEND_URL}/backend/properties/${params.id}`
   ).then((res) => res.json())
 
-  const property = properties.filter(
-    (property) => property.propertyid === params.id
-  )
-
   // Pass post data to the page via props
-  return { props: { property: property[0] }, revalidate: 10 }
+  return { props: { property: data.property, user: data.user }, revalidate: 10 }
 }
 
 // This function gets called at build time

@@ -6,6 +6,7 @@ import {
   InputLeftElement,
   Stack,
   Text,
+  useToast,
 } from "@chakra-ui/react"
 import { useAuth } from "../hooks/contextHooks"
 import { FaUserAlt } from "react-icons/fa"
@@ -13,7 +14,12 @@ import { BsFillTelephoneFill } from "react-icons/bs"
 import { AiFillMail, AiFillHome } from "react-icons/ai"
 import Head from "next/head"
 import { useState } from "react"
-import { handleInputChange, updateUser, validatePhoneNumber } from "../utils"
+import {
+  handleInputChange,
+  updateUser,
+  validatePhoneNumber,
+  showToast,
+} from "../utils"
 
 export default function ProfilePage() {
   const { authUser, setAuthUser } = useAuth()
@@ -24,23 +30,20 @@ export default function ProfilePage() {
     fullName: false,
     mobile: false,
   })
+  const toast = useToast()
 
   // Add profile page update functionality
-
   async function handleUpdate() {
     const cmp = JSON.stringify(authUser) !== JSON.stringify(userData)
     if (!cmp) return
 
     const errorObject = {
       fullName: false,
-      email: false,
-      password: false,
-      confirmPassword: false,
       mobile: false,
     }
 
     // check for full name
-    if (values.fullName.length <= 6) {
+    if (userData.fullName.length <= 6) {
       errorObject.fullName = true
       showToast("Please enter your full name", "error", toast)
     } else {
@@ -48,21 +51,27 @@ export default function ProfilePage() {
     }
 
     // check for mobile number
-    if (!validatePhoneNumber(values.mobile)) {
+    if (!validatePhoneNumber(userData.mobile)) {
       errorObject.mobile = true
       showToast("Please enter a valid mobile number", "error", toast)
     } else {
       errorObject.mobile = false
     }
 
-    setErrors(errorObject)
+    setError(errorObject)
     if (errorObject.fullName || errorObject.mobile) {
       return
     }
 
     setLoading(true)
-    await updateUser(userData, setAuthUser)
-    setLoading(true)
+    try {
+      await updateUser(userData, setAuthUser)
+      showToast("Your profile has been updated", "success", toast)
+    } catch (err) {
+      console.error(err)
+      showToast("Something went wrong", "error", toast)
+    }
+    setLoading(false)
   }
 
   if (!authUser) return <></>
@@ -89,10 +98,10 @@ export default function ProfilePage() {
           <Input
             placeholder="Enter your name (required)"
             _placeholder={{ color: "gray.500" }}
-            name="userName"
+            name="fullName"
             defaultValue={authUser.fullName ?? ""}
             onChange={(e) => handleInputChange(e, setUserData, userData)}
-            //   isInvalid={error.userName}
+            isInvalid={error.fullName}
           />
         </InputGroup>
         <InputGroup>
@@ -105,7 +114,7 @@ export default function ProfilePage() {
             type="tel"
             name="mobile"
             defaultValue={authUser.mobile ?? ""}
-            //   isInvalid={error.userMobileNo}
+            isInvalid={error.mobile}
             onChange={(e) => handleInputChange(e, setUserData, userData)}
           />
         </InputGroup>
@@ -131,7 +140,6 @@ export default function ProfilePage() {
             _placeholder={{ color: "gray.500" }}
             name="address"
             defaultValue={authUser.address ?? ""}
-            //   isInvalid={error.appointmentDate}
             onChange={(e) => handleInputChange(e, setUserData, userData)}
           />
         </InputGroup>

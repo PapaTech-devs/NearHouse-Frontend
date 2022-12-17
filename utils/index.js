@@ -192,19 +192,15 @@ export const deleteProperty = async (property) => {
 }
 
 export const updateUser = async (values, setAuthUser) => {
-  try {
-    const res = await fetch(`/backend/user/${values.userid}`, {
-      method: "PATCH",
-      headers: {
-        Accept: "*/*",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(values),
-    })
-    setAuthUser(values)
-  } catch (err) {
-    console.error(err)
-  }
+  const res = await fetch(`/backend/user/${values.userid}`, {
+    method: "PATCH",
+    headers: {
+      Accept: "*/*",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(values),
+  }).then((res) => res.json())
+  setAuthUser(res["user"])
 }
 
 export const updateProperty = async (values, setLoadingText) => {
