@@ -51,6 +51,7 @@ export default function SearchPage() {
       bgColor="black"
       h="90vh"
       color="white"
+      pt={4}
     >
       <Head>
         <title>Search Property</title>
