@@ -12,6 +12,7 @@ function BlogCard(props) {
       // ml={10}
       // mr={4}
       _hover={{ transform: "scale(1.1)" }}
+      color={"white"}
     >
       <Box p="6">
         <Box display="flex" alignItems="baseline">

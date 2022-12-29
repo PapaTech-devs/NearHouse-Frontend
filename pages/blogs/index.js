@@ -87,15 +87,15 @@ export default function BlogList({ articles }) {
     <>
       <Divider />
       <Box
-        p={{ base: "100px", md: "50px", sm: "20px" }}
+        p={{ base: "20px", md: "50px", sm: "20px" }}
         bgColor={"black"}
-        alignContent={"center"}
+        // alignContent={"center"}
         boxShadow="dark-lg"
       >
         <SimpleGrid
-          columns={{ base: 2, md: 2, sm: 1 }}
+          columns={{ base: 1, md: 2, sm: 1 }}
           spacing={{ base: 10, sm: 5 }}
-          px={{ base: "15%", sm: "5%", md: "10%" }}
+          px={{ base: "0%", sm: "0%", md: "10%" }}
         >
           <Image
             // objectFit="cover"
@@ -107,14 +107,15 @@ export default function BlogList({ articles }) {
           <Box>
             <VStack gap={7} alignItems={"start"}>
               <Text
-                fontSize={{ base: "20px", md: "15px", sm: "10px" }}
+                fontSize={{ base: "8px", md: "15px", sm: "10px" }}
                 color={"gray.500"}
               >
                 12th November 2022
               </Text>
               <Heading
-                fontSize={{ base: "5xl", md: "3xl", sm: "2xl" }}
-                pr={{ base: "2em", sm: "0em" }}
+                fontSize={{ base: "1xl", md: "3xl", sm: "2xl" }}
+                color={"white"}
+                pr={{ base: "0em", sm: "0em" }}
                 _hover={{ animation: animation }}
               >
                 Get to know all about Real Estate investments Trusts in India
@@ -122,15 +123,22 @@ export default function BlogList({ articles }) {
                 (REITS)
               </Heading>
               <Spacer />
-              <Button bgColor={"#2AE027"} borderRadius={"3xl"} size={"lg"}>
+              <Button
+                bgColor={"#2AE027"}
+                color={"white"}
+                borderRadius={"2xl"}
+                size={"lg"}
+              >
                 Read more
               </Button>
             </VStack>
           </Box>
         </SimpleGrid>
       </Box>
-      <Box h={"100vh"} bgColor={"rgb(20, 20, 20)"} p={"4em"} pt={"2em"}>
-        <Heading fontSize={"4xl"}>Latest from us</Heading>
+      <Box h={"100%"} bgColor={"rgb(20, 20, 20)"} p={"4em"} pt={"2em"}>
+        <Heading fontSize={"4xl"} color={"white"}>
+          Latest from us
+        </Heading>
         <hr
           width={"5%"}
           color={"#2AE027"}
@@ -141,7 +149,7 @@ export default function BlogList({ articles }) {
         />
         <Container maxW="7xl" centerContent my={20}>
           <Stack
-            direction={{ base: "row", md: "row", sm: "column" }}
+            direction={{ base: "column", md: "row", sm: "column" }}
             spacing={"40px"}
           >
             <BlogCard />
@@ -151,6 +159,7 @@ export default function BlogList({ articles }) {
           <Button
             my={20}
             bgColor={"rgb(48, 169, 255)"}
+            color={"white"}
             size={"lg"}
             borderRadius={"3xl"}
           >
