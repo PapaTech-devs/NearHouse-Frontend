@@ -31,6 +31,8 @@ export default function Navbar() {
       bgColor="black"
       color="white"
       pt="1"
+      borderBottom="2px"
+      borderColor="gray.700"
     >
       <Box w={["100%", "50%", "25%", "25%"]}>
         <NextLink href="/" passHref>

@@ -57,6 +57,7 @@ export default function PropertyTab({
     appointmentDate: "",
   })
   const { authUser } = useAuth()
+  const BRAND_GREEN = "#2AE027"
 
   const deletePropertyHandler = async () => {
     setDeleteLoading(true)
@@ -97,6 +98,10 @@ export default function PropertyTab({
   function firstLetterCapital(str) {
     return str.charAt(0).toUpperCase() + str.slice(1)
   }
+
+  const avgROI =
+    parseFloat(property.avgRentalYield ?? "0") +
+    parseFloat(property.assetAppreciationRate ?? "0")
 
   return (
     <Link href={`/property/${property.propertyid}`}>
@@ -204,8 +209,8 @@ export default function PropertyTab({
               </HStack>
               <Text mt="1.5" fontSize="lg" color="white" fontWeight="bold">
                 <Icon as={ImLocation} w={5} h={5} />
-                {property.address.split("").splice(0, 35).join("")}
-                {property.address.length > 35 ? "..." : ""}
+                {property.address.split("").splice(0, 30).join("")}
+                {property.address.length > 30 ? "..." : ""}
               </Text>
               <HStack mt="1.5">
                 <Icon as={BsCompass} w={5} h={5} />
@@ -223,6 +228,22 @@ export default function PropertyTab({
                   </>
                 )}
               </HStack>
+              {(property.avgRentalYeild || property.assetAppreciationRate) && (
+                <HStack mt="1.5" alignItems="flex-end">
+                  <Image
+                    w="30px"
+                    h="30px"
+                    src="/images/growth_graph.png"
+                    alt="growth graph icon"
+                  />
+                  <Text color={BRAND_GREEN} fontWeight="bold" fontSize="lg">
+                    {avgROI}% Average ROI
+                  </Text>
+                </HStack>
+              )}
+              {!(property.avgRentalYeild || property.assetAppreciationRate) && (
+                <Box h="35px" />
+              )}
             </Box>
             <HStack>
               <Button

@@ -8,6 +8,10 @@ const config = {
 
 // 3. extend the theme
 const theme = extendTheme({
+  fonts: {
+    heading: `'Poppins', sans-serif`,
+    body: `'Poppins', sans-serif`,
+  },
   components: {
     Button: {
       variants: {
