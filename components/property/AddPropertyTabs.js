@@ -55,6 +55,10 @@ export default function AddPropertyTabs({ setAdd, editingProperty }) {
     videoLink: editingProperty ? editingProperty.videoLink : "",
     images: editingProperty ? editingProperty.images : [],
     location: editingProperty ? editingProperty.location : null,
+    avgRentalYeild: editingProperty ? editingProperty.avgRentalYeild : "",
+    assetAppreciationRate: editingProperty
+      ? editingProperty.assetAppreciationRate
+      : "",
     files: [],
     preview: [],
   })
@@ -104,6 +108,8 @@ export default function AddPropertyTabs({ setAdd, editingProperty }) {
       currentStatus: false,
       floorNo: false,
       location: false,
+      avgRentalYeild: false,
+      assetAppreciationRate: false,
     }
 
     if (!values.title || values.title.length === 0) {
@@ -202,6 +208,21 @@ export default function AddPropertyTabs({ setAdd, editingProperty }) {
       errorObject.floorNo = false
     }
 
+    if (values.verified === "true" && values.avgRentalYeild.length === 0) {
+      errorObject.avgRentalYeild = true
+    } else {
+      errorObject.avgRentalYeild = false
+    }
+
+    if (
+      values.verified === "true" &&
+      values.assetAppreciationRate.length === 0
+    ) {
+      errorObject.assetAppreciationRate = true
+    } else {
+      errorObject.assetAppreciationRate = false
+    }
+
     if (!values.location) {
       errorObject.location = true
       toast({
@@ -228,18 +249,21 @@ export default function AddPropertyTabs({ setAdd, editingProperty }) {
       errorObject.priceType ||
       errorObject.location ||
       errorObject.address ||
+      errorObject.assetAppreciationRate ||
       (values.propertyType === "house" &&
         (errorObject.bhk ||
           errorObject.numBath ||
           errorObject.numFloor ||
           errorObject.furnishType ||
-          errorObject.currentStatus)) ||
+          errorObject.currentStatus ||
+          errorObject.avgRentalYeild)) ||
       (values.propertyType === "flat" &&
         (errorObject.bhk ||
           errorObject.numBath ||
           errorObject.floorNo ||
           errorObject.furnishType ||
-          errorObject.currentStatus)) ||
+          errorObject.currentStatus ||
+          errorObject.avgRentalYeild)) ||
       (values.propertyType === "plot" && errorObject.landType)
     ) {
       toast({

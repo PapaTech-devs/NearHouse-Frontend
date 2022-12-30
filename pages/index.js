@@ -8,6 +8,10 @@ import {
   Heading,
   IconButton,
   Badge,
+  HStack,
+  Grid,
+  GridItem,
+  Hide,
 } from "@chakra-ui/react"
 import Head from "next/head"
 import { useEffect, useState } from "react"
@@ -24,6 +28,7 @@ export default function HomePage() {
   const [featuredFlats, setFeaturedFlats] = useState(null)
   const [featuredPlots, setFeaturedPlots] = useState(null)
   const [featuredCommercial, setFeaturedCommercial] = useState(null)
+  const [wealthGeneratingAssets, setWealthGeneratingAssets] = useState(null)
   const router = useRouter()
   const { authUser } = useAuth()
   const toast = useToast()
@@ -31,14 +36,30 @@ export default function HomePage() {
   const textList = ["Residential", "Flats", "Houses", "Plots", "Fractional"]
   let timer
   const BRAND_GREEN = "#2AE027"
+  const SEC_BG_COLOR = "#1A1A1A"
   const SCROLL_VALUE = 400
   const containerRef = useRef(null)
   const houseRef = useRef(null)
+  const flatsRef = useRef(null)
+  const plotsRef = useRef(null)
+  const commercialRef = useRef(null)
+  const wealthRef = useRef(null)
 
   useEffect(() => {
     async function fetchProperty() {
       const res = await fetch("/backend/properties/featured")
       const data = await res.json()
+      data.sort((property1, property2) => {
+        const avgROI1 =
+          parseFloat(property1.avgRentalYield ?? "0") +
+          parseFloat(property1.assetAppreciationRate ?? "0")
+        const avgROI2 =
+          parseFloat(property2.avgRentalYield ?? "0") +
+          parseFloat(property2.assetAppreciationRate ?? "0")
+
+        return avgROI2 - avgROI1
+      })
+      setWealthGeneratingAssets([...data].splice(0, 6))
       setFeaturedHouse(
         data
           .filter((property) => property.propertyType === "house")
@@ -387,12 +408,15 @@ export default function HomePage() {
         </Flex>
       </Box>
 
+      <Text fontWeight="bold" fontSize="5xl" color="white" my={12}>
+        See What Others Like The Most
+      </Text>
+
       {featuredHouse && featuredHouse.length > 0 && (
         <Box
-          bgColor="#040303"
+          bgColor={SEC_BG_COLOR}
           mx={["-1.5rem", "-2.5rem", "-2.5rem", "-3rem"]}
           pb="8"
-          mt="8"
         >
           <Box
             pt={8}
@@ -471,80 +495,804 @@ export default function HomePage() {
         </Box>
       )}
       {featuredFlats && featuredFlats.length > 0 && (
-        <Box pt={8}>
-          <Text fontWeight="bold" fontSize="4xl" color="white" pb={6}>
-            Featured Flats
-          </Text>
-          <Flex direction="row" overflow="auto" columnGap={3}>
-            {featuredFlats &&
-              featuredFlats.map((property) => {
-                return (
-                  <Box key={property.propertyid} mb={4}>
-                    <PropertyTab
-                      property={property}
-                      maxWidth="450px"
-                      minWidth="400px"
-                      imageHeight="215px"
-                      type="search"
-                    />
-                  </Box>
-                )
-              })}
-            {featuredFlats && featuredFlats.length === 0 && (
-              <Text>No properties to be displayed</Text>
-            )}
-          </Flex>
+        <Box mx={["-1.5rem", "-2.5rem", "-2.5rem", "-3rem"]} pb="8">
+          <Box
+            pt={8}
+            position="relative"
+            px={["1.5rem", "2.5rem", "2.5rem", "3rem"]}
+          >
+            <Text fontWeight="bold" fontSize="4xl" color="white" pb={6}>
+              Our Top Recommended{" "}
+              <Text color={BRAND_GREEN} as="span">
+                Flats
+              </Text>
+            </Text>
+            <Flex
+              direction="row"
+              ref={flatsRef}
+              scrollBehavior="smooth"
+              overflow="auto"
+              columnGap={3}
+              sx={{
+                "::-webkit-scrollbar": {
+                  display: "none",
+                },
+              }}
+            >
+              <>
+                <IconButton
+                  position="absolute"
+                  left="50px"
+                  top="57%"
+                  zIndex={2}
+                  rounded="full"
+                  transform="translate(-50%,-50%)"
+                  size="lg"
+                  bgColor={BRAND_GREEN}
+                  color="black"
+                  onClick={() => {
+                    flatsRef.current.scrollLeft -= SCROLL_VALUE
+                  }}
+                  icon={<AiOutlineArrowLeft />}
+                />
+                <IconButton
+                  position="absolute"
+                  right="0px"
+                  top="57%"
+                  rounded="full"
+                  zIndex={2}
+                  transform="translate(-50%,-50%)"
+                  size="lg"
+                  bgColor={BRAND_GREEN}
+                  color="black"
+                  onClick={() => {
+                    flatsRef.current.scrollLeft += SCROLL_VALUE
+                  }}
+                  icon={<AiOutlineArrowRight />}
+                />
+                {featuredFlats &&
+                  featuredFlats.map((property) => {
+                    return (
+                      <Box key={property.propertyid} mb={4}>
+                        <PropertyTab
+                          property={property}
+                          maxWidth="450px"
+                          minWidth="400px"
+                          imageHeight="215px"
+                          type="search"
+                        />
+                      </Box>
+                    )
+                  })}
+                {featuredFlats && featuredFlats.length === 0 && (
+                  <Text>No properties to be displayed</Text>
+                )}
+              </>
+            </Flex>
+          </Box>
+        </Box>
+      )}
+      {featuredPlots && featuredPlots.length > 0 && (
+        <Box
+          bgColor={SEC_BG_COLOR}
+          mx={["-1.5rem", "-2.5rem", "-2.5rem", "-3rem"]}
+          pb="8"
+        >
+          <Box
+            pt={8}
+            position="relative"
+            px={["1.5rem", "2.5rem", "2.5rem", "3rem"]}
+          >
+            <Text fontWeight="bold" fontSize="4xl" color="white" pb={6}>
+              Our Top Recommended{" "}
+              <Text color={BRAND_GREEN} as="span">
+                Plots
+              </Text>
+            </Text>
+            <Flex
+              direction="row"
+              ref={plotsRef}
+              scrollBehavior="smooth"
+              overflow="auto"
+              columnGap={3}
+              sx={{
+                "::-webkit-scrollbar": {
+                  display: "none",
+                },
+              }}
+            >
+              <>
+                <IconButton
+                  position="absolute"
+                  left="50px"
+                  top="57%"
+                  zIndex={2}
+                  rounded="full"
+                  transform="translate(-50%,-50%)"
+                  size="lg"
+                  bgColor={BRAND_GREEN}
+                  color="black"
+                  onClick={() => {
+                    plotsRef.current.scrollLeft -= SCROLL_VALUE
+                  }}
+                  icon={<AiOutlineArrowLeft />}
+                />
+                <IconButton
+                  position="absolute"
+                  right="0px"
+                  top="57%"
+                  rounded="full"
+                  zIndex={2}
+                  transform="translate(-50%,-50%)"
+                  size="lg"
+                  bgColor={BRAND_GREEN}
+                  color="black"
+                  onClick={() => {
+                    plotsRef.current.scrollLeft += SCROLL_VALUE
+                  }}
+                  icon={<AiOutlineArrowRight />}
+                />
+                {featuredPlots &&
+                  featuredPlots.map((property) => {
+                    return (
+                      <Box key={property.propertyid} mb={4}>
+                        <PropertyTab
+                          property={property}
+                          maxWidth="450px"
+                          minWidth="400px"
+                          imageHeight="215px"
+                          type="search"
+                        />
+                      </Box>
+                    )
+                  })}
+                {featuredPlots && featuredPlots.length === 0 && (
+                  <Text>No properties to be displayed</Text>
+                )}
+              </>
+            </Flex>
+          </Box>
         </Box>
       )}
       {featuredCommercial && featuredCommercial.length > 0 && (
-        <Box pt={8}>
-          <Text fontWeight="bold" fontSize="4xl" color="white" pb={6}>
-            Featured Plots
-          </Text>
-          <Flex direction="row" overflow="auto" columnGap={3}>
-            {featuredPlots &&
-              featuredPlots.map((property) => {
-                return (
-                  <Box key={property.propertyid} mb={4}>
-                    <PropertyTab
-                      property={property}
-                      maxWidth="450px"
-                      minWidth="400px"
-                      imageHeight="215px"
-                      type="search"
-                    />
-                  </Box>
-                )
-              })}
-            {featuredPlots && featuredPlots.length === 0 && (
-              <Text>No properties to be displayed</Text>
-            )}
-          </Flex>
+        <Box mx={["-1.5rem", "-2.5rem", "-2.5rem", "-3rem"]} pb="8">
+          <Box
+            pt={8}
+            position="relative"
+            px={["1.5rem", "2.5rem", "2.5rem", "3rem"]}
+          >
+            <Text fontWeight="bold" fontSize="4xl" color="white" pb={6}>
+              Our Top Recommended{" "}
+              <Text color={BRAND_GREEN} as="span">
+                Plots
+              </Text>
+            </Text>
+            <Flex
+              direction="row"
+              ref={commercialRef}
+              scrollBehavior="smooth"
+              overflow="auto"
+              columnGap={3}
+              sx={{
+                "::-webkit-scrollbar": {
+                  display: "none",
+                },
+              }}
+            >
+              <>
+                <IconButton
+                  position="absolute"
+                  left="50px"
+                  top="57%"
+                  zIndex={2}
+                  rounded="full"
+                  transform="translate(-50%,-50%)"
+                  size="lg"
+                  bgColor={BRAND_GREEN}
+                  color="black"
+                  onClick={() => {
+                    commercialRef.current.scrollLeft -= SCROLL_VALUE
+                  }}
+                  icon={<AiOutlineArrowLeft />}
+                />
+                <IconButton
+                  position="absolute"
+                  right="0px"
+                  top="57%"
+                  rounded="full"
+                  zIndex={2}
+                  transform="translate(-50%,-50%)"
+                  size="lg"
+                  bgColor={BRAND_GREEN}
+                  color="black"
+                  onClick={() => {
+                    commercialRef.current.scrollLeft += SCROLL_VALUE
+                  }}
+                  icon={<AiOutlineArrowRight />}
+                />
+                {featuredCommercial &&
+                  featuredCommercial.map((property) => {
+                    return (
+                      <Box key={property.propertyid} mb={4}>
+                        <PropertyTab
+                          property={property}
+                          maxWidth="450px"
+                          minWidth="400px"
+                          imageHeight="215px"
+                          type="search"
+                        />
+                      </Box>
+                    )
+                  })}
+              </>
+            </Flex>
+          </Box>
         </Box>
       )}
-      {featuredCommercial && featuredCommercial.length > 0 && (
-        <Box pt={8}>
-          <Text fontWeight="bold" fontSize="4xl" color="white" pb={6}>
-            Featured Commercial
-          </Text>
-          <Flex direction="row" overflow="auto" columnGap={3}>
-            {featuredCommercial &&
-              featuredCommercial.map((property) => {
-                return (
-                  <Box key={property.propertyid} mb={4}>
-                    <PropertyTab
-                      property={property}
-                      maxWidth="450px"
-                      minWidth="400px"
-                      imageHeight="215px"
-                      type="search"
-                    />
-                  </Box>
-                )
-              })}
-          </Flex>
+      {wealthGeneratingAssets && wealthGeneratingAssets.length > 0 && (
+        <Box
+          bgColor={SEC_BG_COLOR}
+          mx={["-1.5rem", "-2.5rem", "-2.5rem", "-3rem"]}
+          pb="8"
+        >
+          <Box
+            pt={8}
+            position="relative"
+            px={["1.5rem", "2.5rem", "2.5rem", "3rem"]}
+          >
+            <Text fontWeight="bold" fontSize="5xl" color="white" pb={4}>
+              Our Top Wealth Generating{" "}
+              <Text color={BRAND_GREEN} as="span">
+                Assets
+              </Text>
+            </Text>
+            <Text fontWeight="semibold" fontSize="3xl" color="gray.300" pb={6}>
+              Properties with Highest Average ROI
+            </Text>
+            <Flex
+              direction="row"
+              ref={wealthRef}
+              scrollBehavior="smooth"
+              overflow="auto"
+              columnGap={3}
+              sx={{
+                "::-webkit-scrollbar": {
+                  display: "none",
+                },
+              }}
+            >
+              <>
+                <IconButton
+                  position="absolute"
+                  left="50px"
+                  top="57%"
+                  zIndex={2}
+                  rounded="full"
+                  transform="translate(-50%,-50%)"
+                  size="lg"
+                  bgColor={BRAND_GREEN}
+                  color="black"
+                  onClick={() => {
+                    wealthRef.current.scrollLeft -= SCROLL_VALUE
+                  }}
+                  icon={<AiOutlineArrowLeft />}
+                />
+                <IconButton
+                  position="absolute"
+                  right="0px"
+                  top="57%"
+                  rounded="full"
+                  zIndex={2}
+                  transform="translate(-50%,-50%)"
+                  size="lg"
+                  bgColor={BRAND_GREEN}
+                  color="black"
+                  onClick={() => {
+                    wealthRef.current.scrollLeft += SCROLL_VALUE
+                  }}
+                  icon={<AiOutlineArrowRight />}
+                />
+                {wealthGeneratingAssets &&
+                  wealthGeneratingAssets.map((property) => {
+                    return (
+                      <Box key={property.propertyid} mb={4}>
+                        <PropertyTab
+                          property={property}
+                          maxWidth="450px"
+                          minWidth="400px"
+                          imageHeight="215px"
+                          type="search"
+                        />
+                      </Box>
+                    )
+                  })}
+                {wealthGeneratingAssets &&
+                  wealthGeneratingAssets.length === 0 && (
+                    <Text>No properties to be displayed</Text>
+                  )}
+              </>
+            </Flex>
+          </Box>
         </Box>
       )}
+      <Flex py="8" direction="column">
+        <Text fontWeight="bold" fontSize="5xl" color="white" py={4}>
+          Get Instant Loan From India's{" "}
+          <Text color={BRAND_GREEN} as="span">
+            Top Banks
+          </Text>
+        </Text>
+        <Flex
+          justifyContent="space-between"
+          alignItems="center"
+          direction={["column", "column", "column", "row"]}
+        >
+          <Flex direction="column" gap={8}>
+            <Text fontSize="4xl" fontWeight="semibold" color="gray.300">
+              Avail Loans against properties with great ease and best interest
+              rates
+            </Text>
+            <Flex direction="row" gap={4}>
+              <Flex gap={2} alignItems="center">
+                <Image
+                  src="/images/sbi_icon.png"
+                  alt="sbi bank icon"
+                  w={38}
+                  h={38}
+                />
+                <Text fontSize={["md", "md", "2xl", "4xl"]} fontWeight="bold">
+                  SBI
+                </Text>
+              </Flex>
+              <Flex gap={2} alignItems="center">
+                <Image
+                  src="/images/hdfc_icon.png"
+                  alt="hdfc bank icon"
+                  w={38}
+                  h={38}
+                />
+                <Text fontSize={["md", "md", "2xl", "4xl"]} fontWeight="bold">
+                  HDFC
+                </Text>
+              </Flex>
+              <Flex gap={2} alignItems="center">
+                <Image
+                  src="/images/icici_icon.png"
+                  alt="icici bank icon"
+                  w={38}
+                  h={38}
+                />
+                <Text fontSize={["md", "md", "2xl", "4xl"]} fontWeight="bold">
+                  ICICI
+                </Text>
+              </Flex>
+              <Flex gap={2} alignItems="center">
+                <Image
+                  src="/images/axis_icon.png"
+                  alt="axis bank icon"
+                  w={38}
+                  h={38}
+                />
+                <Text fontSize={["md", "md", "2xl", "4xl"]} fontWeight="bold">
+                  AXIS
+                </Text>
+              </Flex>
+            </Flex>
+            <Button
+              bgColor="#FACF11"
+              color="black"
+              _hover={{ bg: "#FACF11" }}
+              w="250px"
+              h="80px"
+              fontSize="2xl"
+            >
+              Check Eligibility
+            </Button>
+          </Flex>
+          <Image
+            src="/images/bank_icon.svg"
+            alt="bank icon"
+            my={8}
+            w={["100%", "100%", "100%", "40%"]}
+          />
+        </Flex>
+        <Flex
+          direction="column"
+          alignItems="center"
+          gap={8}
+          position="relative"
+          pt={8}
+          pb={16}
+        >
+          <Text fontWeight="bold" fontSize="5xl" color="white" py={4}>
+            Why Indians Love{" "}
+            <Text color={BRAND_GREEN} as="span">
+              Real Estate?
+            </Text>
+          </Text>
+          <Flex
+            w={["100%", "100%", "70%", "70%"]}
+            direction={["column", "column", "column", "row"]}
+            gap={9}
+            mb={6}
+          >
+            <Image
+              src="/images/blue_tick.svg"
+              alt="blue tick svg image"
+              w={150}
+              h={150}
+            />
+            <Flex direction="column">
+              <Text fontSize="4xl" fontWeight="bold">
+                Secured Investment
+              </Text>
+              <Text fontSize="2xl" color="gray.300" fontWeight="semibold">
+                A Real estate investments secure your future by providing
+                long-term stability. It outperforms inflation as its less
+                susceptible to market fluctuations.
+              </Text>
+            </Flex>
+          </Flex>
+          <Flex
+            w={["100%", "100%", "70%", "70%"]}
+            direction={["column", "column", "column", "row"]}
+            gap={6}
+            mb={6}
+          >
+            <Image
+              src="/images/time_money.svg"
+              // src="https://media-public.canva.com/rS4uU/MAEsp9rS4uU/1/t.png"
+              alt="time money rotating clock svg"
+              w={150}
+              h={150}
+            />
+            <Flex direction="column">
+              <Text fontSize="4xl" fontWeight="bold">
+                Stable Returns
+              </Text>
+              <Text fontSize="2xl" color="gray.300" fontWeight="semibold">
+                A Real Estate investments secure your future by providing
+                long-term stability. It outperformes inflation as its less
+                susceptible to market fluctuations.
+              </Text>
+            </Flex>
+          </Flex>
+          <Flex
+            w={["100%", "100%", "70%", "70%"]}
+            direction={["column", "column", "column", "row"]}
+            gap={6}
+          >
+            <Image
+              src="/images/money_gif.gif"
+              alt="rotating money animation"
+              w={150}
+              h={150}
+            />
+            <Flex direction="column">
+              <Text fontSize="4xl" fontWeight="bold">
+                Easily Leveragable
+              </Text>
+              <Text fontSize="2xl" color="gray.300" fontWeight="semibold">
+                A Real estate investments secure your future by providing
+                long-term stability. It outperforms inflation as its less
+                susceptible to market fluctuations.
+              </Text>
+            </Flex>
+            <Hide below="md">
+              <Image
+                position="absolute"
+                top="35%"
+                right="45px"
+                src="/images/star_icon.png"
+                alt="star icon"
+                w={150}
+                h={150}
+              />
+              <Image
+                position="absolute"
+                top="60%"
+                right="15px"
+                src="https://media-public.canva.com/tjpis/MABk_Ztjpis/3/t.png"
+                alt="blank star icon"
+                w={150}
+                h={150}
+              />
+            </Hide>
+          </Flex>
+        </Flex>
+        <Box
+          bgColor={SEC_BG_COLOR}
+          mx={["-1.5rem", "-2.5rem", "-2.5rem", "-3rem"]}
+        >
+          <Flex
+            direction="column"
+            alignItems="center"
+            position="relative"
+            py={12}
+            mx={["1.5rem", "2.5rem", "2.5rem", "3rem"]}
+          >
+            <Text fontWeight="bold" fontSize="4xl" color="white">
+              Testimonials
+            </Text>
+            <Text fontWeight="bold" fontSize="5xl" color="gray.300">
+              What people say about us?
+            </Text>
+            <Flex gap={4} mt={8} direction={["column", "row", "row", "row"]}>
+              <Flex direction="column" gap={4}>
+                <Text fontSize="lg" color="gray.300" fontWeight="semibold">
+                  A Real estate investments secure your future by providing
+                  long-term stability. It outperforms inflation as its less
+                  susceptible to market fluctuations.
+                </Text>
+                <HStack>
+                  <Image
+                    src="/images/star_icon.png"
+                    alt="star icon"
+                    w={35}
+                    h={35}
+                  />
+                  <Image
+                    src="/images/star_icon.png"
+                    alt="star icon"
+                    w={35}
+                    h={35}
+                  />
+                  <Image
+                    src="/images/star_icon.png"
+                    alt="star icon"
+                    w={35}
+                    h={35}
+                  />
+                  <Image
+                    src="/images/star_icon.png"
+                    alt="star icon"
+                    w={35}
+                    h={35}
+                  />
+                  <Image
+                    src="/images/star_icon.png"
+                    alt="star icon"
+                    w={35}
+                    h={35}
+                  />
+                </HStack>
+                <Box h="4px" w="55px" bgColor={BRAND_GREEN} rounded="lg">
+                  {""}
+                </Box>
+                <Flex alignItems="center" gap={4}>
+                  <Box bgColor="white" rounded="full">
+                    <Image
+                      src="/images/default_user.png"
+                      alt="default user"
+                      w={45}
+                      h={45}
+                    />
+                  </Box>
+                  <Text fontWeight="semibold" fontSize="lg">
+                    R Madavan
+                  </Text>
+                </Flex>
+              </Flex>
+              <Flex direction="column" gap={4}>
+                <Text fontSize="lg" color="gray.300" fontWeight="semibold">
+                  A Real estate investments secure your future by providing
+                  long-term stability. It outperforms inflation as its less
+                  susceptible to market fluctuations.
+                </Text>
+                <HStack>
+                  <Image
+                    src="/images/star_icon.png"
+                    alt="star icon"
+                    w={35}
+                    h={35}
+                  />
+                  <Image
+                    src="/images/star_icon.png"
+                    alt="star icon"
+                    w={35}
+                    h={35}
+                  />
+                  <Image
+                    src="/images/star_icon.png"
+                    alt="star icon"
+                    w={35}
+                    h={35}
+                  />
+                  <Image
+                    src="/images/star_icon.png"
+                    alt="star icon"
+                    w={35}
+                    h={35}
+                  />
+                  <Image
+                    src="/images/star_icon.png"
+                    alt="star icon"
+                    w={35}
+                    h={35}
+                  />
+                </HStack>
+                <Box h="4px" w="55px" bgColor={BRAND_GREEN} rounded="lg">
+                  {""}
+                </Box>
+                <Flex alignItems="center" gap={4}>
+                  <Box bgColor="white" rounded="full">
+                    <Image
+                      src="/images/default_user.png"
+                      alt="default user"
+                      w={45}
+                      h={45}
+                    />
+                  </Box>
+                  <Text fontWeight="semibold" fontSize="lg">
+                    R Madavan
+                  </Text>
+                </Flex>
+              </Flex>
+              <Flex direction="column" gap={4}>
+                <Text fontSize="lg" color="gray.300" fontWeight="semibold">
+                  A Real estate investments secure your future by providing
+                  long-term stability. It outperforms inflation as its less
+                  susceptible to market fluctuations.
+                </Text>
+                <HStack>
+                  <Image
+                    src="/images/star_icon.png"
+                    alt="star icon"
+                    w={35}
+                    h={35}
+                  />
+                  <Image
+                    src="/images/star_icon.png"
+                    alt="star icon"
+                    w={35}
+                    h={35}
+                  />
+                  <Image
+                    src="/images/star_icon.png"
+                    alt="star icon"
+                    w={35}
+                    h={35}
+                  />
+                  <Image
+                    src="/images/star_icon.png"
+                    alt="star icon"
+                    w={35}
+                    h={35}
+                  />
+                  <Image
+                    src="/images/star_icon.png"
+                    alt="star icon"
+                    w={35}
+                    h={35}
+                  />
+                </HStack>
+                <Box h="4px" w="55px" bgColor={BRAND_GREEN} rounded="lg">
+                  {""}
+                </Box>
+                <Flex alignItems="center" gap={4}>
+                  <Box bgColor="white" rounded="full">
+                    <Image
+                      src="/images/default_user.png"
+                      alt="default user"
+                      w={45}
+                      h={45}
+                    />
+                  </Box>
+                  <Text fontWeight="semibold" fontSize="lg">
+                    R Madavan
+                  </Text>
+                </Flex>
+              </Flex>
+            </Flex>
+          </Flex>
+        </Box>
+        <Flex
+          direction="column"
+          alignItems="center"
+          position="relative"
+          py={10}
+          mx={["1.5rem", "2.5rem", "2.5rem", "3rem"]}
+        >
+          <Text fontWeight="bold" fontSize="5xl">
+            All the{" "}
+            <Text color={BRAND_GREEN} as="span">
+              tools
+            </Text>{" "}
+            you need!
+          </Text>
+          <Grid
+            templateColumns={[
+              "repeat(2, 1fr)",
+              "repeat(2, 1fr)",
+              "repeat(4, 1fr)",
+              "repeat(4, 1fr)",
+            ]}
+            pt={8}
+            gap={6}
+          >
+            <GridItem w="100%" h="60">
+              <Flex
+                direction="column"
+                alignItems="center"
+                p={8}
+                bgColor="#4C00ED"
+                rounded="lg"
+                gap={4}
+              >
+                <Image
+                  src="/images/calculator_icon.png"
+                  alt="calculator icon"
+                  w={85}
+                  h={85}
+                />
+                <Text fontWeight="bold" fontSize="2xl">
+                  EMI Calculator
+                </Text>
+              </Flex>
+            </GridItem>
+            <GridItem w="100%" h="60">
+              <Flex
+                direction="column"
+                alignItems="center"
+                p={8}
+                bgColor="#EF6047"
+                rounded="lg"
+                gap={4}
+              >
+                <Image
+                  src="/images/stopwatch_icon.png"
+                  alt="stopwatch icon"
+                  w={85}
+                  h={85}
+                />
+                <Text fontWeight="bold" fontSize="2xl">
+                  Bastu Checker
+                </Text>
+              </Flex>
+            </GridItem>
+            <GridItem w="100%" h="60">
+              <Flex
+                direction="column"
+                alignItems="center"
+                p={8}
+                bgColor="#FFA728"
+                rounded="lg"
+                gap={4}
+              >
+                <Image
+                  src="/images/bar_graph_icon.png"
+                  alt="bar graph icon"
+                  w={85}
+                  h={85}
+                />
+                <Text fontWeight="bold" fontSize="2xl">
+                  ROI Calculator
+                </Text>
+              </Flex>
+            </GridItem>
+            <GridItem w="100%" h="60">
+              <Flex
+                direction="column"
+                alignItems="center"
+                p={8}
+                bgColor="#2BA8AB"
+                rounded="lg"
+                gap={4}
+              >
+                <Image
+                  src="/images/calculator_icon.png"
+                  alt="calculator icon"
+                  w={85}
+                  h={85}
+                />
+                <Text fontWeight="bold" fontSize="2xl">
+                  EMI Calculator
+                </Text>
+              </Flex>
+            </GridItem>
+          </Grid>
+        </Flex>
+      </Flex>
     </Flex>
   )
 }

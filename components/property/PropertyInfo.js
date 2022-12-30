@@ -270,6 +270,32 @@ export default function PropertyInfo({ error, values, setValues }) {
           defaultChecked={values.verified}
         />
       </Flex>
+      {values.verified && (
+        <>
+          <Input
+            placeholder="*Enter average rental yeild(optional for plots)"
+            size="md"
+            name="avgRentalYield"
+            _placeholder={{ color: "gray.400" }}
+            border="none"
+            bgColor="gray.700"
+            color="white"
+            value={values.avgRentalYield}
+            onChange={(e) => handleInputChange(e, setValues, values)}
+          />
+          <Input
+            placeholder="*Enter asset appreciation rate"
+            size="md"
+            name="assetAppreciationRate"
+            _placeholder={{ color: "gray.400" }}
+            border="none"
+            bgColor="gray.700"
+            color="white"
+            value={values.assetAppreciationRate}
+            onChange={(e) => handleInputChange(e, setValues, values)}
+          />
+        </>
+      )}
     </Stack>
   )
 }
