@@ -18,20 +18,44 @@ import {
   HStack,
   Container,
   keyframes,
-} from "@chakra-ui/react"
-import ArticleInfo from "../../components/blog/articleInfo"
-import BlogCard from "../../components/blog/BlogCard"
-import { CustomButton } from "../../components/blog/CustomButton"
-import Head from "next/head"
-import { transform } from "framer-motion"
+} from "@chakra-ui/react";
+import ArticleInfo from "../../components/blog/articleInfo";
+import BlogCard from "../../components/blog/BlogCard";
+import { CustomButton } from "../../components/blog/CustomButton";
+import Head from "next/head";
+import { transform } from "framer-motion";
+import BlogCarousel from "../../components/blog/BlogCarousel";
 
 const zoom = keyframes`
   from { transform: scale(1); }
   to { transform: scale(1.05); }
-`
+`;
+
+const dummyData = [
+  {
+    id: 1,
+    title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+    thumbnal: "https://picsum.photos/300/100",
+  },
+  {
+    id: 2,
+    title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+    thumbnal: "https://picsum.photos/300/100",
+  },
+  {
+    id: 3,
+    title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+    thumbnal: "https://picsum.photos/300/100",
+  },
+  {
+    id: 4,
+    title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
+    thumbnal: "https://picsum.photos/300/100",
+  },
+];
 
 export default function BlogList({ articles }) {
-  const animation = `${zoom} 1 0.1s forwards`
+  const animation = `${zoom} 1 0.1s forwards`;
 
   return (
     // <Flex height="90vh" flexDirection="column" bgColor="black">
@@ -196,8 +220,12 @@ export default function BlogList({ articles }) {
           {/* <CustomButton name={"More >"} /> */}
         </Flex>
       </Box>
+      {/* <Flex bgColor={"yellow"}>
+        <Box h={"20vh"}></Box>
+      </Flex> */}
+      <BlogCarousel blogs={dummyData} />
     </>
-  )
+  );
 }
 
 export async function getServerSideProps(context) {
@@ -205,9 +233,9 @@ export async function getServerSideProps(context) {
 
   const articles = await fetch(
     `${process.env.NEXT_PUBLIC_FRONTEND_URL}/backend/articles`
-  ).then((res) => res.json())
+  ).then((res) => res.json());
 
   return {
     props: { articles }, // will be passed to the page component as props
-  }
+  };
 }
