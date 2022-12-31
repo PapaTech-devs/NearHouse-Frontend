@@ -18,20 +18,20 @@ import {
   HStack,
   Container,
   keyframes,
-} from "@chakra-ui/react";
-import ArticleInfo from "../../components/blog/articleInfo";
-import BlogCard from "../../components/blog/BlogCard";
-import { CustomButton } from "../../components/blog/CustomButton";
-import Head from "next/head";
-import { transform } from "framer-motion";
+} from "@chakra-ui/react"
+import ArticleInfo from "../../components/blog/articleInfo"
+import BlogCard from "../../components/blog/BlogCard"
+import { CustomButton } from "../../components/blog/CustomButton"
+import Head from "next/head"
+import { transform } from "framer-motion"
 
 const zoom = keyframes`
   from { transform: scale(1); }
   to { transform: scale(1.05); }
-`;
+`
 
 export default function BlogList({ articles }) {
-  const animation = `${zoom} 1 0.1s forwards`;
+  const animation = `${zoom} 1 0.1s forwards`
 
   return (
     // <Flex height="90vh" flexDirection="column" bgColor="black">
@@ -191,13 +191,13 @@ export default function BlogList({ articles }) {
             size={"lg"}
             borderRadius={"3xl"}
           >
-            {"More >"} */}
+            {"More >"}
           </Button>
           {/* <CustomButton name={"More >"} /> */}
         </Flex>
       </Box>
     </>
-  );
+  )
 }
 
 export async function getServerSideProps(context) {
@@ -205,9 +205,9 @@ export async function getServerSideProps(context) {
 
   const articles = await fetch(
     `${process.env.NEXT_PUBLIC_FRONTEND_URL}/backend/articles`
-  ).then((res) => res.json());
+  ).then((res) => res.json())
 
   return {
     props: { articles }, // will be passed to the page component as props
-  };
+  }
 }

@@ -817,7 +817,7 @@ export default function HomePage() {
       )}
       <Flex py="8" direction="column">
         <Text fontWeight="bold" fontSize="5xl" color="white" py={4}>
-          Get Instant Loan From India's{" "}
+          Get Instant Loan From India&apos;s{" "}
           <Text color={BRAND_GREEN} as="span">
             Top Banks
           </Text>
