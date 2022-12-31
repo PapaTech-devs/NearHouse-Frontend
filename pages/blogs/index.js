@@ -191,7 +191,7 @@ export default function BlogList({ articles }) {
             size={"lg"}
             borderRadius={"3xl"}
           >
-            {"More >"} */}
+            {"More >"}
           </Button>
           {/* <CustomButton name={"More >"} /> */}
         </Flex>
