@@ -105,6 +105,7 @@ export default function HomePage() {
         h={["fit-content", "fit-content", "90vh", "90vh"]}
         pt={16}
         justifyContent="space-between"
+        gap={4}
       >
         <Flex direction="column" gap={12} w={["100%", "100%", "60%", "60%"]}>
           <Button
@@ -122,7 +123,7 @@ export default function HomePage() {
           >
             Search properties near you
           </Button>
-          <Heading fontSize="5xl">
+          <Heading fontSize={["4xl", "4xl", "4xl", "5xl"]}>
             List{" "}
             <Text color={BRAND_GREEN} as="span">
               Properties
@@ -173,7 +174,13 @@ export default function HomePage() {
       </Flex>
 
       <Box pt={8} position="relative">
-        <Text fontWeight="bold" fontSize="4xl" color="white" pb={6}>
+        <Text
+          fontWeight="bold"
+          fontSize={["3xl", "3xl", "3xl", "4xl"]}
+          color="white"
+          pb={6}
+          textAlign={["center", "center", "left", "left"]}
+        >
           Invest in{" "}
           <Text as="span" color={BRAND_GREEN}>
             {textList[dynamicText]}
@@ -201,6 +208,7 @@ export default function HomePage() {
             transform="translate(-50%,-50%)"
             size="lg"
             bgColor={BRAND_GREEN}
+            _hover={{ bgColor: BRAND_GREEN }}
             color="black"
             onClick={() => {
               containerRef.current.scrollLeft -= SCROLL_VALUE
@@ -216,6 +224,7 @@ export default function HomePage() {
             transform="translate(-50%,-50%)"
             size="lg"
             bgColor={BRAND_GREEN}
+            _hover={{ bgColor: BRAND_GREEN }}
             color="black"
             onClick={() => {
               containerRef.current.scrollLeft += SCROLL_VALUE
@@ -223,7 +232,7 @@ export default function HomePage() {
             icon={<AiOutlineArrowRight />}
           />
           <Flex
-            minW="400px"
+            minW={["100%", "100%", "100%", "400px"]}
             h="400px"
             direction="column"
             justifyContent="center"
@@ -256,7 +265,7 @@ export default function HomePage() {
             </Flex>
           </Flex>
           <Flex
-            minW="400px"
+            minW={["100%", "100%", "100%", "400px"]}
             h="400px"
             direction="column"
             justifyContent="center"
@@ -289,7 +298,7 @@ export default function HomePage() {
             </Flex>
           </Flex>
           <Flex
-            minW="400px"
+            minW={["100%", "100%", "100%", "400px"]}
             h="400px"
             direction="column"
             justifyContent="center"
@@ -322,7 +331,7 @@ export default function HomePage() {
             </Flex>
           </Flex>
           <Flex
-            minW="400px"
+            minW={["100%", "100%", "100%", "400px"]}
             h="400px"
             direction="column"
             justifyContent="center"
@@ -364,7 +373,7 @@ export default function HomePage() {
             </Flex>
           </Flex>
           <Flex
-            minW="400px"
+            minW={["100%", "100%", "100%", "400px"]}
             h="400px"
             direction="column"
             justifyContent="center"
@@ -408,7 +417,13 @@ export default function HomePage() {
         </Flex>
       </Box>
 
-      <Text fontWeight="bold" fontSize="5xl" color="white" my={12}>
+      <Text
+        fontWeight="bold"
+        fontSize={["4xl", "4xl", "4xl", "5xl"]}
+        color="white"
+        my={12}
+        textAlign={["center", "center", "left", "left"]}
+      >
         See What Others Like The Most
       </Text>
 
@@ -423,7 +438,13 @@ export default function HomePage() {
             position="relative"
             px={["1.5rem", "2.5rem", "2.5rem", "3rem"]}
           >
-            <Text fontWeight="bold" fontSize="4xl" color="white" pb={6}>
+            <Text
+              fontWeight="bold"
+              fontSize={["3xl", "3xl", "3xl", "4xl"]}
+              color="white"
+              pb={6}
+              textAlign={["center", "center", "left", "left"]}
+            >
               Our Top Recommended{" "}
               <Text color={BRAND_GREEN} as="span">
                 Houses
@@ -435,6 +456,7 @@ export default function HomePage() {
               scrollBehavior="smooth"
               overflow="auto"
               columnGap={3}
+              mx={["-1.2rem", "-2.5rem", "0rem", "0rem"]}
               sx={{
                 "::-webkit-scrollbar": {
                   display: "none",
@@ -444,7 +466,7 @@ export default function HomePage() {
               <>
                 <IconButton
                   position="absolute"
-                  left="50px"
+                  left={["25px", "30px", "40px", "50px"]}
                   top="57%"
                   zIndex={2}
                   rounded="full"
@@ -459,7 +481,7 @@ export default function HomePage() {
                 />
                 <IconButton
                   position="absolute"
-                  right="0px"
+                  right={["-25px", "-15px", "-5px", "0px"]}
                   top="57%"
                   rounded="full"
                   zIndex={2}
@@ -478,8 +500,8 @@ export default function HomePage() {
                       <Box key={property.propertyid} mb={4}>
                         <PropertyTab
                           property={property}
-                          maxWidth="450px"
-                          minWidth="400px"
+                          maxWidth={["100%", "100%", "100%", "450px"]}
+                          minWidth={["100%", "100%", "100%", "400px"]}
                           imageHeight="215px"
                           type="search"
                         />
@@ -501,7 +523,13 @@ export default function HomePage() {
             position="relative"
             px={["1.5rem", "2.5rem", "2.5rem", "3rem"]}
           >
-            <Text fontWeight="bold" fontSize="4xl" color="white" pb={6}>
+            <Text
+              fontWeight="bold"
+              fontSize={["3xl", "3xl", "3xl", "4xl"]}
+              color="white"
+              pb={6}
+              textAlign={["center", "center", "left", "left"]}
+            >
               Our Top Recommended{" "}
               <Text color={BRAND_GREEN} as="span">
                 Flats
@@ -512,6 +540,7 @@ export default function HomePage() {
               ref={flatsRef}
               scrollBehavior="smooth"
               overflow="auto"
+              mx={["-1.2rem", "-2.5rem", "0rem", "0rem"]}
               columnGap={3}
               sx={{
                 "::-webkit-scrollbar": {
@@ -522,7 +551,7 @@ export default function HomePage() {
               <>
                 <IconButton
                   position="absolute"
-                  left="50px"
+                  left={["25px", "30px", "40px", "50px"]}
                   top="57%"
                   zIndex={2}
                   rounded="full"
@@ -537,7 +566,7 @@ export default function HomePage() {
                 />
                 <IconButton
                   position="absolute"
-                  right="0px"
+                  right={["-25px", "-15px", "-5px", "0px"]}
                   top="57%"
                   rounded="full"
                   zIndex={2}
@@ -556,8 +585,8 @@ export default function HomePage() {
                       <Box key={property.propertyid} mb={4}>
                         <PropertyTab
                           property={property}
-                          maxWidth="450px"
-                          minWidth="400px"
+                          maxWidth={["100%", "100%", "100%", "450px"]}
+                          minWidth={["100%", "100%", "100%", "400px"]}
                           imageHeight="215px"
                           type="search"
                         />
@@ -583,7 +612,13 @@ export default function HomePage() {
             position="relative"
             px={["1.5rem", "2.5rem", "2.5rem", "3rem"]}
           >
-            <Text fontWeight="bold" fontSize="4xl" color="white" pb={6}>
+            <Text
+              fontWeight="bold"
+              fontSize={["3xl", "3xl", "3xl", "4xl"]}
+              color="white"
+              pb={6}
+              textAlign={["center", "center", "left", "left"]}
+            >
               Our Top Recommended{" "}
               <Text color={BRAND_GREEN} as="span">
                 Plots
@@ -594,6 +629,7 @@ export default function HomePage() {
               ref={plotsRef}
               scrollBehavior="smooth"
               overflow="auto"
+              mx={["-1.2rem", "-2.5rem", "0rem", "0rem"]}
               columnGap={3}
               sx={{
                 "::-webkit-scrollbar": {
@@ -604,9 +640,9 @@ export default function HomePage() {
               <>
                 <IconButton
                   position="absolute"
-                  left="50px"
                   top="57%"
                   zIndex={2}
+                  left={["25px", "30px", "40px", "50px"]}
                   rounded="full"
                   transform="translate(-50%,-50%)"
                   size="lg"
@@ -619,7 +655,7 @@ export default function HomePage() {
                 />
                 <IconButton
                   position="absolute"
-                  right="0px"
+                  right={["-25px", "-15px", "-5px", "0px"]}
                   top="57%"
                   rounded="full"
                   zIndex={2}
@@ -638,8 +674,8 @@ export default function HomePage() {
                       <Box key={property.propertyid} mb={4}>
                         <PropertyTab
                           property={property}
-                          maxWidth="450px"
-                          minWidth="400px"
+                          maxWidth={["100%", "100%", "100%", "450px"]}
+                          minWidth={["100%", "100%", "100%", "400px"]}
                           imageHeight="215px"
                           type="search"
                         />
@@ -661,7 +697,13 @@ export default function HomePage() {
             position="relative"
             px={["1.5rem", "2.5rem", "2.5rem", "3rem"]}
           >
-            <Text fontWeight="bold" fontSize="4xl" color="white" pb={6}>
+            <Text
+              fontWeight="bold"
+              fontSize={["3xl", "3xl", "3xl", "4xl"]}
+              color="white"
+              pb={6}
+              textAlign={["center", "center", "left", "left"]}
+            >
               Our Top Recommended{" "}
               <Text color={BRAND_GREEN} as="span">
                 Plots
@@ -670,6 +712,7 @@ export default function HomePage() {
             <Flex
               direction="row"
               ref={commercialRef}
+              mx={["-1.2rem", "-2.5rem", "0rem", "0rem"]}
               scrollBehavior="smooth"
               overflow="auto"
               columnGap={3}
@@ -682,9 +725,9 @@ export default function HomePage() {
               <>
                 <IconButton
                   position="absolute"
-                  left="50px"
                   top="57%"
                   zIndex={2}
+                  left={["25px", "30px", "40px", "50px"]}
                   rounded="full"
                   transform="translate(-50%,-50%)"
                   size="lg"
@@ -697,7 +740,7 @@ export default function HomePage() {
                 />
                 <IconButton
                   position="absolute"
-                  right="0px"
+                  right={["-25px", "-15px", "-5px", "0px"]}
                   top="57%"
                   rounded="full"
                   zIndex={2}
@@ -716,8 +759,8 @@ export default function HomePage() {
                       <Box key={property.propertyid} mb={4}>
                         <PropertyTab
                           property={property}
-                          maxWidth="450px"
-                          minWidth="400px"
+                          maxWidth={["100%", "100%", "100%", "450px"]}
+                          minWidth={["100%", "100%", "100%", "400px"]}
                           imageHeight="215px"
                           type="search"
                         />
@@ -740,18 +783,31 @@ export default function HomePage() {
             position="relative"
             px={["1.5rem", "2.5rem", "2.5rem", "3rem"]}
           >
-            <Text fontWeight="bold" fontSize="5xl" color="white" pb={4}>
+            <Text
+              fontWeight="bold"
+              fontSize={["4xl", "4xl", "4xl", "5xl"]}
+              color="white"
+              pb={4}
+              textAlign={["center", "center", "left", "left"]}
+            >
               Our Top Wealth Generating{" "}
               <Text color={BRAND_GREEN} as="span">
                 Assets
               </Text>
             </Text>
-            <Text fontWeight="semibold" fontSize="3xl" color="gray.300" pb={6}>
+            <Text
+              fontWeight="semibold"
+              fontSize={["3xl", "3xl", "3xl", "4xl"]}
+              color="gray.300"
+              pb={6}
+              textAlign={["center", "center", "left", "left"]}
+            >
               Properties with Highest Average ROI
             </Text>
             <Flex
               direction="row"
               ref={wealthRef}
+              mx={["-1.2rem", "-2.5rem", "0rem", "0rem"]}
               scrollBehavior="smooth"
               overflow="auto"
               columnGap={3}
@@ -764,14 +820,15 @@ export default function HomePage() {
               <>
                 <IconButton
                   position="absolute"
-                  left="50px"
+                  left={["25px", "30px", "40px", "50px"]}
                   top="57%"
+                  size="lg"
                   zIndex={2}
                   rounded="full"
                   transform="translate(-50%,-50%)"
-                  size="lg"
                   bgColor={BRAND_GREEN}
                   color="black"
+                  _hover={{ bgColor: BRAND_GREEN }}
                   onClick={() => {
                     wealthRef.current.scrollLeft -= SCROLL_VALUE
                   }}
@@ -779,7 +836,7 @@ export default function HomePage() {
                 />
                 <IconButton
                   position="absolute"
-                  right="0px"
+                  right={["-25px", "-15px", "-5px", "0px"]}
                   top="57%"
                   rounded="full"
                   zIndex={2}
@@ -787,6 +844,7 @@ export default function HomePage() {
                   size="lg"
                   bgColor={BRAND_GREEN}
                   color="black"
+                  _hover={{ bgColor: BRAND_GREEN }}
                   onClick={() => {
                     wealthRef.current.scrollLeft += SCROLL_VALUE
                   }}
@@ -798,8 +856,8 @@ export default function HomePage() {
                       <Box key={property.propertyid} mb={4}>
                         <PropertyTab
                           property={property}
-                          maxWidth="450px"
-                          minWidth="400px"
+                          maxWidth={["100%", "100%", "100%", "450px"]}
+                          minWidth={["100%", "100%", "100%", "400px"]}
                           imageHeight="215px"
                           type="search"
                         />
@@ -816,7 +874,13 @@ export default function HomePage() {
         </Box>
       )}
       <Flex py="8" direction="column">
-        <Text fontWeight="bold" fontSize="5xl" color="white" py={4}>
+        <Text
+          fontWeight="bold"
+          fontSize={["4xl", "4xl", "4xl", "5xl"]}
+          color="white"
+          py={4}
+          textAlign={["center", "center", "left", "left"]}
+        >
           Get Instant Loan From India&apos;s{" "}
           <Text color={BRAND_GREEN} as="span">
             Top Banks
@@ -827,8 +891,17 @@ export default function HomePage() {
           alignItems="center"
           direction={["column", "column", "column", "row"]}
         >
-          <Flex direction="column" gap={8}>
-            <Text fontSize="4xl" fontWeight="semibold" color="gray.300">
+          <Flex
+            direction="column"
+            gap={8}
+            alignItems={["center", "center", "flex-start", "flex-start"]}
+          >
+            <Text
+              fontSize={["3xl", "3xl", "3xl", "4xl"]}
+              fontWeight="semibold"
+              color="gray.300"
+              textAlign={["center", "center", "left", "left"]}
+            >
               Avail Loans against properties with great ease and best interest
               rates
             </Text>
@@ -904,7 +977,13 @@ export default function HomePage() {
           pt={8}
           pb={16}
         >
-          <Text fontWeight="bold" fontSize="5xl" color="white" py={4}>
+          <Text
+            fontWeight="bold"
+            fontSize={["4xl", "4xl", "4xl", "5xl"]}
+            color="white"
+            py={4}
+            textAlign="center"
+          >
             Why Indians Love{" "}
             <Text color={BRAND_GREEN} as="span">
               Real Estate?
@@ -915,6 +994,7 @@ export default function HomePage() {
             direction={["column", "column", "column", "row"]}
             gap={9}
             mb={6}
+            alignItems="center"
           >
             <Image
               src="/images/blue_tick.svg"
@@ -923,10 +1003,20 @@ export default function HomePage() {
               h={150}
             />
             <Flex direction="column">
-              <Text fontSize="4xl" fontWeight="bold">
+              <Text
+                fontSize="4xl"
+                fontWeight="bold"
+                textAlign={["center", "center", "left", "left"]}
+                pb={4}
+              >
                 Secured Investment
               </Text>
-              <Text fontSize="2xl" color="gray.300" fontWeight="semibold">
+              <Text
+                fontSize="2xl"
+                color="gray.300"
+                fontWeight="semibold"
+                textAlign={["center", "center", "left", "left"]}
+              >
                 A Real estate investments secure your future by providing
                 long-term stability. It outperforms inflation as its less
                 susceptible to market fluctuations.
@@ -938,19 +1028,29 @@ export default function HomePage() {
             direction={["column", "column", "column", "row"]}
             gap={6}
             mb={6}
+            alignItems="center"
           >
             <Image
               src="/images/time_money.svg"
-              // src="https://media-public.canva.com/rS4uU/MAEsp9rS4uU/1/t.png"
               alt="time money rotating clock svg"
               w={150}
               h={150}
             />
             <Flex direction="column">
-              <Text fontSize="4xl" fontWeight="bold">
+              <Text
+                fontSize="4xl"
+                fontWeight="bold"
+                textAlign={["center", "center", "left", "left"]}
+                pb={4}
+              >
                 Stable Returns
               </Text>
-              <Text fontSize="2xl" color="gray.300" fontWeight="semibold">
+              <Text
+                fontSize="2xl"
+                color="gray.300"
+                fontWeight="semibold"
+                textAlign={["center", "center", "left", "left"]}
+              >
                 A Real Estate investments secure your future by providing
                 long-term stability. It outperformes inflation as its less
                 susceptible to market fluctuations.
@@ -961,6 +1061,7 @@ export default function HomePage() {
             w={["100%", "100%", "70%", "70%"]}
             direction={["column", "column", "column", "row"]}
             gap={6}
+            alignItems="center"
           >
             <Image
               src="/images/money_gif.gif"
@@ -969,10 +1070,20 @@ export default function HomePage() {
               h={150}
             />
             <Flex direction="column">
-              <Text fontSize="4xl" fontWeight="bold">
+              <Text
+                fontSize="4xl"
+                fontWeight="bold"
+                textAlign={["center", "center", "left", "left"]}
+                pb={4}
+              >
                 Easily Leveragable
               </Text>
-              <Text fontSize="2xl" color="gray.300" fontWeight="semibold">
+              <Text
+                fontSize="2xl"
+                color="gray.300"
+                fontWeight="semibold"
+                textAlign={["center", "center", "left", "left"]}
+              >
                 A Real estate investments secure your future by providing
                 long-term stability. It outperforms inflation as its less
                 susceptible to market fluctuations.
@@ -1011,13 +1122,22 @@ export default function HomePage() {
             py={12}
             mx={["1.5rem", "2.5rem", "2.5rem", "3rem"]}
           >
-            <Text fontWeight="bold" fontSize="4xl" color="white">
+            <Text
+              fontWeight="bold"
+              fontSize={["3xl", "3xl", "3xl", "4xl"]}
+              color="white"
+            >
               Testimonials
             </Text>
-            <Text fontWeight="bold" fontSize="5xl" color="gray.300">
+            <Text
+              fontWeight="bold"
+              fontSize={["4xl", "4xl", "4xl", "5xl"]}
+              color="gray.300"
+              textAlign="center"
+            >
               What people say about us?
             </Text>
-            <Flex gap={4} mt={8} direction={["column", "row", "row", "row"]}>
+            <Flex gap={6} mt={8} direction={["column", "row", "row", "row"]}>
               <Flex direction="column" gap={4}>
                 <Text fontSize="lg" color="gray.300" fontWeight="semibold">
                   A Real estate investments secure your future by providing
@@ -1193,7 +1313,11 @@ export default function HomePage() {
           py={10}
           mx={["1.5rem", "2.5rem", "2.5rem", "3rem"]}
         >
-          <Text fontWeight="bold" fontSize="5xl">
+          <Text
+            fontWeight="bold"
+            fontSize={["4xl", "4xl", "4xl", "5xl"]}
+            textAlign="center"
+          >
             All the{" "}
             <Text color={BRAND_GREEN} as="span">
               tools
@@ -1208,88 +1332,80 @@ export default function HomePage() {
               "repeat(4, 1fr)",
             ]}
             pt={8}
-            gap={6}
+            gap={[4, 4, 4, 6]}
           >
-            <GridItem w="100%" h="60">
-              <Flex
-                direction="column"
-                alignItems="center"
-                p={8}
-                bgColor="#4C00ED"
-                rounded="lg"
-                gap={4}
-              >
-                <Image
-                  src="/images/calculator_icon.png"
-                  alt="calculator icon"
-                  w={85}
-                  h={85}
-                />
-                <Text fontWeight="bold" fontSize="2xl">
-                  EMI Calculator
-                </Text>
-              </Flex>
-            </GridItem>
-            <GridItem w="100%" h="60">
-              <Flex
-                direction="column"
-                alignItems="center"
-                p={8}
-                bgColor="#EF6047"
-                rounded="lg"
-                gap={4}
-              >
-                <Image
-                  src="/images/stopwatch_icon.png"
-                  alt="stopwatch icon"
-                  w={85}
-                  h={85}
-                />
-                <Text fontWeight="bold" fontSize="2xl">
-                  Bastu Checker
-                </Text>
-              </Flex>
-            </GridItem>
-            <GridItem w="100%" h="60">
-              <Flex
-                direction="column"
-                alignItems="center"
-                p={8}
-                bgColor="#FFA728"
-                rounded="lg"
-                gap={4}
-              >
-                <Image
-                  src="/images/bar_graph_icon.png"
-                  alt="bar graph icon"
-                  w={85}
-                  h={85}
-                />
-                <Text fontWeight="bold" fontSize="2xl">
-                  ROI Calculator
-                </Text>
-              </Flex>
-            </GridItem>
-            <GridItem w="100%" h="60">
-              <Flex
-                direction="column"
-                alignItems="center"
-                p={8}
-                bgColor="#2BA8AB"
-                rounded="lg"
-                gap={4}
-              >
-                <Image
-                  src="/images/calculator_icon.png"
-                  alt="calculator icon"
-                  w={85}
-                  h={85}
-                />
-                <Text fontWeight="bold" fontSize="2xl">
-                  EMI Calculator
-                </Text>
-              </Flex>
-            </GridItem>
+            <Flex
+              direction="column"
+              alignItems="center"
+              p={[4, 5, 6, 8]}
+              bgColor="#4C00ED"
+              rounded="lg"
+              gap={4}
+            >
+              <Image
+                src="/images/calculator_icon.png"
+                alt="calculator icon"
+                w={85}
+                h={85}
+              />
+              <Text fontWeight="bold" fontSize="2xl" textAlign="center">
+                EMI Calculator
+              </Text>
+            </Flex>
+            <Flex
+              direction="column"
+              alignItems="center"
+              p={[4, 5, 6, 8]}
+              bgColor="#EF6047"
+              rounded="lg"
+              gap={4}
+            >
+              <Image
+                src="/images/stopwatch_icon.png"
+                alt="stopwatch icon"
+                w={85}
+                h={85}
+              />
+              <Text fontWeight="bold" fontSize="2xl" textAlign="center">
+                Bastu Checker
+              </Text>
+            </Flex>
+            <Flex
+              direction="column"
+              alignItems="center"
+              p={[4, 5, 6, 8]}
+              bgColor="#FFA728"
+              rounded="lg"
+              gap={4}
+            >
+              <Image
+                src="/images/bar_graph_icon.png"
+                alt="bar graph icon"
+                w={85}
+                h={85}
+              />
+              <Text fontWeight="bold" fontSize="2xl" textAlign="center">
+                ROI Calculator
+              </Text>
+            </Flex>
+            <Flex
+              direction="column"
+              alignItems="center"
+              p={[4, 5, 6, 8]}
+              bgColor="#2BA8AB"
+              rounded="lg"
+              gap={4}
+            >
+              <Image
+                src="/images/calculator_icon.png"
+                alt="calculator icon"
+                w={85}
+                h={85}
+              />
+              <Text fontWeight="bold" fontSize="2xl" textAlign="center">
+                EMI Calculator
+              </Text>
+            </Flex>
           </Grid>
         </Flex>
       </Flex>
