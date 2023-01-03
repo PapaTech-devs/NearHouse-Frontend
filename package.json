@@ -27,6 +27,8 @@
     "react-responsive-carousel": "^3.2.23",
     "react-select": "^5.4.0",
     "react-slick": "^0.29.0",
+    "rehype-raw": "^6.1.1",
+    "remark-unwrap-images": "^3.0.1",
     "slick-carousel": "^1.8.1",
     "uuid": "^9.0.0"
   },

@@ -50,7 +50,7 @@ function BlogCard(props) {
             h={{ base: "300px", md: "300px", sm: "300px" }}
             w={{ base: "100%", md: "100%", sm: "100%" }}
             src={props.thumbnail}
-            alt="blogImage"
+            alt={props.title}
           />
 
           {/* <Box

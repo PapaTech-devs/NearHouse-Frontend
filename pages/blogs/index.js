@@ -18,6 +18,7 @@ import {
   HStack,
   Container,
   keyframes,
+  Link,
 } from "@chakra-ui/react";
 import ArticleInfo from "../../components/blog/articleInfo";
 import BlogCard from "../../components/blog/BlogCard";
@@ -77,7 +78,7 @@ function getLatest(articles, n) {
 
 export default function BlogList(props) {
   const animation = `${zoom} 1 0.1s forwards`;
-  console.log(props);
+  // console.log(props);
   let heroBlog = props.articles.filter((article) => {
     return article._id === props.hero[0].heroBlogId;
   });
@@ -183,7 +184,9 @@ export default function BlogList(props) {
               >
                 Read more
               </Button> */}
-              <CustomButton name={"Read more"} />
+              <Link href={`/blogs/${heroBlog.slug}`}>
+                <CustomButton name={"Read more"} />
+              </Link>
             </VStack>
           </Box>
         </SimpleGrid>
@@ -224,12 +227,14 @@ export default function BlogList(props) {
               title={"Why Home loans are better than any other loan ? "}
             /> */}
             {latestArticles.map((article) => (
-              <BlogCard
-                key={article._id}
-                title={article.title}
-                thumbnail={article.thumbnail}
-                createdAt={getDate(article.createdAt)}
-              />
+              <Link href={`/blogs/${article.slug}`}>
+                <BlogCard
+                  key={article._id}
+                  title={article.title}
+                  thumbnail={article.thumbnail}
+                  createdAt={getDate(article.createdAt)}
+                />
+              </Link>
             ))}
             {/* <BlogCard
               title={"The best places to invest in residential properties ?  "}
