@@ -10,8 +10,8 @@ import {
   Badge,
   HStack,
   Grid,
-  GridItem,
   Hide,
+  useDisclosure,
 } from "@chakra-ui/react"
 import Head from "next/head"
 import { useEffect, useState } from "react"
@@ -22,8 +22,10 @@ import { useAuth } from "../hooks/contextHooks"
 import { showToast } from "../utils/index"
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai"
 import { useRef } from "react"
+import PropertyAppointmentModal from "../components/PropertyAppointmentModal"
 
 export default function HomePage() {
+  const toast = useToast()
   const [featuredHouse, setFeaturedHouse] = useState(null)
   const [featuredFlats, setFeaturedFlats] = useState(null)
   const [featuredPlots, setFeaturedPlots] = useState(null)
@@ -31,7 +33,6 @@ export default function HomePage() {
   const [wealthGeneratingAssets, setWealthGeneratingAssets] = useState(null)
   const router = useRouter()
   const { authUser } = useAuth()
-  const toast = useToast()
   let [dynamicText, setDynamicText] = useState(0)
   const textList = ["Residential", "Flats", "Houses", "Plots", "Fractional"]
   let timer
@@ -44,6 +45,13 @@ export default function HomePage() {
   const plotsRef = useRef(null)
   const commercialRef = useRef(null)
   const wealthRef = useRef(null)
+  const [values, setValues] = useState({
+    userName: "",
+    userEmail: "",
+    userMobileNo: "",
+    appointmentDate: "",
+  })
+  const appointmentModal = useDisclosure()
 
   useEffect(() => {
     async function fetchProperty() {
@@ -103,7 +111,7 @@ export default function HomePage() {
       <Flex
         direction={["column", "column", "row", "row"]}
         h={["fit-content", "fit-content", "90vh", "90vh"]}
-        pt={16}
+        pt={[6, 10, 12, 16]}
         justifyContent="space-between"
         gap={4}
       >
@@ -117,9 +125,9 @@ export default function HomePage() {
             fontSize={["lg", "2xl", "2xl", "2xl"]}
             fontWeight="bold"
             textAlign="left"
-            h={["10vh", "10vh", "10vh", "9vh"]}
+            h={["5vh", "10vh", "10vh", "9vh"]}
             onClick={() => router.push("/search")}
-            sx={{ borderRadius: "15px" }}
+            sx={{ borderRadius: "5px" }}
           >
             Search properties near you
           </Button>
@@ -138,9 +146,10 @@ export default function HomePage() {
             backgroundSize="cover"
             backgroundRepeat="no-repeat"
             alignSelf="flex-start"
-            h="76px"
-            w="268px"
-            justifyContent="center"
+            h={["63px", "76px", "76px", "76px"]}
+            w={["220px", "268px", "268px", "268px"]}
+            justifyContent="flex-start"
+            px={4}
             alignItems="center"
             gap={4}
             fontSize={["md", "lg", "2xl", "2xl"]}
@@ -160,7 +169,11 @@ export default function HomePage() {
               src="/images/add_icon.png"
               alt="add property icon"
             />
-            <Text fontWeight="bold" color="black">
+            <Text
+              fontWeight="bold"
+              color="black"
+              fontSize={["larger", "2xl", "2xl", "2xl"]}
+            >
               Add Property
             </Text>
           </Flex>
@@ -259,9 +272,33 @@ export default function HomePage() {
               Flats
             </Text>
             <Flex direction="column" fontSize="lg" color="gray.400" gap={1}>
-              <Text>✔️ Earn up to 5% Rental Yield</Text>
-              <Text>✔️ Starts from 12.5Lacs</Text>
-              <Text>✔️ No brokerage Associated</Text>
+              <Flex gap={2}>
+                <Image
+                  w={6}
+                  h={6}
+                  src="/images/green_tick_icon.png"
+                  alt="green tick icon"
+                />
+                <Text>Earn up to 5% Rental Yield</Text>
+              </Flex>
+              <Flex gap={2}>
+                <Image
+                  w={6}
+                  h={6}
+                  src="/images/green_tick_icon.png"
+                  alt="green tick icon"
+                />
+                <Text>Starts from 12.5Lacs</Text>
+              </Flex>
+              <Flex gap={2}>
+                <Image
+                  w={6}
+                  h={6}
+                  src="/images/green_tick_icon.png"
+                  alt="green tick icon"
+                />
+                <Text>No brokerage Associated</Text>
+              </Flex>
             </Flex>
           </Flex>
           <Flex
@@ -292,9 +329,33 @@ export default function HomePage() {
               Houses
             </Text>
             <Flex direction="column" fontSize="lg" color="gray.400" gap={1}>
-              <Text>✔️ Earn up to 3% Rental Yield</Text>
-              <Text>✔️ Starts from 35Lacs</Text>
-              <Text>✔️ No brokerage Associated</Text>
+              <Flex gap={2}>
+                <Image
+                  w={6}
+                  h={6}
+                  src="/images/green_tick_icon.png"
+                  alt="green tick icon"
+                />
+                <Text>Earn up to 3% Rental Yield</Text>
+              </Flex>
+              <Flex gap={2}>
+                <Image
+                  w={6}
+                  h={6}
+                  src="/images/green_tick_icon.png"
+                  alt="green tick icon"
+                />
+                <Text>Starts from 35Lacs</Text>
+              </Flex>
+              <Flex gap={2}>
+                <Image
+                  w={6}
+                  h={6}
+                  src="/images/green_tick_icon.png"
+                  alt="green tick icon"
+                />
+                <Text>No brokerage Associated</Text>
+              </Flex>
             </Flex>
           </Flex>
           <Flex
@@ -325,9 +386,33 @@ export default function HomePage() {
               Plots
             </Text>
             <Flex fontSize="lg" color="gray.400" gap={1} direction="column">
-              <Text>✔️ Earn up to 22% IRR</Text>
-              <Text>✔️ Starts from 5 Lacs</Text>
-              <Text>✔️ High Capital Appreciation</Text>
+              <Flex gap={2}>
+                <Image
+                  w={6}
+                  h={6}
+                  src="/images/green_tick_icon.png"
+                  alt="green tick icon"
+                />
+                <Text>Earn up to 22% IRR</Text>
+              </Flex>
+              <Flex gap={2}>
+                <Image
+                  w={6}
+                  h={6}
+                  src="/images/green_tick_icon.png"
+                  alt="green tick icon"
+                />
+                <Text>Starts from 5Lacs</Text>
+              </Flex>
+              <Flex gap={2}>
+                <Image
+                  w={6}
+                  h={6}
+                  src="/images/green_tick_icon.png"
+                  alt="green tick icon"
+                />
+                <Text>High Capital Appreciation</Text>
+              </Flex>
             </Flex>
           </Flex>
           <Flex
@@ -366,10 +451,40 @@ export default function HomePage() {
             >
               Fractional
             </Text>
-            <Flex fontSize="lg" color="gray.400" direction="column" gap={1}>
-              <Text>✔️ Earn upto 15% IRR</Text>
-              <Text>✔️ Starts from 2 Lacs</Text>
-              <Text>✔️ Co-own properties with great ROI</Text>
+            <Flex
+              fontSize="lg"
+              color="gray.400"
+              direction="column"
+              gap={1}
+              mx={6}
+            >
+              <Flex gap={2}>
+                <Image
+                  w={6}
+                  h={6}
+                  src="/images/green_tick_icon.png"
+                  alt="green tick icon"
+                />
+                <Text>Earn up to 15% IRR</Text>
+              </Flex>
+              <Flex gap={2}>
+                <Image
+                  w={6}
+                  h={6}
+                  src="/images/green_tick_icon.png"
+                  alt="green tick icon"
+                />
+                <Text>Starts from 2Lacs</Text>
+              </Flex>
+              <Flex gap={2}>
+                <Image
+                  w={6}
+                  h={6}
+                  src="/images/green_tick_icon.png"
+                  alt="green tick icon"
+                />
+                <Text>Co-own properties with great ROI</Text>
+              </Flex>
             </Flex>
           </Flex>
           <Flex
@@ -409,9 +524,33 @@ export default function HomePage() {
               REITs
             </Text>
             <Flex fontSize="lg" color="gray.400" direction="column" gap={1}>
-              <Text>✔️ Earn upto 16% IRR</Text>
-              <Text>✔️ Start investing with ₹400</Text>
-              <Text>✔️ Sell anytime ,just like stocks</Text>
+              <Flex gap={2}>
+                <Image
+                  w={6}
+                  h={6}
+                  src="/images/green_tick_icon.png"
+                  alt="green tick icon"
+                />
+                <Text>Earn up to 16% IRR</Text>
+              </Flex>
+              <Flex gap={2}>
+                <Image
+                  w={6}
+                  h={6}
+                  src="/images/green_tick_icon.png"
+                  alt="green tick icon"
+                />
+                <Text>Start investing with ₹400</Text>
+              </Flex>
+              <Flex gap={2}>
+                <Image
+                  w={6}
+                  h={6}
+                  src="/images/green_tick_icon.png"
+                  alt="green tick icon"
+                />
+                <Text>Sell anytime, just like stocks</Text>
+              </Flex>
             </Flex>
           </Flex>
         </Flex>
@@ -473,6 +612,8 @@ export default function HomePage() {
                   transform="translate(-50%,-50%)"
                   size="lg"
                   bgColor={BRAND_GREEN}
+                  opacity={0.75}
+                  _hover={{ bgColor: BRAND_GREEN }}
                   color="black"
                   onClick={() => {
                     houseRef.current.scrollLeft -= SCROLL_VALUE
@@ -484,6 +625,8 @@ export default function HomePage() {
                   right={["-25px", "-15px", "-5px", "0px"]}
                   top="57%"
                   rounded="full"
+                  opacity={0.75}
+                  _hover={{ bgColor: BRAND_GREEN }}
                   zIndex={2}
                   transform="translate(-50%,-50%)"
                   size="lg"
@@ -555,6 +698,8 @@ export default function HomePage() {
                   top="57%"
                   zIndex={2}
                   rounded="full"
+                  opacity={0.75}
+                  _hover={{ bgColor: BRAND_GREEN }}
                   transform="translate(-50%,-50%)"
                   size="lg"
                   bgColor={BRAND_GREEN}
@@ -570,6 +715,8 @@ export default function HomePage() {
                   top="57%"
                   rounded="full"
                   zIndex={2}
+                  opacity={0.75}
+                  _hover={{ bgColor: BRAND_GREEN }}
                   transform="translate(-50%,-50%)"
                   size="lg"
                   bgColor={BRAND_GREEN}
@@ -646,6 +793,8 @@ export default function HomePage() {
                   rounded="full"
                   transform="translate(-50%,-50%)"
                   size="lg"
+                  opacity={0.75}
+                  _hover={{ bgColor: BRAND_GREEN }}
                   bgColor={BRAND_GREEN}
                   color="black"
                   onClick={() => {
@@ -659,6 +808,8 @@ export default function HomePage() {
                   top="57%"
                   rounded="full"
                   zIndex={2}
+                  opacity={0.75}
+                  _hover={{ bgColor: BRAND_GREEN }}
                   transform="translate(-50%,-50%)"
                   size="lg"
                   bgColor={BRAND_GREEN}
@@ -731,6 +882,8 @@ export default function HomePage() {
                   rounded="full"
                   transform="translate(-50%,-50%)"
                   size="lg"
+                  opacity={0.75}
+                  _hover={{ bgColor: BRAND_GREEN }}
                   bgColor={BRAND_GREEN}
                   color="black"
                   onClick={() => {
@@ -744,6 +897,8 @@ export default function HomePage() {
                   top="57%"
                   rounded="full"
                   zIndex={2}
+                  opacity={0.75}
+                  _hover={{ bgColor: BRAND_GREEN }}
                   transform="translate(-50%,-50%)"
                   size="lg"
                   bgColor={BRAND_GREEN}
@@ -797,7 +952,7 @@ export default function HomePage() {
             </Text>
             <Text
               fontWeight="semibold"
-              fontSize={["3xl", "3xl", "3xl", "4xl"]}
+              fontSize={["2xl", "2xl", "2xl", "3xl"]}
               color="gray.300"
               pb={6}
               textAlign={["center", "center", "left", "left"]}
@@ -825,6 +980,7 @@ export default function HomePage() {
                   size="lg"
                   zIndex={2}
                   rounded="full"
+                  opacity={0.75}
                   transform="translate(-50%,-50%)"
                   bgColor={BRAND_GREEN}
                   color="black"
@@ -842,6 +998,7 @@ export default function HomePage() {
                   zIndex={2}
                   transform="translate(-50%,-50%)"
                   size="lg"
+                  opacity={0.75}
                   bgColor={BRAND_GREEN}
                   color="black"
                   _hover={{ bgColor: BRAND_GREEN }}
@@ -893,11 +1050,11 @@ export default function HomePage() {
         >
           <Flex
             direction="column"
-            gap={8}
+            gap={6}
             alignItems={["center", "center", "flex-start", "flex-start"]}
           >
             <Text
-              fontSize={["3xl", "3xl", "3xl", "4xl"]}
+              fontSize={["2xl", "2xl", "2xl", "4xl"]}
               fontWeight="semibold"
               color="gray.300"
               textAlign={["center", "center", "left", "left"]}
@@ -913,7 +1070,7 @@ export default function HomePage() {
                   w={38}
                   h={38}
                 />
-                <Text fontSize={["md", "md", "2xl", "4xl"]} fontWeight="bold">
+                <Text fontSize={["md", "md", "2xl", "3xl"]} fontWeight="bold">
                   SBI
                 </Text>
               </Flex>
@@ -924,7 +1081,7 @@ export default function HomePage() {
                   w={38}
                   h={38}
                 />
-                <Text fontSize={["md", "md", "2xl", "4xl"]} fontWeight="bold">
+                <Text fontSize={["md", "md", "2xl", "3xl"]} fontWeight="bold">
                   HDFC
                 </Text>
               </Flex>
@@ -935,7 +1092,7 @@ export default function HomePage() {
                   w={38}
                   h={38}
                 />
-                <Text fontSize={["md", "md", "2xl", "4xl"]} fontWeight="bold">
+                <Text fontSize={["md", "md", "2xl", "3xl"]} fontWeight="bold">
                   ICICI
                 </Text>
               </Flex>
@@ -946,7 +1103,7 @@ export default function HomePage() {
                   w={38}
                   h={38}
                 />
-                <Text fontSize={["md", "md", "2xl", "4xl"]} fontWeight="bold">
+                <Text fontSize={["md", "md", "2xl", "3xl"]} fontWeight="bold">
                   AXIS
                 </Text>
               </Flex>
@@ -958,6 +1115,13 @@ export default function HomePage() {
               w="250px"
               h="80px"
               fontSize="2xl"
+              onClick={() => {
+                if (authUser) appointmentModal.onOpen()
+                else {
+                  showToast("Please login to fix appointment.", "error", toast)
+                  router.push("/login")
+                }
+              }}
             >
               Check Eligibility
             </Button>
@@ -1409,6 +1573,13 @@ export default function HomePage() {
           </Grid>
         </Flex>
       </Flex>
+      <PropertyAppointmentModal
+        values={values}
+        setValues={setValues}
+        isOpen={appointmentModal.isOpen}
+        onClose={appointmentModal.onClose}
+        propertyid="loan"
+      />
     </Flex>
   )
 }
