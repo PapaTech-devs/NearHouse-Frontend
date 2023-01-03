@@ -49,7 +49,7 @@ function BlogCard(props) {
             objectFit={"cover"}
             h={{ base: "300px", md: "300px", sm: "300px" }}
             w={{ base: "100%", md: "100%", sm: "100%" }}
-            src="https://picsum.photos/300/100"
+            src={props.thumbnail}
             alt="blogImage"
           />
 

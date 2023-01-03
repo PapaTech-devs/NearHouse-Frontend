@@ -17,26 +17,25 @@ export default function BlogCarousel(props) {
   };
 
   return (
-    <Flex h={"30vh"} bgColor={"rgb(20,20,20)"}>
-      <Box w={"100%"} h={"100%"} mb={"-10em"} bgColor={"yellow"}>
-        <Slider {...settings}>
-          {props.blogs.map((blog) => {
-            return (
-              <Image
-                key={blog.id}
-                src={"https://picsum.photos/300/100"}
-                px={"3em"}
-                h={"150px"}
-                mt={"-10em"}
-              />
-            );
-          })}
-        </Slider>
-
+    <Box h={"30vh"} bgColor={"rgb(20,20,20)"}>
+      <Slider {...settings}>
+        {props.blogs.map((blog) => {
+          return (
+            <Image
+              key={blog._id}
+              src={blog.thumbnail}
+              px={"3em"}
+              h={"300px"}
+              mt={"-10em"}
+            />
+          );
+        })}
+      </Slider>
+      <Box w={"100%"} h={"100%"} bgColor={"yellow"}>
         <Heading textAlign={"center"} color={"black"}>
-          {"blogTitle"}
+          {"BlogTitle"}
         </Heading>
       </Box>
-    </Flex>
+    </Box>
   );
 }

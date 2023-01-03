@@ -11,7 +11,7 @@ export const CustomButton = (props) => {
       justifyContent="center"
       alignItems="center"
       gap={4}
-      fontSize={["sm", "sm", "md", "2xl"]}
+      fontSize={["xs", "sm", "md", "2xl"]}
       cursor="pointer"
       _hover={{ transform: "scale(1.05)" }}
       onClick={() => {
