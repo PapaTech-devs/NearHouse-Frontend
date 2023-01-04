@@ -151,15 +151,17 @@ export default function BlogList(props) {
           spacing={{ base: 10, sm: 5 }}
           px={{ base: "0%", sm: "0%", md: "10%" }}
         >
-          <Image
-            // objectFit="cover"
-            // maxW={{ base: "100%", sm: "200px" }}
-            src={heroBlog.thumbnail}
-            alt={heroBlog.title}
-            h={"100%"}
-            w={"100%"}
-            pr={{ md: "1em", sm: "0em", base: "0em", lg: "5em" }}
-          />
+          <Link href={`/blogs/${heroBlog.slug}`}>
+            <Image
+              // objectFit="cover"
+              // maxW={{ base: "100%", sm: "200px" }}
+              src={heroBlog.thumbnail}
+              alt={heroBlog.title}
+              h={"100%"}
+              w={"100%"}
+              pr={{ md: "1em", sm: "0em", base: "0em", lg: "5em" }}
+            />
+          </Link>
           <Box>
             <VStack gap={{ md: 7, sm: 3, base: 0 }} alignItems={"start"}>
               <Text
@@ -228,7 +230,14 @@ export default function BlogList(props) {
               title={"Why Home loans are better than any other loan ? "}
             /> */}
             {latestArticles.map((article) => (
-              <Link key={article._id} href={`/blogs/${article.slug}`}>
+              <Link
+                key={article._id}
+                href={`/blogs/${article.slug}`}
+                _hover={{
+                  md: { transform: "scale(1.1)" },
+                  base: { transform: "scale(1.03)" },
+                }}
+              >
                 <BlogCard
                   key={article._id}
                   title={article.title}

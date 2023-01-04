@@ -19,10 +19,7 @@ function BlogCard(props) {
       // my={20}
       // ml={10}
       // mr={4}
-      _hover={{
-        md: { transform: "scale(1.1)" },
-        base: { transform: "scale(1.03)" },
-      }}
+
       color={"white"}
       w={"100%"}
       alignItems="center"

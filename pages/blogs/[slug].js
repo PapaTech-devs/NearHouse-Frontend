@@ -1,10 +1,12 @@
-import { Box, Text, Image, Flex } from "@chakra-ui/react";
+import { Box, Text, Image, Flex, Link } from "@chakra-ui/react";
 import ChakraUIRenderer from "chakra-ui-markdown-renderer";
 import ReactMarkdown from "react-markdown";
 import Head from "next/head";
 // import rehypeRaw from "rehype-raw";
 // import unwrapImages from "remark-unwrap-images";
 export default function ArticleComponent({ article }) {
+  // const input = `<img>`;
+
   const newTheme = {
     p: (props) => {
       const { children } = props;
@@ -31,6 +33,32 @@ export default function ArticleComponent({ article }) {
         </Box>
       );
     },
+    a: (props) => {
+      return (
+        <Link
+          href={props.href}
+          isExternal
+          fontFamily={"cursive"}
+          color={"#2AE027"}
+        >
+          {props.children}
+        </Link>
+      );
+    },
+
+    img: (props) => {
+      const { src, alt } = props;
+      return (
+        <Flex justifyContent="center" alignItems="center" py={"2em"}>
+          <Image
+            src={src}
+            alt={alt}
+            h={{ md: "400px", sm: "350px", base: "300px" }}
+            w={"550px"}
+          />
+        </Flex>
+      );
+    },
   };
   return (
     <Box
@@ -52,10 +80,14 @@ export default function ArticleComponent({ article }) {
         <title>{article.title}</title>
       </Head>
       <ReactMarkdown
-        // rehypePlugins={customPlugins}
-        // remarkPlugins={[unwrapImages]}
         components={ChakraUIRenderer(newTheme)}
         skipHtml
+        // source={data.strapiArticle.content}
+        // transformImageUri={(uri) =>
+        //   uri.startsWith("http")
+        //     ? uri
+        //     : `${process.env.REACT_IMAGE_BASE_URL}${uri}`
+        // }
       >
         {article.markdown}
       </ReactMarkdown>
