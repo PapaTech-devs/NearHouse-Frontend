@@ -19,6 +19,7 @@ import PropertyAppointmentModal from "../../components/PropertyAppointmentModal"
 import { useState } from "react"
 import { useAuth } from "../../hooks/contextHooks"
 import { showToast } from "../../utils"
+import Map from "../../components/Map"
 
 export default function Property({ property, user }) {
   const [values, setValues] = useState({
@@ -60,11 +61,10 @@ export default function Property({ property, user }) {
 
   return (
     <Flex
-      h="90vh"
       bgColor="black"
       px={["1.5rem", "2.5rem", "2.5rem", "3rem"]}
       direction="column"
-      pt={5}
+      py={8}
       color="white"
     >
       <Head>
@@ -76,7 +76,7 @@ export default function Property({ property, user }) {
         direction={["column", "column", "row", "row"]}
         gap={5}
       >
-        <Box w={["100%", "100%", "90%", "65%"]}>
+        <Box w={["100%", "100%", "90%", "60%"]}>
           <Carousel
             swipeable={true}
             emulateTouch={true}
@@ -109,7 +109,7 @@ export default function Property({ property, user }) {
           </Carousel>
         </Box>
         <Flex
-          w={["100%", "100%", "90%", "40%"]}
+          w={["100%", "100%", "90%", "45%"]}
           direction="column"
           h={["fit-content", "90vh", "90vh", "90vh"]}
           gap={2}
@@ -128,7 +128,7 @@ export default function Property({ property, user }) {
               gap={4}
             >
               {property.priceType === "lumpsum" ? (
-                <Text fontWeight="bold" fontSize="4xl">
+                <Text fontWeight="bold" fontSize="4xl" my={"-2"}>
                   {formatter.format(property.price / 1e5)} Lacs
                 </Text>
               ) : (
@@ -236,7 +236,7 @@ export default function Property({ property, user }) {
             <Text>{property.description}</Text>
           </Box>
           <Divider my={2} />
-          <Text fontSize="xl" fontWeight="bold">
+          <Text fontSize="2xl" fontWeight="bold">
             Property Details
           </Text>
           <Grid
@@ -359,8 +359,50 @@ export default function Property({ property, user }) {
                 {facingList[property.facing]}
               </Text>
             </Flex>
+            <Flex
+              justifyContent="space-between"
+              direction={["row", "column", "column", "column"]}
+            >
+              <Text>Average Rental Yeild</Text>
+              <Text fontSize="lg" fontWeight="bold">
+                {property.avgRentalYield
+                  ? parseFloat(property.avgRentalYield).toFixed(2) + "%"
+                  : "No data"}
+              </Text>
+            </Flex>
+            <Flex
+              justifyContent="space-between"
+              direction={["row", "column", "column", "column"]}
+            >
+              <Text>Asset Appreciation Rate</Text>
+              <Text fontSize="lg" fontWeight="bold">
+                {property.assetAppreciationRate
+                  ? parseFloat(property.assetAppreciationRate).toFixed(2) + "%"
+                  : "No data"}
+              </Text>
+            </Flex>
+            <Flex
+              justifyContent="space-between"
+              direction={["row", "column", "column", "column"]}
+            >
+              <Text>Average ROI</Text>
+              <Text fontSize="lg" fontWeight="bold">
+                {property.avgRentalYield || property.assetAppreciationRate
+                  ? (
+                      parseFloat(property.avgRentalYield ?? "0") +
+                      parseFloat(property.assetAppreciationRate ?? "0")
+                    ).toFixed(2) + "%"
+                  : "No data"}
+              </Text>
+            </Flex>
           </Grid>
         </Flex>
+      </Flex>
+      <Flex direction="column" gap={4}>
+        <Text fontSize="2xl" fontWeight="bold">
+          Map
+        </Text>
+        <Map properties={[property]} width="100%" height="50vh" />
       </Flex>
     </Flex>
   )

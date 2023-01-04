@@ -9,7 +9,7 @@ import { useRouter } from "next/router"
 import React, { useEffect } from "react"
 import { usePropertyContext } from "../hooks/propertyContext"
 
-function Map({ width, properties }) {
+function Map({ width, properties, height }) {
   const { selectedProperty, setSelectedProperty } = usePropertyContext()
   const [map, setMap] = React.useState(null)
   const router = useRouter()
@@ -21,6 +21,22 @@ function Map({ width, properties }) {
   useEffect(() => {
     if (map && properties.length > 0) {
       var bounds = new window.google.maps.LatLngBounds()
+      var delta = 0.002
+      if (properties.length === 1) {
+        bounds.extend(
+          new window.google.maps.LatLng(
+            parseFloat(properties[0].location.lat + delta),
+            parseFloat(properties[0].location.lng + delta)
+          )
+        )
+        bounds.extend(
+          new window.google.maps.LatLng(
+            parseFloat(properties[0].location.lat + delta),
+            parseFloat(properties[0].location.lng - delta)
+          )
+        )
+      }
+
       for (var i = 0; i < properties.length; i++) {
         bounds.extend(
           new window.google.maps.LatLng(
@@ -34,7 +50,7 @@ function Map({ width, properties }) {
   }, [map, properties])
 
   const mapContainerStyle = {
-    height: "80vh",
+    height: height ?? "80vh",
     borderRadius: "5px",
   }
 

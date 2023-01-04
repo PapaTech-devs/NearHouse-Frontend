@@ -172,7 +172,7 @@ export default function HomePage() {
             <Text
               fontWeight="bold"
               color="black"
-              fontSize={["larger", "2xl", "2xl", "2xl"]}
+              fontSize={["larger", "25px", "25px", "25px"]}
             >
               Add Property
             </Text>
