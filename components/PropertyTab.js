@@ -19,10 +19,11 @@ import { deleteProperty, showToast } from "../utils"
 import { useState } from "react"
 import PropertyDeleteConfirmation from "./DeleteConfirmation"
 import { BsWhatsapp } from "react-icons/bs"
-import { AiFillSchedule } from "react-icons/ai"
 import { ImLocation } from "react-icons/im"
 import { useAuth } from "../hooks/contextHooks"
 import PropertyAppointmentModal from "./PropertyAppointmentModal"
+import { useRouter } from "next/router"
+import { AiFillPhone } from "react-icons/ai"
 
 export default function PropertyTab({
   property,
@@ -45,6 +46,7 @@ export default function PropertyTab({
   const toast = useToast()
   const deleteModal = useDisclosure()
   const bookAppointmentModal = useDisclosure()
+  const router = useRouter()
   let formatter = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "INR",
@@ -237,7 +239,7 @@ export default function PropertyTab({
                     alt="growth graph icon"
                   />
                   <Text color={BRAND_GREEN} fontWeight="bold" fontSize="lg">
-                    {avgROI}% Average ROI
+                    {avgROI.toFixed(2)}% Average ROI
                   </Text>
                 </HStack>
               )}
@@ -259,20 +261,22 @@ export default function PropertyTab({
               </Button>
               <Button
                 colorScheme="telegram"
-                leftIcon={<AiFillSchedule />}
+                leftIcon={<AiFillPhone size="20" />}
                 onClick={(e) => {
                   e.stopPropagation()
                   e.preventDefault()
                   if (authUser) bookAppointmentModal.onOpen()
-                  else
+                  else {
                     showToast(
                       "Please login to fix appointment.",
                       "error",
                       toast
                     )
+                    router.push("/login")
+                  }
                 }}
               >
-                Book Appointment
+                Request a CallBack
               </Button>
             </HStack>
           </Flex>

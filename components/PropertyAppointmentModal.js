@@ -10,6 +10,7 @@ import {
   Stack,
   Input,
   useToast,
+  Flex,
 } from "@chakra-ui/react"
 import { useState } from "react"
 import {
@@ -103,15 +104,15 @@ export default function PropertyAppointmentModal({
 
   return (
     <Modal
+      variant="dark"
       isOpen={isOpen}
       onClose={onClose}
       isCentered
       size="sm"
-      variant="dark"
     >
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader>Appointment for Site Visit</ModalHeader>
+        <ModalHeader>Request a callback</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <Stack rowGap={2}>
@@ -138,20 +139,24 @@ export default function PropertyAppointmentModal({
               isInvalid={error.userEmail}
               onChange={(e) => handleInputChange(e, setValues, values)}
             />
-            <Input
-              placeholder="Enter the date of your visit"
-              _placeholder={{ color: "gray.500" }}
-              type="date"
-              name="appointmentDate"
-              isInvalid={error.appointmentDate}
-              onChange={(e) => handleInputChange(e, setValues, values)}
-            />
+            <Flex direction="column" gap={4}>
+              <label htmlFor="appointmentDate">
+                Preffered Date & Time for Callback
+              </label>
+              <Input
+                placeholder="Enter the date of your visit"
+                type="datetime-local"
+                name="appointmentDate"
+                isInvalid={error.appointmentDate}
+                onChange={(e) => handleInputChange(e, setValues, values)}
+              />
+            </Flex>
           </Stack>
         </ModalBody>
 
         <ModalFooter>
           <Button onClick={handleSubmit} colorScheme="green" mr={3}>
-            Fix Appointment
+            Submit
           </Button>
           <Button
             variant="dark"

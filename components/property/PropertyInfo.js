@@ -17,6 +17,8 @@ export default function PropertyInfo({ error, values, setValues }) {
   const { regions } = usePropertyContext()
   const { authUser } = useAuth()
 
+  console.log("values", values)
+
   return (
     <Stack w="100%" rowGap={1}>
       <Text fontSize="sm" fontStyle="italic" marginBottom={1}>
@@ -275,12 +277,12 @@ export default function PropertyInfo({ error, values, setValues }) {
           <Input
             placeholder="*Enter average rental yeild(optional for plots)"
             size="md"
-            name="avgRentalYield"
+            name="avgRentalYeild"
             _placeholder={{ color: "gray.400" }}
             border="none"
             bgColor="gray.700"
             color="white"
-            value={values.avgRentalYield}
+            value={values.avgRentalYeild}
             onChange={(e) => handleInputChange(e, setValues, values)}
           />
           <Input

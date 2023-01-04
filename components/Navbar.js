@@ -39,7 +39,8 @@ export default function Navbar() {
           <Link>
             <Image
               alt="nearhouse brand image"
-              w="29%"
+              w="39%"
+              pt={3}
               src="/images/brand.png"
             />
           </Link>

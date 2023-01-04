@@ -8,7 +8,6 @@ import {
   Icon,
   CircularProgress,
   Text,
-  useDisclosure,
 } from "@chakra-ui/react"
 import Map from "../components/Map"
 import PropertyTab from "../components/PropertyTab"
