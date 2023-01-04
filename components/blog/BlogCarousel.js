@@ -52,7 +52,7 @@ export default function BlogCarousel(props) {
                 <Image
                   key={blog._id}
                   src={blog.thumbnail}
-                  px={{ base: "0.5em", sm: "1em", md: "3em" }}
+                  px={{ base: "1.5em", sm: "1em", md: "3em" }}
                   h={"300px"}
                   w={"500px"}
                   mt={{ md: "0em", sm: "1em", base: "4em" }}
