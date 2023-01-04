@@ -39,7 +39,7 @@ export default function ArticleComponent({ article }) {
       // px={["1.5rem", "2.5rem", "2.5rem", "3rem"]}
       mb="8"
       direction={"column"}
-      px={{ md: "20rem", sm: "5em", base: "2rem" }}
+      px={{ md: "20rem", sm: "4em", base: "1em" }}
     >
       {/* <Flex alignItems={"start"} direction={"column"}> */}
       <Image

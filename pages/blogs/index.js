@@ -83,6 +83,7 @@ export default function BlogList(props) {
     return article._id === props.hero[0].heroBlogId;
   });
   heroBlog = heroBlog[0];
+  // console.log(heroBlog._id);
   const latestArticles = getLatest(props.articles, 3);
   // let publishDate = new Date(heroBlog.publishDate);
   return (
@@ -227,7 +228,7 @@ export default function BlogList(props) {
               title={"Why Home loans are better than any other loan ? "}
             /> */}
             {latestArticles.map((article) => (
-              <Link href={`/blogs/${article.slug}`}>
+              <Link key={article._id} href={`/blogs/${article.slug}`}>
                 <BlogCard
                   key={article._id}
                   title={article.title}

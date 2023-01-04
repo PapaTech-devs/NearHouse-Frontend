@@ -44,34 +44,42 @@ export default function BlogCarousel(props) {
 
   return (
     <Box h={"30vh"} bgColor={"rgb(20,20,20)"}>
-      <Slider {...settings}>
-        {props.blogs.map((blog) => {
-          return (
-            <Link href={`/blogs/${blog.slug}`}>
-              <Image
-                key={blog._id}
-                src={blog.thumbnail}
-                px={{ base: "0.5em", sm: "1em", md: "3em" }}
-                h={"300px"}
-                w={"500px"}
-                mt={"-5em"}
-                _hover={{ transform: "scale(1.02)" }}
-              />
-              <Heading
-                textAlign={"center"}
-                color={"white"}
-                fontSize={{ base: "1xl", md: "3xl", sm: "2xl" }}
-              >
-                {blog.title}
-              </Heading>
-            </Link>
-          );
-        })}
-      </Slider>
+      <Box w={"100%"} h={"100%"} bgColor={"rgb(20,20,20)"}>
+        <Slider {...settings}>
+          {props.blogs.map((blog) => {
+            return (
+              <Link key={blog._id} href={`/blogs/${blog.slug}`}>
+                <Image
+                  key={blog._id}
+                  src={blog.thumbnail}
+                  px={{ base: "0.5em", sm: "1em", md: "3em" }}
+                  h={"300px"}
+                  w={"500px"}
+                  mt={{ md: "0em", sm: "1em", base: "4em" }}
+                  _hover={{
+                    base: { transform: "scale(1.02)" },
+                    md: { transform: "scale(1.1)" },
+                    sm: { transform: "scale(1.05)" },
+                  }}
+                />
+
+                <Heading
+                  textAlign={"center"}
+                  color={"black"}
+                  fontSize={{ base: "1xl", md: "3xl", sm: "2xl" }}
+                  pt={"1em"}
+                >
+                  {blog.title}
+                </Heading>
+              </Link>
+            );
+          })}
+        </Slider>
+      </Box>
       <Box w={"100%"} h={"100%"} bgColor={"yellow"}>
-        <Heading textAlign={"center"} color={"black"}>
+        {/* <Heading textAlign={"center"} color={"black"}>
           {"Featrured articles"}
-        </Heading>
+        </Heading> */}
       </Box>
     </Box>
   );
