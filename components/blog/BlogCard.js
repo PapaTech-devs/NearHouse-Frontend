@@ -13,13 +13,16 @@ function BlogCard(props) {
   return (
     <Box
       maxW="xl"
-      borderWidth="1px"
+      borderWidth="0px"
       borderRadius="lg"
       overflow="hidden"
       // my={20}
       // ml={10}
       // mr={4}
-      _hover={{ transform: "scale(1.1)" }}
+      _hover={{
+        md: { transform: "scale(1.1)" },
+        base: { transform: "scale(1.03)" },
+      }}
       color={"white"}
       w={"100%"}
       alignItems="center"
@@ -31,7 +34,7 @@ function BlogCard(props) {
           </Badge>
           <Box
             color="gray.500"
-            fontWeight="semibold"
+            fontWeight={{ md: "semibold", base: "medium" }}
             letterSpacing="wide"
             fontSize="xs"
             textTransform="uppercase"
@@ -44,10 +47,10 @@ function BlogCard(props) {
           <Image
             py={4}
             objectFit={"cover"}
-            h={{ base: "200px", md: "250px", sm: "200px" }}
+            h={{ base: "300px", md: "300px", sm: "300px" }}
             w={{ base: "100%", md: "100%", sm: "100%" }}
-            src="https://picsum.photos/300/100"
-            alt="blogImage"
+            src={props.thumbnail}
+            alt={props.title}
           />
 
           {/* <Box

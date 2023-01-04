@@ -1,4 +1,3 @@
-import React from "react";
 import { Flex, Image, Text } from "@chakra-ui/react";
 export const CustomButton = (props) => {
   return (
@@ -12,14 +11,15 @@ export const CustomButton = (props) => {
       justifyContent="center"
       alignItems="center"
       gap={4}
-      fontSize={["md", "sm", "md", "2xl"]}
+      fontSize={["xs", "sm", "md", "2xl"]}
       cursor="pointer"
+      _hover={{ transform: "scale(1.05)" }}
       onClick={() => {
         console.log("clicked read more");
       }}
     >
       {/* <Image w={10} h={10} src="/images/add_icon.png" alt="add property icon" /> */}
-      <Text fontWeight="bold" color="white">
+      <Text fontWeight={"semibold"} color="white">
         {props.name}
       </Text>
     </Flex>
