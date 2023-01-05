@@ -123,7 +123,7 @@ export default function SearchPage() {
             {/* <Box w="46%" h="80vh" bg="red.200" borderRadius="5px">
             Map
           </Box> */}
-            <Map properties={filteredProperties} width="46%" />
+            <Map properties={filteredProperties} width="44%" />
           </Show>
           <Hide above="md">
             <Button
