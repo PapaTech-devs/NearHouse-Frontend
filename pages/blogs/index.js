@@ -32,31 +32,8 @@ const zoom = keyframes`
   to { transform: scale(1.05); }
 `;
 
-const dummyData = [
-  {
-    id: 1,
-    title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-    thumbnal: "https://picsum.photos/300/100",
-  },
-  {
-    id: 2,
-    title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-    thumbnal: "https://picsum.photos/300/100",
-  },
-  {
-    id: 3,
-    title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-    thumbnal: "https://picsum.photos/300/100",
-  },
-  {
-    id: 4,
-    title: "Lorem ipsum dolor sit amet, consectetur adipiscing elit",
-    thumbnal: "https://picsum.photos/300/100",
-  },
-];
-
 function getDate(pdate) {
-  let date = new Date();
+  let date = new Date(pdate);
   return date.toLocaleDateString("en-us", {
     year: "numeric",
     month: "short",
@@ -136,6 +113,9 @@ export default function BlogList(props) {
     //   </Box>
     // </Flex>
     <>
+      <Head>
+        <title>Blogs from NearHouse</title>
+      </Head>
       <Divider />
       <Box
         p={{ base: "20px", md: "50px", sm: "20px" }}

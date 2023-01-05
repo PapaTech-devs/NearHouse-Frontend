@@ -37,7 +37,7 @@ function BlogCard(props) {
             textTransform="uppercase"
             ml="2"
           >
-            publised on &bull; 12/12/12
+            publised on &bull; {props.createdAt}
           </Box>
         </Box>
         <Box>
