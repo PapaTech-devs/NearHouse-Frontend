@@ -77,6 +77,10 @@ export default function ArticleComponent({ article }) {
       // direction={"column"}
       px={{ lg: "25em", md: "5em", sm: "4em", base: "1em" }}
     >
+      <Head>
+        {" "}
+        <title>{article.title}</title>
+      </Head>
       {/* <Flex alignItems={"start"} direction={"column"}> */}
       <Heading
         pt={4}
