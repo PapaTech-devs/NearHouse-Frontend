@@ -1,4 +1,14 @@
-import { Box, Text, Image, Flex, Link } from "@chakra-ui/react";
+import {
+  Box,
+  Text,
+  Image,
+  Flex,
+  Link,
+  Heading,
+  HStack,
+  Spacer,
+  Divider,
+} from "@chakra-ui/react";
 import ChakraUIRenderer from "chakra-ui-markdown-renderer";
 import ReactMarkdown from "react-markdown";
 import Head from "next/head";
@@ -20,12 +30,13 @@ export default function ArticleComponent({ article }) {
       const { children } = props;
       return (
         <Box
-          bgColor="gray.900"
+          bgColor="rgb(20, 20, 20)"
           fontSize="18px"
-          fontStyle="italic"
+          // fontStyle="italic"
           p={4}
           borderLeft="4px"
-          borderColor="gray.500"
+          borderColor="rgba(42, 224, 39, 0.8)"
+          borderRadius={"lg"}
           my={5}
           color="whiteAlpha.800"
         >
@@ -38,7 +49,8 @@ export default function ArticleComponent({ article }) {
         <Link
           href={props.href}
           isExternal
-          fontFamily={"cursive"}
+          // fontFamily={"body"}
+          fontWeight={"hairline"}
           color={"#2AE027"}
         >
           {props.children}
@@ -50,35 +62,72 @@ export default function ArticleComponent({ article }) {
       const { src, alt } = props;
       return (
         <Flex justifyContent="center" alignItems="center" py={"2em"}>
-          <Image
-            src={src}
-            alt={alt}
-            h={{ md: "400px", sm: "350px", base: "300px" }}
-            w={"550px"}
-          />
+          <Image src={src} alt={alt} h={"100%"} w={"100%"} />
         </Flex>
       );
     },
   };
+  console.log(article.title);
   return (
     <Box
       bgColor="black"
       color="white"
       // px={["1.5rem", "2.5rem", "2.5rem", "3rem"]}
       mb="8"
-      direction={"column"}
-      px={{ md: "20rem", sm: "4em", base: "1em" }}
+      // direction={"column"}
+      px={{ lg: "25em", md: "5em", sm: "4em", base: "1em" }}
     >
       {/* <Flex alignItems={"start"} direction={"column"}> */}
+      <Heading
+        pt={4}
+        fontSize={{ lg: "5xl", md: "5xl", sm: "4xl", base: "4xl" }}
+      >
+        {article.title}
+      </Heading>
+      <Box
+        bgColor="rgb(20, 20, 20)"
+        fontSize="18px"
+        p={4}
+        borderRight="2px"
+        borderBottom={"1px"}
+        borderRadius={"lg"}
+        borderColor="rgba(42, 224, 39, 0.8)"
+        my={5}
+        // color="whiteAlpha.800"
+      >
+        <Flex direction={"row"} alignItems={"center"}>
+          <Text
+            // as={"span"}
+            // textAlign={"right"}
+            fontSize={{ lg: "lg", md: "md", sm: "sm", base: "sm" }}
+            color={"gray.500"}
+            w={"70%"}
+          >
+            &bull;{" "}
+            {new Date(article.createdAt).toLocaleDateString("en-us", {
+              year: "numeric",
+              month: "short",
+              day: "numeric",
+            })}
+          </Text>
+          <Spacer />
+          <Text
+            pl={2}
+            fontSize={{ lg: "xl", md: "lg", sm: "md", base: "md" }}
+            color={"gray.300"}
+            textAlign={"right"}
+          >
+            {article.description}
+          </Text>
+        </Flex>
+      </Box>
       <Image
         src={article.thumbnail}
         alt={article.title}
-        h={{ md: "500px", sm: "300px", base: "200px" }}
-        w={{ md: "1500px", sm: "600px", base: "400px" }}
+        h={"100%"}
+        w={"100%"}
       />
-      <Head>
-        <title>{article.title}</title>
-      </Head>
+      <Divider my={9} />
       <ReactMarkdown
         components={ChakraUIRenderer(newTheme)}
         skipHtml

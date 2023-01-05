@@ -57,9 +57,6 @@ const dummyData = [
 
 function getDate(pdate) {
   let date = new Date();
-  // let month = date.getMonth();
-  // let day = date.getDate();
-  // let year = date.getFullYear();
   return date.toLocaleDateString("en-us", {
     year: "numeric",
     month: "short",
