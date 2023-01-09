@@ -95,6 +95,7 @@ export default function Property({ property, user }) {
           content="Find , buy and sell real estates like houses, flats and plots at the best prices in places like Santiniketan, Kolkata."
           property="og:description"
         />
+        <meta property="og:type" content="website" />
         <meta content={property.title} property="og:site_name" />
         <meta content="summary" name="twitter:card" />
       </Head>
