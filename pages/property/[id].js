@@ -81,15 +81,15 @@ export default function Property({ property, user }) {
           content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"
           name="viewport"
         />
-        <meta content={property.title} itemprop="name" />
+        <meta content={property.title} itemProp="name" />
         <meta content={property.title} property="og:title" />
-        <meta content={ogImageLink} itemprop="image" />
+        <meta content={ogImageLink} itemProp="image" />
         <meta content={ogImageLink} property="og:image" />
         <meta content="256" property="og:image:width" />
         <meta content="256" property="og:image:height" />
         <meta
           content="Find , buy and sell real estates like houses, flats and plots at the best prices in places like Santiniketan, Kolkata."
-          itemprop="description"
+          itemProp="description"
         />
         <meta
           content="Find , buy and sell real estates like houses, flats and plots at the best prices in places like Santiniketan, Kolkata."
