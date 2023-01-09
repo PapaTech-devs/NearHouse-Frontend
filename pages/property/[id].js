@@ -58,6 +58,10 @@ export default function Property({ property, user }) {
     currency: "INR",
     maximumFractionDigits: 2,
   })
+  const ogImageLink =
+    property.images.length === 0
+      ? "https://www.nearhouse.in/images/dummy.png"
+      : property.images[0]
 
   return (
     <Flex
@@ -69,6 +73,30 @@ export default function Property({ property, user }) {
     >
       <Head>
         <title>{property.title}</title>
+        <meta
+          content="Find , buy and sell real estates like houses, flats and plots at the best prices in places like Santiniketan, Kolkata."
+          name="Description"
+        />
+        <meta
+          content="initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"
+          name="viewport"
+        />
+        <meta content={property.title} itemprop="name" />
+        <meta content={property.title} property="og:title" />
+        <meta content={ogImageLink} itemprop="image" />
+        <meta content={ogImageLink} property="og:image" />
+        <meta content="256" property="og:image:width" />
+        <meta content="256" property="og:image:height" />
+        <meta
+          content="Find , buy and sell real estates like houses, flats and plots at the best prices in places like Santiniketan, Kolkata."
+          itemprop="description"
+        />
+        <meta
+          content="Find , buy and sell real estates like houses, flats and plots at the best prices in places like Santiniketan, Kolkata."
+          property="og:description"
+        />
+        <meta content={property.title} property="og:site_name" />
+        <meta content="summary" name="twitter:card" />
       </Head>
       <Flex
         justifyContent="space-between"
