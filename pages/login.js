@@ -15,7 +15,12 @@ import { useRouter } from "next/router"
 import { useAuth } from "../hooks/contextHooks"
 import { useState } from "react"
 import PasswordInput from "../components/PasswordInput"
-import { validateEmail, showToast, handleInputChange } from "../utils"
+import {
+  validateEmail,
+  showToast,
+  handleInputChange,
+  storeUser,
+} from "../utils"
 import { GrGoogle } from "react-icons/gr"
 
 export default function LoginPage() {
@@ -185,7 +190,7 @@ export default function LoginPage() {
                 router.replace("/")
               } catch (e) {
                 showToast("Something went wrong.", "error", toast)
-                console.error(e.code)
+                console.error(e)
                 setLoading(false)
               }
             }}
