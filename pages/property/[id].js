@@ -58,10 +58,6 @@ export default function Property({ property, user }) {
     currency: "INR",
     maximumFractionDigits: 2,
   })
-  const ogImageLink =
-    property.images.length === 0
-      ? "https://www.nearhouse.in/images/dummy.png"
-      : property.images[0]
 
   return (
     <Flex
@@ -73,26 +69,6 @@ export default function Property({ property, user }) {
     >
       <Head>
         <title>{property.title}</title>
-        <meta name="title" content={property.title} />
-        <meta name="description" content={property.description} />
-
-        <meta property="og:type" content="website" />
-        <meta
-          property="og:url"
-          content={`https://www.nearhouse.in/property/${property.propertyid}`}
-        />
-        <meta property="og:title" content={property.title} />
-        <meta property="og:description" content={property.description} />
-        <meta property="og:image" content={ogImageLink} />
-
-        <meta property="twitter:card" content="summary_large_image" />
-        <meta
-          property="twitter:url"
-          content={`https://www.nearhouse.in/property/${property.propertyid}`}
-        />
-        <meta property="twitter:title" content={property.title} />
-        <meta property="twitter:description" content={property.description} />
-        <meta property="twitter:image" content={ogImageLink} />
       </Head>
       <Flex
         justifyContent="space-between"
@@ -439,7 +415,14 @@ export async function getStaticProps({ params }) {
   ).then((res) => res.json())
 
   // Pass post data to the page via props
-  return { props: { property: data.property, user: data.user }, revalidate: 10 }
+  return {
+    props: {
+      websiteType: "property",
+      property: data.property,
+      user: data.user,
+    },
+    revalidate: 10,
+  }
 }
 
 // This function gets called at build time
