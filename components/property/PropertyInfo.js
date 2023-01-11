@@ -17,7 +17,7 @@ export default function PropertyInfo({ error, values, setValues }) {
   const { regions } = usePropertyContext()
   const { authUser } = useAuth()
 
-  console.log("values", values)
+  if (!authUser) return <></>
 
   return (
     <Stack w="100%" rowGap={1}>
@@ -264,25 +264,29 @@ export default function PropertyInfo({ error, values, setValues }) {
         value={values.videoLink}
         onChange={(e) => handleInputChange(e, setValues, values)}
       />
-      <Flex alignItems="center" ml={4} gap={4}>
-        <Text>Is property verified?</Text>
-        <Checkbox
-          onChange={(e) => setValues({ ...values, verified: e.target.checked })}
-          size="md"
-          defaultChecked={values.verified}
-        />
-      </Flex>
+      {authUser.role === "admin" && (
+        <Flex alignItems="center" ml={4} gap={4}>
+          <Text>Is property verified?</Text>
+          <Checkbox
+            onChange={(e) =>
+              setValues({ ...values, verified: e.target.checked })
+            }
+            size="md"
+            defaultChecked={values.verified}
+          />
+        </Flex>
+      )}
       {values.verified && (
         <>
           <Input
             placeholder="*Enter average rental yeild(optional for plots)"
             size="md"
-            name="avgRentalYeild"
+            name="avgRentalYield"
             _placeholder={{ color: "gray.400" }}
             border="none"
             bgColor="gray.700"
             color="white"
-            value={values.avgRentalYeild}
+            value={values.avgRentalYield}
             onChange={(e) => handleInputChange(e, setValues, values)}
           />
           <Input

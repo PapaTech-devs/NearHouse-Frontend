@@ -32,6 +32,7 @@ export default function PropertyPage() {
   }, [loading])
 
   if (loading) return <>Loading contents</>
+  if (!authUser) return <></>
 
   return (
     <Flex

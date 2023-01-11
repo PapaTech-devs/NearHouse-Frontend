@@ -230,7 +230,7 @@ export default function PropertyTab({
                   </>
                 )}
               </HStack>
-              {(property.avgRentalYeild || property.assetAppreciationRate) && (
+              {(property.avgRentalYield || property.assetAppreciationRate) && (
                 <HStack mt="1.5" alignItems="flex-end">
                   <Image
                     w="30px"
@@ -243,7 +243,7 @@ export default function PropertyTab({
                   </Text>
                 </HStack>
               )}
-              {!(property.avgRentalYeild || property.assetAppreciationRate) && (
+              {!(property.avgRentalYield || property.assetAppreciationRate) && (
                 <Box h="35px" />
               )}
             </Box>

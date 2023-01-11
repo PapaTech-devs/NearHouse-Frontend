@@ -56,11 +56,12 @@ export default function AppointmentPage() {
       month: "long",
       day: "numeric",
     }
-    return `${date.toLocaleString("en-US", options)}
-      at ${date.toLocaleTimeString("en-US", {
-        hour: "numeric",
-        minute: "2-digit",
-      })}}`
+    const text = `${date.toLocaleString("en-US", options)}
+    at ${date.toLocaleTimeString("en-US", {
+      hour: "numeric",
+      minute: "2-digit",
+    })}`
+    return text
   }
 
   return (

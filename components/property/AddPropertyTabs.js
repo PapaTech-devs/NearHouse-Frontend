@@ -55,7 +55,7 @@ export default function AddPropertyTabs({ setAdd, editingProperty }) {
     videoLink: editingProperty ? editingProperty.videoLink : "",
     images: editingProperty ? editingProperty.images : [],
     location: editingProperty ? editingProperty.location : null,
-    avgRentalYeild: editingProperty ? editingProperty.avgRentalYeild : "",
+    avgRentalYield: editingProperty ? editingProperty.avgRentalYield : "",
     assetAppreciationRate: editingProperty
       ? editingProperty.assetAppreciationRate
       : "",
@@ -108,7 +108,7 @@ export default function AddPropertyTabs({ setAdd, editingProperty }) {
       currentStatus: false,
       floorNo: false,
       location: false,
-      avgRentalYeild: false,
+      avgRentalYield: false,
       assetAppreciationRate: false,
     }
 
@@ -208,10 +208,10 @@ export default function AddPropertyTabs({ setAdd, editingProperty }) {
       errorObject.floorNo = false
     }
 
-    if (values.verified === "true" && values.avgRentalYeild.length === 0) {
-      errorObject.avgRentalYeild = true
+    if (values.verified === "true" && values.avgRentalYield.length === 0) {
+      errorObject.avgRentalYield = true
     } else {
-      errorObject.avgRentalYeild = false
+      errorObject.avgRentalYield = false
     }
 
     if (
@@ -256,14 +256,14 @@ export default function AddPropertyTabs({ setAdd, editingProperty }) {
           errorObject.numFloor ||
           errorObject.furnishType ||
           errorObject.currentStatus ||
-          errorObject.avgRentalYeild)) ||
+          errorObject.avgRentalYield)) ||
       (values.propertyType === "flat" &&
         (errorObject.bhk ||
           errorObject.numBath ||
           errorObject.floorNo ||
           errorObject.furnishType ||
           errorObject.currentStatus ||
-          errorObject.avgRentalYeild)) ||
+          errorObject.avgRentalYield)) ||
       (values.propertyType === "plot" && errorObject.landType)
     ) {
       toast({
@@ -305,6 +305,8 @@ export default function AddPropertyTabs({ setAdd, editingProperty }) {
     }
     setAdd(false)
   }
+
+  if (!authUser) return <></>
 
   return (
     <Flex direction="column" rowGap="2" bgColor="black" color="white">

@@ -129,8 +129,6 @@ export const storeProperty = async (values, setLoadingText) => {
     if (values[key] !== "" && key !== "files" && key !== "preview")
       data[key] = values[key]
 
-  console.log("Store", data)
-
   setLoadingText("Compressing images...")
   const compressedFiles = await compressImages(values)
   setLoadingText("Uploading images to server...")
@@ -209,8 +207,6 @@ export const updateProperty = async (values, setLoadingText) => {
     if (values[key] !== "" && key !== "files" && key !== "preview")
       data[key] = values[key]
 
-  console.log("update", values)
-
   setLoadingText("Compressing images...")
   const compressedFiles = await compressImages(values)
   setLoadingText("Uploading images to server...")
@@ -228,7 +224,6 @@ export const updateProperty = async (values, setLoadingText) => {
       body: JSON.stringify(data),
     })
     const d = await res.json()
-    console.log("updated", d)
     setLoadingText(null)
     return d["property"]
   } catch (err) {
